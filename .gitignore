@@ -1,2 +1,7 @@
+# ignore
+database/migrations/*
 *.pyc
 .idea
+
+# except
+!database/migrations/__init__.py
