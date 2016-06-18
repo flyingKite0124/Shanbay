@@ -128,6 +128,7 @@ var cartItem = {
 }
 
 var dishItem = {
+	restID : undefined,
 	dl : [],
 }
 
@@ -192,13 +193,33 @@ function renderDishes(dishlist){
 		var item = $('<div>').attr('did', 'dish' + (i+1).toString()).attr('class', 'dishitem');
 		var img = $('<img>').attr('class', 'dishitem-pic').attr('src', dishlist[i].pic_path);
 		var name = $('<name>').attr('class', 'dishitem-name').text(dishlist[i].name);
-		var p = $('<p>');
-		var grade = $('<span>').attr('class', 'dishitem-grade').text(dishlist[i].grade);
+		var d = $('<div>');
+		//var grade = $('<span>').attr('class', 'dishitem-grade').text(dishlist[i].grade);
+		var grade = $('<div class="dishitem-grade" data-steps="2"><ul class="star-bg"><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li></ul><ul class="star-bg star-fg"><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li></ul></div>');
+		gradeScore = Math.round(dishlist[i].grade * 20);
+		grade.children().filter('.star-fg').css('width', gradeScore + '%');
+		var gradeCount = $('<span>').attr('class', 'dishitem-gradecount').text('(' + dishlist[i].grade_count + ')');
 		var count = $('<span>').attr('class', 'dishitem-count').text('月销 ' + dishlist[i].total_count + ' 份');
-		p.append(grade).append(count);
+		d.append(grade).append(gradeCount).append(count);
 		var price = $('<span>').attr('class', 'dishitem-price').text(dishlist[i].price.toString() + ' 元');
 		var button = $('<button>').attr('class', 'shop-cartbutton').attr('onclick','cartItem.add(this)').text('加入购物车');
-		item.append(img).append(name).append(p).append(price).append(button);
+		item.append(img).append(name).append(d).append(price).append(button);
 		this.dlElement.append(item);
 	}
+}
+
+function sendOrder() {
+	orderDishes = []
+	for (k in cartItem.itemList){
+		orderDishes.push({'dish_id' : k, 'dish_num' : cartItem.itemList[k]});
+	}
+	$.ajax({
+		type	: 'POST',
+		url		: '/user/createOrder/',
+		contentType: "application/json",
+		data	: {rest_id : dishItem.restID, order_dishes : orderDishes},
+		success	: function(data){
+			cartItem.clear();
+		}		
+	});
 }

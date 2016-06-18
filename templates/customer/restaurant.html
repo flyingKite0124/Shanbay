@@ -78,13 +78,14 @@
 			<div class="shop-cartfooter">
 				<span class="icon-cart 	glyphicon glyphicon-shopping-cart"></span>
 				<p class="shop-cartfooter-price">￥0</p>
-				<button class="shop-cartfooter-checkout">去结算 ></button>
+				<button class="shop-cartfooter-checkout" onclick="sendOrder()">去结算 ></button>
 			</div>
 		</div>
 		<script type="text/javascript">
 			{% for dish in dishes %}
 			dishItem.dl.push(new dishObj('{{ dish.did }}', '{{ dish.name }}',{{ dish.price }},'{{ dish.introduction }}',{{ dish.total_count }},{{ dish.grade_count }},{{ dish.total_grade }},'{{ dish.pic_path }}'));
 			{% endfor %}
+			dishItem.restID = {{ restaurant.rid }};
 			cartItem.init(dishItem.dl);
 			renderDishes(dishItem.dl);
 			cartItem.readCookies();
