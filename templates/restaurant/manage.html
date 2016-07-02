@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="/static/common/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/restaurant/css/manage.css" rel="stylesheet">
 
 </head>
 <body>
@@ -34,12 +35,42 @@
     <div class="col-md-10">
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="dishes">
-                <p>The form is automatically generated from the Question model.</p>
-                <div class="btn-group" role="group" aria-label="...">
+                <div id="dish-list">
+                    {% for dish in restaurant.dish_set.all %}
+                        <div class="dish-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100% height=100%>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">{{ dish.name }}</li>
+                                        <li class="list-group-item">
+                                            {{ dish.price }}<span class="glyphicon glyphicon-yen"></span>
+                                        </li>
+                                        <li class="list-group-item">{{ dish.introduction }}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2 ">
+                                    <button class="btn btn-primary modify-dish">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>店铺目前没有菜品上架</p>
+                    {% endfor %}
+                </div>
+
+                <button type="button" class="btn btn-danger btn-lg disabled hide"
+                        id="banned_btn">封停中
+                </button>
+                <div class="btn-group" role="group" aria-label="open or close" id="open_or_close">
                     <button type="button" class="btn btn-default btn-lg"
-                            id="open_restaurant">营业</button>
+                            id="open_restaurant">营业
+                    </button>
                     <button type="button" class="btn btn-default btn-lg"
-                            id="close_restaurant">打烊</button>
+                            id="close_restaurant">打烊
+                    </button>
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="profile">
@@ -65,16 +96,22 @@
         //你应该在此进行各种初始化，比如注册你的回调函数
         var open_or_close;
         var open_btn = $('#open_restaurant');
-        var close_btn= $('#close_restaurant');
-        {% if restaurant.status|default:'0' %}
-            open_or_close = open_btn;
-        {% else %}
-            open_or_close = close_btn;
-        {% endif %}
-        open_or_close.removeClass('btn-default');
-        open_or_close.addClass('btn-warning active');
+        var close_btn = $('#close_restaurant');
+        var status = {{ restaurant.status }};
+        if (status === 2) {
+            show_banned_btn();
+        }
+        else {
+            if (status === 1)
+                open_or_close = open_btn;
+            else
+                open_or_close = close_btn;
+            open_or_close.removeClass('btn-default');
+            open_or_close.addClass('btn-warning active');
+        }
         open_btn.click(open_restaurant);
         close_btn.click(close_restaurant);
+        $('.modify-dish').click(modify_dish);
     })
 </script>
 </body>
