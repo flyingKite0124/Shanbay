@@ -2,6 +2,7 @@
 database/migrations/*
 *.pyc
 .idea
+*.sqlite3
 
 # except
 !database/migrations/__init__.py
