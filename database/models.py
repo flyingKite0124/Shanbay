@@ -8,6 +8,7 @@ class Customer(models.Model):
     passwd = models.CharField(max_length=60)
     status = models.IntegerField()
     default_aid = models.IntegerField(null=True)
+    # default_address = models.ForeignKey(Address,null=True)
 
     def __unicode__(self):
         return smart_unicode(self.phone)
@@ -59,7 +60,7 @@ class Order(models.Model):
     total = models.FloatField()
     customer = models.ForeignKey(Customer)
     restaurant = models.ForeignKey(Restaurant)
-    address = models.ForeignKey(Address)
+    address = models.ForeignKey(Address,null=True)
 
     def __unicode__(self):
         return smart_unicode(self.customer) + u' ' \
