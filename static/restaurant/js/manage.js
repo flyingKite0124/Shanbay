@@ -108,10 +108,10 @@ function btn_submit_modify_dish(e) {
 }
 
 function btn_delete_dish(e) {
-    var dish_modify = $(this).parent().parent();
+    var dish_info = $(this).parent().parent();
     var dish = {
         type: 'delete',
-        dish_id: dish_modify.find(".dish-id").val(),
+        dish_id: dish_info.find(".dish-id").html(),
     };
     console.log(dish);
     $.ajax({

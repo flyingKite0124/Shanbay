@@ -92,7 +92,7 @@ def checkPhone(request):
             return JsonResponse({"result":"success"})
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
-    
+
 def checkName(request):
     if request.is_ajax() and request.method == "POST":
         data = json.loads(request.body)
@@ -198,7 +198,7 @@ def changeStatus(request):
             HttpResponseRedirect("sign")
         if restaurant == None:
             HttpResponseRedirect("sign")
-        data = json.loads(request.body)    
+        data = json.loads(request.body)
         if "type" not in data:
             return JsonResponse({"result":"fail"})
         else:
