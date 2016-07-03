@@ -22,7 +22,7 @@ def index(request):
         if request.session.get("issigned", "False")=="True":
             content_dict["issigned"] = True
             content_dict["customer"] = Customer.objects.get(
-                pk=request.session.get("customer_id"))
+                pk=int(request.session.get("customer_id")))
         else:
             content_dict["issigned"] = False
         content_dict["restaurant"] = dict()
@@ -53,7 +53,7 @@ def restaurant(request):
             if request.session.get("issigned", "False")=="True":
                 content_dict["issigned"] = True
                 content_dict["customer"] = Customer.objects.get(
-                    pk=request.session.get("customer_id"))
+                    pk=int(request.session.get("customer_id")))
             else:
                 content_dict["issigned"] = False
             restaurant=Restaurant.objects.filter(pk=request.GET["rest_id"])
@@ -74,7 +74,7 @@ def checkorder(request):
             global const
             content_dict=dict()
             if request.session.get("issigned", "False")=="True":
-                content_dict["customer"]=Customer.objects.get(pk=request.session.get("customer_id"))
+                content_dict["customer"]=Customer.objects.get(pk=int(request.session.get("customer_id")))
                 content_dict["addresses"]=Address.objects.filter(customer=content_dict["customer"]).filter(delete_flag=False)
             else:
                 return HttpResponseRedirect("index")
@@ -99,7 +99,7 @@ def search(request):
             if request.session.get("issigned", "False")=="True":
                 content_dict["issigned"] = True
                 content_dict["customer"] = Customer.objects.get(
-                    pk=request.session.get("customer_id"))
+                    pk=int(request.session.get("customer_id")))
             else:
                 content_dict["issigned"] = False
             content_dict["restaurants"]=Restaurant.objects.filter(name__contains=request.GET["queryString"]).filter(status=const.restaurant["OPENING"])
@@ -116,7 +116,7 @@ def profile(request):
         global const
         content_dict = dict()
         if request.session.get("issigned", "False")=="True":
-            content_dict["customer"]=Customer.objects.get(pk=request.session.get(("customer_id")))
+            content_dict["customer"]=Customer.objects.get(pk=int(request.session.get("customer_id")))
         else:
             return HttpResponseRedirect("index")
         content_dict["orders"]=Order.objects.filter(customer=content_dict["customer"]).exclude(status=const.order["UNCERTAIN"])
@@ -161,7 +161,7 @@ def signUp(request):
                 newCustomer.passwd=password
                 newCustomer.status=const.customer["NORMAL"]
                 newCustomer.save()
-                request.session["user_id"]=str(newCustomer.id)
+                request.session["customer_id"]=str(newCustomer.id)
                 request.session["issigned"]="True"
                 return JsonResponse({"result":"success"})
             except Exception:
@@ -188,13 +188,29 @@ def createOrder(request):
             postObj=json.loads(request.body)
             rest_id=postObj["rest_id"]
             order_dishes=postObj["order_dishes"]
-            print order_dishes
-            # TODO
-            return JsonResponse({"result":"success"})
+            order=Order()
+            order.customer=Customer.objects.get(pk=int(request.session.get("customer_id")))
+            order.restaurant=Restaurant.objects.get(pk=rest_id)
+            order.total=0
+            order.status=const.order["UNCERTAIN"]
+            order.save()
+            for order_dish in order_dishes:
+                orderDish=OrderDish()
+                orderDish.order=order
+                orderDish.dish=Dish.objects.get(pk=order_dish["dish_id"])
+                orderDish.price=orderDish.dish.price
+                orderDish.num=order_dish["dish_num"]
+                order.total+=orderDish.price*orderDish.num
+                orderDish.save()
+            order.save()
+            return JsonResponse({"result":"success","":order.id})
         else:
             return JsonResponse({"result":"notsigned"})
     else:
         return HttpResponseNotAllowed(['POST'],'illegal request')
+
+def submitOrder(request):
+    pass
 
 
 
