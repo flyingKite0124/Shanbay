@@ -59,7 +59,8 @@ class Order(models.Model):
     total = models.FloatField()
     customer = models.ForeignKey(Customer)
     restaurant = models.ForeignKey(Restaurant)
-    address = models.ForeignKey(Address)
+    # address = models.ForeignKey(Address)
+    address = models.IntegerField(null=True)
 
     def __unicode__(self):
         return smart_unicode(self.customer) + u' ' \

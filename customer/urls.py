@@ -8,4 +8,9 @@ urlpatterns = [
     url(r'^checkorder$',views.checkorder,name="checkorder"),
     url(r'^search$',views.search,name="search"),
     url(r'^profile$',views.profile,name="profile"),
+    url(r'^signIn$',views.signIn,name="signIn"),
+    url(r'^signUp$',views.signUp,name="signUp"),
+    url(r'^checkPhone$',views.checkPhone,name="checkPhone"),
+    url(r'^createOrder$',views.createOrder,name="createOrder"),
+    url(r'^test$',views.test,name="test"),
 ]

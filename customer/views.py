@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from database.models import *
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect,JsonResponse
+import json
 import const
+
 
 const.customer = {"NORMAL": 0, "FROZEN": 1}
 const.restaurant = {"UNCERTIFIED": 0, "OPENING": 1, "CLOSED": 2, "FROZEN": 3}
@@ -17,7 +19,7 @@ def index(request):
     if not request.is_ajax() and request.method == "GET":
         global const
         content_dict = dict()
-        if request.session.get("issigned", False):
+        if request.session.get("issigned", "False")=="True":
             content_dict["issigned"] = True
             content_dict["customer"] = Customer.objects.get(
                 pk=request.session.get("customer_id"))
@@ -35,7 +37,10 @@ def index(request):
 
 def sign(request):
     if not request.is_ajax() and request.method=="GET":
-        return render(request, "customer/sign.html")
+        if request.session.get("issigned", "False")=="True":
+            return HttpResponseRedirect("index")
+        else:
+            return render(request, "customer/sign.html")
     else:
         return HttpResponseNotAllowed(['GET'], 'illegal request')
 
@@ -45,7 +50,7 @@ def restaurant(request):
         if "rest_id" in request.GET:
             global const
             content_dict=dict()
-            if request.session.get("issigned", False):
+            if request.session.get("issigned", "False")=="True":
                 content_dict["issigned"] = True
                 content_dict["customer"] = Customer.objects.get(
                     pk=request.session.get("customer_id"))
@@ -68,7 +73,7 @@ def checkorder(request):
         if "order_id" in request.GET:
             global const
             content_dict=dict()
-            if request.session.get("issigned",False):
+            if request.session.get("issigned", "False")=="True":
                 content_dict["customer"]=Customer.objects.get(pk=request.session.get("customer_id"))
                 content_dict["addresses"]=Address.objects.filter(customer=content_dict["customer"]).filter(delete_flag=False)
             else:
@@ -91,7 +96,7 @@ def search(request):
         if "queryString" in request.GET:
             global const
             content_dict=dict()
-            if request.session.get("issigned", False):
+            if request.session.get("issigned", "False")=="True":
                 content_dict["issigned"] = True
                 content_dict["customer"] = Customer.objects.get(
                     pk=request.session.get("customer_id"))
@@ -110,7 +115,7 @@ def profile(request):
     if not request.is_ajax() and request.method=="GET":
         global const
         content_dict = dict()
-        if request.session.get('issigned',False):
+        if request.session.get("issigned", "False")=="True":
             content_dict["customer"]=Customer.objects.get(pk=request.session.get(("customer_id")))
         else:
             return HttpResponseRedirect("index")
@@ -121,6 +126,76 @@ def profile(request):
         return render(request, "customer/profile.html")
     else:
         return HttpResponseNotAllowed(['GET'], 'illegal request')
+
+def test(request):
+    return render(request,"customer/test.html")
+
+def signIn(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        postObj=json.loads(request.body)
+        phone=postObj["phone"]
+        password=postObj["password"]
+        hasCustomer=Customer.objects.filter(phone=phone).filter(passwd=password)
+        if len(hasCustomer)==1:
+            request.session["customer_id"]=str(hasCustomer[0].id)
+            request.session["issigned"]="True"
+            return JsonResponse({"result":"success"})
+        else:
+            return JsonResponse({"result":"fail"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+
+def signUp(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        postObj=json.loads(request.body)
+        phone=postObj["phone"]
+        password=postObj["password"]
+        if len(Customer.objects.filter(phone=phone)):
+            return JsonResponse({"result":"fail"})
+        else:
+            try:
+                newCustomer=Customer()
+                newCustomer.phone=phone
+                newCustomer.passwd=password
+                newCustomer.status=const.customer["NORMAL"]
+                newCustomer.save()
+                request.session["user_id"]=str(newCustomer.id)
+                request.session["issigned"]="True"
+                return JsonResponse({"result":"success"})
+            except Exception:
+                return JsonResponse({"result":"fail"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+
+def checkPhone(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        postObj=json.loads(request.body)
+        phone=postObj["phone"]
+        if len(Customer.objects.filter(phone=phone)):
+            return JsonResponse({"result":"fail"})
+        else:
+            return JsonResponse({"result":"success"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+
+def createOrder(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        if request.session.get("issigned","False")=="True":
+            postObj=json.loads(request.body)
+            rest_id=postObj["rest_id"]
+            order_dishes=postObj["order_dishes"]
+            print order_dishes
+            # TODO
+            return JsonResponse({"result":"success"})
+        else:
+            return JsonResponse({"result":"notsigned"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+
 
 
 def redirect(request):
