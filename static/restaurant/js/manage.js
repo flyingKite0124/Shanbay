@@ -130,7 +130,6 @@ function btn_delete_dish(e) {
 }
 
 
-
 var dish_create = $('#dish-create');
 var create_btn_row = $('#btn-create-dish').parent();
 function btn_create_dish(e) {
@@ -166,4 +165,57 @@ function btn_submit_create_dish(e) {
             }
         })
         .fail(ajax_fail_handler);
+}
+
+var btn_modify_restaurant_row = $('#btn-modify-restaurant-row');
+var btn_submit_or_cancel_modify_restaurant = $('#btn-submit-or-cancel-modify-restaurant');
+var restaurant_info = $('#restaurant-info');
+var restaurant_info_input = restaurant_info.find('input');
+var restaurant_info_textarea = restaurant_info.find('textarea');
+function btn_modify_restaurant(e) {
+    btn_modify_restaurant_row.hide('fast');
+    btn_submit_or_cancel_modify_restaurant.show('slow');
+    restaurant_info_input.removeAttr('disabled');
+    restaurant_info_textarea.removeAttr('disabled');
+}
+function btn_submit_modify_restaurant(e) {
+    var restaurant = {
+        restaurant_name: restaurant_info.find("#restaurant-name").val(),
+        phone: restaurant_info.find("#restaurant-phone").val(),
+        introduction: restaurant_info.find("#restaurant-introduction").val(),
+        address: restaurant_info.find("#restaurant-address").val(),
+        classification: restaurant_info_input.filter("[type='radio']:checked").val(),
+    }
+    console.log(restaurant);
+    $.ajax({
+            url: "/restaurant/updateInformation",   // 填上接口中要求的url
+            data: restaurant,
+            type: "POST",       // 据熊学长说都是POST请求，不用改
+            dataType: "json",  // 据熊学长说都是json格式，不用改
+        })
+        //请求成功时的回调函数
+        .done(function (data) {
+            if (data.result === 'success') {
+                window.location.reload();
+            }
+            else {
+                alert('Not success');
+            }
+        })
+        .fail(ajax_fail_handler);
+}
+
+function btn_cancel_modify_restaurant(e, classification) {
+    btn_submit_or_cancel_modify_restaurant.hide('fast');
+    btn_modify_restaurant_row.show('slow');
+    restaurant_info_input.attr('disabled', true);
+    restaurant_info_textarea.attr('disabled', true);
+    restaurant_info_input.filter('[type!=radio]').each( function(){
+        j = $(this);
+        j.val(j.attr('value'));
+    });
+    restaurant_info_textarea.val(restaurant_info_textarea.html());
+    restaurant_info_input.filter("[type='radio']").attr('checked',false);
+    $("#classification"+classification).attr('checked',true);
+    //restaurant_info_input.filter("[type='radio']").filter("[value="+classification+"]").attr('checked',true);
 }

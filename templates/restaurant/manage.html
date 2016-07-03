@@ -186,7 +186,7 @@
                                 <label for="restaurant-classification">类型</label>
                                 <div class="form-control">
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="inlineRadio1" value="0"
+                                        <input type="radio" name="restaurant-classification" id="classification0" value="0"
                                                disabled
                                                 {% if restaurant.classification == 0 %}
                                                checked
@@ -194,7 +194,7 @@
                                         > 正餐
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="inlineRadio2" value="1"
+                                        <input type="radio" name="restaurant-classification" id="classification1" value="1"
                                                disabled
                                                 {% if restaurant.classification == 1 %}
                                                checked
@@ -202,7 +202,7 @@
                                         > 小吃
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="inlineRadio3" value="2"
+                                        <input type="radio" name="restaurant-classification" id="classification2" value="2"
                                                disabled
                                                 {% if restaurant.classification == 2 %}
                                                checked
@@ -210,7 +210,7 @@
                                         > 烧烤
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="inlineRadio3" value="3"
+                                        <input type="radio" name="restaurant-classification" id="classification3" value="3"
                                                disabled
                                                 {% if restaurant.classification == 3 %}
                                                checked
@@ -255,6 +255,7 @@
         var open_btn = $('#open_restaurant');
         var close_btn = $('#close_restaurant');
         var status = {{ restaurant.status }};
+        var classification = {{ restaurant.classification }};
         if (status === 2) {
             show_banned_btn();
         }
@@ -274,12 +275,17 @@
         $('.btn-submit-modify-dish').click(btn_submit_modify_dish);
         $('.btn-delete-dish').click(btn_delete_dish);
 
-        $('#btn-create-dish').click(btn_create_dish);
         $('#dish-create').hide();
+        $('#btn-create-dish').click(btn_create_dish);
         $('#btn-submit-create-dish').click(btn_submit_create_dish);
         $('#btn-cancel-create-dish').click(btn_cancel_create_dish);
 
-
+        $('#btn-submit-or-cancel-modify-restaurant').hide();
+        $('#btn-modify-restaurant').click(btn_modify_restaurant);
+        $('#btn-submit-modify-restaurant').click(btn_submit_modify_restaurant);
+        $('#btn-cancel-modify-restaurant').click(function (e) {
+            btn_cancel_modify_restaurant(e, classification);
+        });
     })
 </script>
 </body>
