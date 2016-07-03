@@ -86,6 +86,8 @@ def checkorder(request):
         return HttpResponseNotAllowed(['GET'], 'illegal request')
 
 
+
+
 def search(request):
     if not request.is_ajax()and request.method=="GET":
         if "queryString" in request.GET:
@@ -121,7 +123,6 @@ def profile(request):
         return render(request, "customer/profile.html")
     else:
         return HttpResponseNotAllowed(['GET'], 'illegal request')
-
 
 def redirect(request):
     return HttpResponseRedirect("/customer/index")
