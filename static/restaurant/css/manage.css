@@ -1,12 +1,19 @@
 #dish-list {
     padding: 10px 10px 10px 10px;
-    background: rgba(00,00,255,0.2);
 }
 
 .dish-item {
     margin: 10px 10px 10px 10px;
 }
-
+.tab-content {
+    background: rgba(00,00,255,0.2);
+}
+.tab-pane {
+    padding: 20px 20px 20px 20px;
+}
+#restaurant-info {
+    padding: 20px 20px 20px 20px;
+}
 #open_or_close{
     padding: 30px 30px 30px 30px;
 }

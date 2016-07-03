@@ -132,14 +132,14 @@ function btn_delete_dish(e) {
 
 
 var dish_create = $('#dish-create');
-var btn_row = $('#btn-create-dish').parent();
+var create_btn_row = $('#btn-create-dish').parent();
 function btn_create_dish(e) {
-    btn_row.hide('fast');
+    create_btn_row.hide('fast');
     dish_create.show('slow');
 }
 function btn_cancel_create_dish(e) {
     dish_create.hide('fast');
-    btn_row.show('slow');
+    create_btn_row.show('slow');
 }
 
 function btn_submit_create_dish(e) {
