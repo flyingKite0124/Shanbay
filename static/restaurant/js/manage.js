@@ -17,11 +17,12 @@ function show_banned_btn() {
 function open_restaurant(e) {
     $.ajax({
             url: " /restaurant/changeStatus",   // 填上接口中要求的url
-            data: {
+            data: JSON.stringify({
                 type: "open"    // 填上接口中要的各种数据
-            },
+            }), //注意！这里跟上次给的模版不一样，我们的数据需要调用JSON.stringify()进行序列化。
             type: "POST",       // 据熊学长说都是POST请求，不用改
-            dataType: "json",  // 据熊学长说都是json格式，不用改
+            dataType: "json",  // 据熊学长说都是json格式，不用改。这个是指定请求的返回值类型的
+            contentType: "application/json", //这个是指定你发送的数据类型。注意，上次给的模版里面没有。这个一定要加。
         })
         //请求成功时的回调函数
         .done(function (data) {
@@ -41,11 +42,12 @@ function open_restaurant(e) {
 function close_restaurant(e) {
     $.ajax({
             url: "/restaurant/changeStatus",   // 填上接口中要求的url
-            data: {
+            data: JSON.stringify({
                 type: "close"    // 填上接口中要的各种数据
-            },
+            }),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
         })
         //请求成功时的回调函数
         .done(function (data) {
@@ -88,9 +90,10 @@ function btn_submit_modify_dish(e) {
     console.log(dish);
     $.ajax({
             url: "/restaurant/manageDish",   // 填上接口中要求的url
-            data: dish,
+            data: JSON.stringify(dish),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
         })
         //请求成功时的回调函数
         .done(function (data) {
@@ -113,9 +116,10 @@ function btn_delete_dish(e) {
     console.log(dish);
     $.ajax({
             url: "/restaurant/manageDish",   // 填上接口中要求的url
-            data: dish,
+            data: JSON.stringify(dish),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
         })
         //请求成功时的回调函数
         .done(function (data) {
@@ -151,9 +155,10 @@ function btn_submit_create_dish(e) {
     console.log(dish);
     $.ajax({
             url: "/restaurant/manageDish",   // 填上接口中要求的url
-            data: dish,
+            data: JSON.stringify(dish),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
         })
         //请求成功时的回调函数
         .done(function (data) {
@@ -189,9 +194,10 @@ function btn_submit_modify_restaurant(e) {
     console.log(restaurant);
     $.ajax({
             url: "/restaurant/updateInformation",   // 填上接口中要求的url
-            data: restaurant,
+            data: JSON.stringify(restaurant),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
         })
         //请求成功时的回调函数
         .done(function (data) {
@@ -224,9 +230,10 @@ function get_orders() {
     var orders;
     $.ajax({
             url: "/restaurant/pollOrder",   // 填上接口中要求的url
-            data: null,
+            data: JSON.stringify(null),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
         })
         //请求成功时的回调函数
         .done(function (data) {
