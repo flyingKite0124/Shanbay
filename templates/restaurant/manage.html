@@ -186,7 +186,8 @@
                                 <label for="restaurant-classification">类型</label>
                                 <div class="form-control">
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification0" value="0"
+                                        <input type="radio" name="restaurant-classification" id="classification0"
+                                               value="0"
                                                disabled
                                                 {% if restaurant.classification == 0 %}
                                                checked
@@ -194,7 +195,8 @@
                                         > 正餐
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification1" value="1"
+                                        <input type="radio" name="restaurant-classification" id="classification1"
+                                               value="1"
                                                disabled
                                                 {% if restaurant.classification == 1 %}
                                                checked
@@ -202,7 +204,8 @@
                                         > 小吃
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification2" value="2"
+                                        <input type="radio" name="restaurant-classification" id="classification2"
+                                               value="2"
                                                disabled
                                                 {% if restaurant.classification == 2 %}
                                                checked
@@ -210,7 +213,8 @@
                                         > 烧烤
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification3" value="3"
+                                        <input type="radio" name="restaurant-classification" id="classification3"
+                                               value="3"
                                                disabled
                                                 {% if restaurant.classification == 3 %}
                                                checked
@@ -241,6 +245,9 @@
             </div>
         </div>
     </div>
+</div>
+<div id="orders">
+    AAAAAAAAAAAAAAAAAA
 </div>
 
 <script src="/static/common/js/jquery.min.js"></script>
@@ -286,6 +293,7 @@
         $('#btn-cancel-modify-restaurant').click(function (e) {
             btn_cancel_modify_restaurant(e, classification);
         });
+        setInterval(get_orders, 10000);
     })
 </script>
 </body>

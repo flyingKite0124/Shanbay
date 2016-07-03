@@ -4,7 +4,7 @@ from django.shortcuts import render
 from database.models import *
 from django.http import HttpResponse,HttpResponseRedirect,HttpResponseNotAllowed, JsonResponse
 import json
-import const
+import customer.const as const
 
 const.restaurant = {"UNCERTIFIED": 0, "OPENING": 1, "CLOSED": 2, "FROZEN": 3}
 const.order = {
@@ -255,7 +255,7 @@ def manageDish(request):
                     if price != None and price != "":
                         dish.price = float(price)
                     introduction = data["introduction"]
-                    if introduction != None and introduction != ""
+                    if introduction != None and introduction != "":
                         dish.introduction = introduction
                     dish.save()
                     return JsonResponse({"result":"success"})
@@ -268,13 +268,13 @@ def manageDish(request):
                 try:
                     dish = Dish.objects.get(id=dish_id)
                     dish.delete()
-                    return JsonResponse("result":"success")
+                    return JsonResponse({"result":"success"})
                 except Exception:
-                    return JsonResponse("result":"fail")
+                    return JsonResponse({"result":"fail"})
             else:
-                return JsonResponse("result":"fail")
+                return JsonResponse({"result":"fail"})
         else:
-            return JsonResponse("result":"fail")
+            return JsonResponse({"result":"fail"})
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
@@ -284,7 +284,7 @@ def pollOrder(request):
 
 
 def redirect(request):
-    if request.session.get("issigned",False):
+    if request.session.get("issigned", False):
         return HttpResponseRedirect("manage")
     else:
         return HttpResponseRedirect("sign")
@@ -309,7 +309,7 @@ def changeOrderStatus(request):
         or "type" not in data:
             return JsonResponse({"result":"fail"})
         try:
-            order = Order.objects.get(id=data[order])
+            order = Order.objects.get(id=data['order_id'])
         except Exception:
             return JsonResponse({"result":"fail"})
         mType = data["type"]
@@ -330,9 +330,9 @@ def changeOrderStatus(request):
 def logout(request):
     if request.is_ajax() and request.method == "POST":
         if "isSignIn" not in request.session:
-            return JsonResponse("result":"fail")
+            return JsonResponse({"result":"fail"})
         request.session["isSignIn"] = False
-        return JsonResponse("result":"success")
+        return JsonResponse({"result":"success"})
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 

@@ -210,12 +210,32 @@ function btn_cancel_modify_restaurant(e, classification) {
     btn_modify_restaurant_row.show('slow');
     restaurant_info_input.attr('disabled', true);
     restaurant_info_textarea.attr('disabled', true);
-    restaurant_info_input.filter('[type!=radio]').each( function(){
+    restaurant_info_input.filter('[type!=radio]').each(function () {
         j = $(this);
         j.val(j.attr('value'));
     });
     restaurant_info_textarea.val(restaurant_info_textarea.html());
-    restaurant_info_input.filter("[type='radio']").attr('checked',false);
-    $("#classification"+classification).attr('checked',true);
+    restaurant_info_input.filter("[type='radio']").attr('checked', false);
+    $("#classification" + classification).attr('checked', true);
     //restaurant_info_input.filter("[type='radio']").filter("[value="+classification+"]").attr('checked',true);
+}
+
+function get_orders() {
+    var orders;
+    $.ajax({
+            url: "/restaurant/pollOrder",   // 填上接口中要求的url
+            data: null,
+            type: "POST",       // 据熊学长说都是POST请求，不用改
+            dataType: "json",  // 据熊学长说都是json格式，不用改
+        })
+        //请求成功时的回调函数
+        .done(function (data) {
+            if (data.result === 'success') {
+                orders = data.orders;
+            }
+            else {
+                alert('Fail to get orders');
+            }
+        })
+        .fail(ajax_fail_handler);
 }

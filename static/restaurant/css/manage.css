@@ -29,3 +29,9 @@ body {
 .my-btn-margin {
     margin: 10px 10px 10px 10px;
 }
+
+#orders {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
