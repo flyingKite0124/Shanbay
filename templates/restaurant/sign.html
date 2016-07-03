@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <!-- Bootstrap -->
+    <link href="/static/common/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/restaurant/css/manage.css" rel="stylesheet">
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">ShanBay</a>
+        </div>
+
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+        <div class="jumbotron">
+            <h1>Theme example</h1>
+            <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <label>Username</label><input type="text" id="username"></input><br>
+            <label>Password</label><input type="password" id="password"></input><br>
+            <button id="sign_in">submit</button>
+        </div>
+    </div>
+    <script src="/static/common/js/jquery.min.js"></script>
+    <script src="/static/common/js/csrf.js"></script>
+    <script src="/static/common/bootstrap/js/bootstrap.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sign_in').click(function(e){
+                data={
+                    phone: $('#username').val(),
+                    password: $('#password').val(),
+                };
+                $.ajax({
+                    url: "/restaurant/signIn",   // 填上接口中要求的url
+                    data: JSON.stringify(data),
+                    type: "POST",       // 据熊学长说都是POST请求，不用改
+                    dataType: "json",  // 据熊学长说都是json格式，不用改
+                    contentType: "application/json",
+                })
+                //请求成功时的回调函数
+                .done(function (data) {
+                    if (data.result === 'success') {
+                        $(window.location).attr('href', '/restaurant/manage');
+                    }
+                    else {
+                        alert('Username and password are not compitable.');
+                    }
+                })
+            });
+        });
+    </script>
+</body>

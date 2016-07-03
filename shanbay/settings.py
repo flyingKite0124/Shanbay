@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'customer',
     'restaurant',
     'database',
+    'templateLib',
 )
 
 MIDDLEWARE_CLASSES = (

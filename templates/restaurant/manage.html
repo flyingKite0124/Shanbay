@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{{ restaurant.name }}</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/common/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/restaurant/css/manage.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <h1 id="name">{{ restaurant.name }}</h1>
+            <ul class="list-unstyled">
+                <li><b style="padding: 0 10px 0 0">电话</b>{{ restaurant.phone }}</li>
+                <li><b style="padding: 0 10px 0 0">地址</b>{{ restaurant.address }}</li>
+            </ul>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-danger btn-lg disabled hide"
+                    id="banned_btn">封停中
+            </button>
+            <div class="btn-group" role="group" aria-label="open or close" id="open_or_close">
+                <button type="button" class="btn btn-default btn-lg"
+                        id="open_restaurant">营业
+                </button>
+                <button type="button" class="btn btn-default btn-lg"
+                        id="close_restaurant">打烊
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 0">
+        <div class="col-md-1" style="margin-top: 0"></div>
+        <div class="col-md-7" style="padding-top: 0">
+            <b style="padding: 0 10px 0 0">描述</b>
+            {{ restaurant.introduction }}
+            Each DateTimeField gets free JavaScript shortcuts. Dates
+            get a “Today” shortcut and calendar popup, and times get
+            a “Now” shortcut and a convenient popup that lists commonly
+            entered times.
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px">
+        <div role="navigation" class="col-md-2">
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills nav-stacked" role="tablist">
+                <li role="presentation" class="active">
+                    <a data-target="#dishes" aria-controls="dishes"
+                       role="tab" data-toggle="tab">菜品管理</a>
+                </li>
+                <li role="presentation">
+                    <a data-target="#profile" aria-controls="profile"
+                       role="tab" data-toggle="tab">店铺信息</a>
+                </li>
+                <li role="presentation">
+                    <a data-target="#cash-flow" aria-controls="cash-flow"
+                       role="tab" data-toggle="tab">流水查询</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Tab panes -->
+        <div class="col-md-10">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="dishes">
+                    <div id="dish-list">
+                        {% for dish in restaurant.dish_set.all %}
+                            <div class="dish-item">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100%
+                                             height=100%>
+                                    </div>
+                                    <div class="dish-info">
+                                        <div class="col-md-8">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">{{ dish.name }}</li>
+                                                <li class="list-group-item">
+                                                    {{ dish.price }}<span class="glyphicon glyphicon-yen"></span>
+                                                </li>
+                                                <li class="list-group-item">{{ dish.introduction }}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-2 ">
+                                            <button class="btn btn-primary btn-modify-dish my-btn-margin">修改</button>
+                                            <br/>
+                                            <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>
+                                        </div>
+                                    </div>
+                                    <div class="dish-modify">
+                                        <div class="col-md-8">
+                                            <input disabled type="number" class="form-control dish-id hide"
+                                                   value="{{ dish.id }}">
+                                            <div class="input-group" style="padding: 0 0 0 0;">
+                                                <div class="input-group-addon">菜名</div>
+                                                <input type="text" placeholder="菜名" class="form-control dish-name"
+                                                       value="{{ dish.name }}">
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-yen"></span>
+                                                </div>
+                                                <input type="number" class="form-control dish-price"
+                                                       placeholder="价格" value="{{ dish.price }}">
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    菜品介绍
+                                                </div>
+                                                <textarea class="form-control dish-introduction"
+                                                          placeholder="菜品介绍">{{ dish.introduction }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary my-btn-margin btn-submit-modify-dish">确定
+                                            </button>
+                                            <br/>
+                                            <button class="btn btn-primary my-btn-margin btn-cancel-modify-dish">取消
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p>您的店铺目前空空如也</p>
+                        {% endfor %}
+
+                        <div class="row text-center">
+                            <button class="btn btn-success btn-lg my-btn-margin"
+                                    id="btn-create-dish">添加菜品</button>
+                        </div>
+                        <div class="row" id="dish-create">
+                            <div class="col-md-2 text-center">
+                                <h3><b>添加菜品</b></h3>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group" style="padding: 0 0 0 0;">
+                                    <div class="input-group-addon">菜名</div>
+                                    <input type="text" placeholder="菜名" class="form-control dish-name">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-yen"></span>
+                                    </div>
+                                    <input type="number" class="form-control dish-price" placeholder="价格">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        菜品介绍
+                                    </div>
+                                    <textarea class="form-control dish-introduction" placeholder="菜品介绍"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary my-btn-margin" id="btn-submit-create-dish">确定</button>
+                                <br/>
+                                <button class="btn btn-primary my-btn-margin" id="btn-cancel-create-dish">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="profile">
+                    Each DateTimeField gets free JavaScript shortcuts. Dates
+                    get a “Today” shortcut and calendar popup, and times get
+                    a “Now” shortcut and a convenient popup that lists commonly
+                    entered times.
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="cash-flow">
+                    The bottom part of the page gives you a couple of options:
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/common/js/jquery.min.js"></script>
+<script src="/static/common/js/csrf.js"></script>
+<script src="/static/common/bootstrap/js/bootstrap.js"></script>
+<script src="/static/restaurant/js/manage.js"></script>
+<script>
+    $(document).ready(function () {
+        //这里的代码会在整个html文档加载完成后执行
+        //你应该在此进行各种初始化，比如注册你的回调函数
+        var open_or_close;
+        var open_btn = $('#open_restaurant');
+        var close_btn = $('#close_restaurant');
+        var status = {{ restaurant.status }};
+        if (status === 2) {
+            show_banned_btn();
+        }
+        else {
+            if (status === 1)
+                open_or_close = open_btn;
+            else
+                open_or_close = close_btn;
+            open_or_close.removeClass('btn-default');
+            open_or_close.addClass('btn-warning active');
+        }
+        open_btn.click(open_restaurant);
+        close_btn.click(close_restaurant);
+        $('.btn-modify-dish').click(btn_modify_dish);
+        $('.dish-modify').hide();
+        $('.btn-cancel-modify-dish').click(btn_cancel_modify_dish);
+        $('.btn-submit-modify-dish').click(btn_submit_modify_dish);
+        $('.btn-delete-dish').click(btn_delete_dish);
+
+        $('#btn-create-dish').click(btn_create_dish);
+        $('#dish-create').hide();
+        $('#btn-submit-create-dish').click(btn_submit_create_dish);
+        $('#btn-cancel-create-dish').click(btn_cancel_create_dish);
+    })
+</script>
+</body>
+</html>
