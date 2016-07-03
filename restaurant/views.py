@@ -133,13 +133,14 @@ def updateInformation(request):
             HttpResponseRedirect("sign")
         if restaurant == None:
             HttpResponseRedirect("sign")
-        data = json.loads(request)
+        data = json.loads(request.body)
         if "restaurant_name" not in data \
         or "phone" not in data \
         or "introduction" not in data \
         or "address" not in data \
         or "classification" not in data:
             return JsonResponse({"result":"fail"})
+        print data
         restaurant_name = data["restaurant_name"]
         if restaurant_name != None and restaurant_name != "":
             restaurant.restaurant_name = restaurant_name
@@ -156,7 +157,7 @@ def updateInformation(request):
         if classification != None and classification != "":
             restaurant.classification = classification
         restaurant.save()
-        JsonResponse({"result":"success"})
+        return JsonResponse({"result":"success"})
 
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
