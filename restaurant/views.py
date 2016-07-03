@@ -4,7 +4,7 @@ from django.shortcuts import render
 from database.models import *
 from django.http import HttpResponse,HttpResponseRedirect,HttpResponseNotAllowed, JsonResponse
 import json
-import customer.const as const
+import const
 
 const.restaurant = {"UNCERTIFIED": 0, "OPENING": 1, "CLOSED": 2, "FROZEN": 3}
 const.order = {
