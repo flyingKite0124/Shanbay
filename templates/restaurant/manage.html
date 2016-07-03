@@ -26,9 +26,12 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <button type="button" class="btn btn-danger btn-lg disabled hide"
-                    id="banned_btn">封停中
+                    id="banned-btn">封停中
             </button>
-            <div class="btn-group" role="group" aria-label="open or close" id="open_or_close">
+            <button type="button" class="btn btn-default btn-lg disabled hide"
+                    id="unauthorized-btn">未认证
+            </button>
+            <div class="btn-group" role="group" aria-label="open or close" id="open-or-close">
                 <button type="button" class="btn btn-default btn-lg"
                         id="open_restaurant">营业
                 </button>
@@ -133,38 +136,38 @@
                         {% empty %}
                             <p>您的店铺目前空空如也</p>
                         {% endfor %}
-
-                        <div class="row text-center">
-                            <button class="btn btn-success btn-lg my-btn-margin"
-                                    id="btn-create-dish">添加菜品</button>
+                    </div>
+                    <div class="row text-center">
+                        <button class="btn btn-success btn-lg my-btn-margin"
+                                id="btn-create-dish">添加菜品
+                        </button>
+                    </div>
+                    <div class="row" id="dish-create">
+                        <div class="col-md-2 text-center">
+                            <h3><b>添加菜品</b></h3>
                         </div>
-                        <div class="row" id="dish-create">
-                            <div class="col-md-2 text-center">
-                                <h3><b>添加菜品</b></h3>
+                        <div class="col-md-8">
+                            <div class="input-group" style="padding: 0 0 0 0;">
+                                <div class="input-group-addon">菜名</div>
+                                <input type="text" placeholder="菜名" class="form-control dish-name">
                             </div>
-                            <div class="col-md-8">
-                                <div class="input-group" style="padding: 0 0 0 0;">
-                                    <div class="input-group-addon">菜名</div>
-                                    <input type="text" placeholder="菜名" class="form-control dish-name">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-yen"></span>
                                 </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-yen"></span>
-                                    </div>
-                                    <input type="number" class="form-control dish-price" placeholder="价格">
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        菜品介绍
-                                    </div>
-                                    <textarea class="form-control dish-introduction" placeholder="菜品介绍"></textarea>
-                                </div>
+                                <input type="number" class="form-control dish-price" placeholder="价格">
                             </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-primary my-btn-margin" id="btn-submit-create-dish">确定</button>
-                                <br/>
-                                <button class="btn btn-primary my-btn-margin" id="btn-cancel-create-dish">取消</button>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    菜品介绍
+                                </div>
+                                <textarea class="form-control dish-introduction" placeholder="菜品介绍"></textarea>
                             </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary my-btn-margin" id="btn-submit-create-dish">确定</button>
+                            <br/>
+                            <button class="btn btn-primary my-btn-margin" id="btn-cancel-create-dish">取消</button>
                         </div>
                     </div>
                 </div>
@@ -267,16 +270,22 @@
         var close_btn = $('#close_restaurant');
         var status = {{ restaurant.status }};
         var classification = {{ restaurant.classification }};
-        if (status === 2) {
-            show_banned_btn();
-        }
-        else {
-            if (status === 1)
-                open_or_close = open_btn;
-            else
-                open_or_close = close_btn;
-            open_or_close.removeClass('btn-default');
-            open_or_close.addClass('btn-warning active');
+        switch (status){
+            case 0:
+                show_unauthorized_btn();
+                break;
+            case 3:
+                show_banned_btn();
+                break;
+            case 1:
+            case 2:
+                if (status === 1)
+                    open_or_close = open_btn;
+                else
+                    open_or_close = close_btn;
+                open_or_close.removeClass('btn-default');
+                open_or_close.addClass('btn-warning active');
+                break;
         }
         open_btn.click(open_restaurant);
         close_btn.click(close_restaurant);

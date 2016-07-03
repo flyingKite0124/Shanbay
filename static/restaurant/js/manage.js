@@ -11,8 +11,14 @@ function ajax_fail_handler(xhr, status, errorThrown) {
 }
 
 function show_banned_btn() {
-    $("#open_or_close").addClass('hide');
-    $("#banned_btn").removeClass('hide');
+    $("#open-or-close").addClass('hide');
+    $("#unauthorized-btn").addClass('hide');
+    $("#banned-btn").removeClass('hide');
+}
+function show_unauthorized_btn() {
+    $("#open-or-close").addClass('hide');
+    $("#banned-btn").addClass('hide');
+    $("#unauthorized-btn").removeClass('hide');
 }
 function open_restaurant(e) {
     $.ajax({
@@ -65,21 +71,21 @@ function close_restaurant(e) {
         .fail(ajax_fail_handler);
 }
 function btn_modify_dish(e) {
-    var dish_item = $(this).parent().parent().parent();
+    var dish_item = $(this).parents(".dish-item");
     var dish_info = dish_item.find(".dish-info");
     var dish_modify = dish_item.find(".dish-modify");
     dish_info.hide('fast');
     dish_modify.show('slow');
 }
 function btn_cancel_modify_dish(e) {
-    var dish_item = $(this).parent().parent().parent();
+    var dish_item = $(this).parents(".dish-item");
     var dish_info = dish_item.find(".dish-info");
     var dish_modify = dish_item.find(".dish-modify");
     dish_modify.hide('fast');
     dish_info.show('slow');
 }
 function btn_submit_modify_dish(e) {
-    var dish_modify = $(this).parent().parent();
+    var dish_modify = $(this).parents(".dish-modify");
     var dish = {
         type: 'update',
         dish_id: dish_modify.find(".dish-id").val(),
@@ -108,7 +114,7 @@ function btn_submit_modify_dish(e) {
 }
 
 function btn_delete_dish(e) {
-    var dish_info = $(this).parent().parent();
+    var dish_info = $(this).parents(".dish-info");
     var dish = {
         type: 'delete',
         dish_id: dish_info.find(".dish-id").html(),
@@ -124,7 +130,8 @@ function btn_delete_dish(e) {
         //请求成功时的回调函数
         .done(function (data) {
             if (data.result === 'success') {
-                window.location.reload();
+                var dish_item = dish_info.parents(".dish-item");
+                dish_item.remove();
             }
             else {
                 alert('Not success');
@@ -144,7 +151,64 @@ function btn_cancel_create_dish(e) {
     dish_create.hide('fast');
     create_btn_row.show('slow');
 }
-
+//var dish_item_format =
+//    '<div class="dish-item">\
+//        <div class="row">\
+//            <div class="col-md-2">\
+//                <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100%\
+//                     height=100%>\
+//            </div>\
+//            <div class="dish-info">\
+//                <div class="col-md-8">\
+//                    <ul class="list-group">\
+//                        <li class="list-group-item hidden dish-id">{{ dish.id }}</li>\
+//                        <li class="list-group-item">{{ dish.name }}</li>\
+//                        <li class="list-group-item">\
+//                            {{ dish.price }}<span class="glyphicon glyphicon-yen"></span>\
+//                        </li>\
+//                        <li class="list-group-item">{{ dish.introduction }}</li>\
+//                    </ul>\
+//                </div>\
+//                <div class="col-md-2 ">\
+//                    <button class="btn btn-primary btn-modify-dish my-btn-margin">修改</button>\
+//                    <br/>\
+//                    <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>\
+//                </div>\
+//            </div>\
+//            <div class="dish-modify">\
+//                <div class="col-md-8">\
+//                    <input disabled type="number" class="form-control dish-id hide"\
+//                           value="{{ dish.id }}">\
+//                    <div class="input-group" style="padding: 0 0 0 0;">\
+//                        <div class="input-group-addon">菜名</div>\
+//                        <input type="text" placeholder="菜名" class="form-control dish-name"\
+//                               value="{{ dish.name }}">\
+//                    </div>\
+//                    <div class="input-group">\
+//                        <div class="input-group-addon">\
+//                            <span class="glyphicon glyphicon-yen"></span>\
+//                        </div>\
+//                        <input type="number" class="form-control dish-price"\
+//                               placeholder="价格" value="{{ dish.price }}">\
+//                    </div>\
+//                    <div class="input-group">\
+//                        <div class="input-group-addon">\
+//                            菜品介绍\
+//                        </div>\
+//                        <textarea class="form-control dish-introduction"\
+//                                  placeholder="菜品介绍">{{ dish.introduction }}</textarea>\
+//                    </div>\
+//                </div>\
+//                <div class="col-md-2">\
+//                    <button class="btn btn-primary my-btn-margin btn-submit-modify-dish">确定\
+//                    </button>\
+//                    <br/>\
+//                    <button class="btn btn-primary my-btn-margin btn-cancel-modify-dish">取消\
+//                    </button>\
+//                </div>\
+//            </div>\
+//        </div>\
+//    </div>';
 function btn_submit_create_dish(e) {
     var dish = {
         type: 'new',
