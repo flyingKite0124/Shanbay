@@ -10,7 +10,11 @@ def sign(request):
 
 def manage(request):
     # request.session["issigned"]=False
-    return render(request,"restaurant/manage.html")
+    restaurant = Restaurant.objects.get(name="SiLing")
+    content_dict = dict()
+    content_dict["restaurant"] = restaurant
+    request.session["mRestaurant"] = restaurant.name
+    return render(request,"restaurant/manage.html", content_dict)
 
 def redirect(request):
     if request.session.get("issigned",False):
@@ -48,8 +52,6 @@ def checkName(request):
     result = json.dumps(content_dict)
     return HttpResponse(result)
 
-def manage(request):
-    return render(request, "restaurant/signIn.html")
 
 def updateInformation(request):
     return HttpResponseRedirectnse("updateInformation")
@@ -64,7 +66,77 @@ def changeStatus(request):
     return HttpResponse(result)
 
 def manageDish(request):
-    return HttpResponse("manageDish")
+    content_dict = dict()
+    if request.is_ajax() and request.method == "POST":
+        if "type" in request.POST:
+            mType = request.POST["type"]
+            if mType == "new":
+                if "name" not in request.POST \
+                or "price" not in request.POST \
+                or "introduction" not in request.POST:
+                    content_dict["result"] = "fail"
+                    result = json.dumps(content_dict)
+                    return HttpResponse(result)
+                print "finish add check"
+                name = request.POST["name"]
+                price = request.POST["price"]
+                introduction = request.POST["introduction"]
+                print name, price, introduction
+                restaurantName = request.session.get("mRestaurant")
+                restaurant = Restaurant.objects.get(name=restaurantName)
+                print "Restaurant name : ", restaurant.name
+                dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant)
+                print "create succ"
+                dish.save()
+                print "save succ"
+                print "name : " ,dish.name 
+                print "price : ", dish.price
+                print "introduction : ", introduction
+                content_dict["result"] = "success"
+                result = json.dumps(content_dict)
+                return HttpResponse(result)
+            elif mType == "update":
+                print "updating"
+                if "dish_id" not in request.POST:
+                    print "no dish id"
+                    content_dict["result"] = "fail"
+                    result = json.dumps(content_dict)
+                    return HttpResponse(result)
+                dish_id = request.POST["dish_id"]
+                dish = Dish.objects.get(id=dish_id)
+                if "price" in request.POST:
+                    print "before : ", dish.price
+                    dish.price = float(request.POST["price"])
+                    print "after : ",dish.price
+                if "introduction" in request.POST:
+                    print dish.introduction
+                    dish.introduction = request.POST["introduction"]
+                dish.save()
+                print "finish update"
+                content_dict["result"] = "success"
+                result = json.dumps(content_dict)
+                return HttpResponse(result)
+            elif mType == "delete":
+                print "deleting"
+                if "dish_id" not in request.POST:
+                    print "no dish id"
+                    content_dict["result"] = "fail"
+                    result = json.dumps(content_dict)
+                    return HttpResponse(result)
+                dish_id = request.POST["dish_id"]
+                dish = Dish.objects.get(id=dish_id)
+                dish.delete()
+                content_dict["result"] = "success"
+                result = json.dumps(content_dict)
+                return HttpResponse(result)
+            else:
+                content_dict["result"] = "fail"
+                result = json.dumps(content_dict)
+                return HttpResponse(result)
+        else:
+            content_dict["result"] = "fail"
+            result = json.dumps(content_dict)
+            return HttpResponse(result)
 
 def pollOrder(request):
     return HttpResponse("pollOrder")
