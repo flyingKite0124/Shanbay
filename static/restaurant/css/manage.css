@@ -1,0 +1,24 @@
+#dish-list {
+    padding: 10px 10px 10px 10px;
+    background: rgba(00,00,255,0.2);
+}
+
+.dish-item {
+    margin: 10px 10px 10px 10px;
+}
+
+#open_or_close{
+    padding: 30px 30px 30px 30px;
+}
+
+#name {
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+
+.my-btn-margin {
+    margin: 10px 10px 10px 10px;
+}
