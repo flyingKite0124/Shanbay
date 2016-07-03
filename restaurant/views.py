@@ -238,20 +238,24 @@ def manageDish(request):
                 try:
                     dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant)
                     dish.save()
-                    return JsonResponse({"result","success"})
+                    print data
+                    return JsonResponse({"result":"success"})
                 except Exception:
-                    return JsonResponse({"result","fail"})
+                    return JsonResponse({"result":"fail"})
             elif mType == "update":
                 if "dish_id" not in data:
                     return JsonResponse({"result":"fail"})
                 dish_id = data["dish_id"]
+                print dish_id
                 try:
-                    dish = Dish.objects.get(id=dish_id)
+                    dish = Dish.objects.get(id=int(dish_id))
                 except Exception:
-                    return JsonResponse({"result","fail"})
+                    return JsonResponse({"result":"fail"})
+                print data
                 if "price" not in data \
                 or "introduction" not in data:
-                    return JsonResponse({"result","fail"})
+                    return JsonResponse({"result":"fail"})
+
                 try:
                     price = data["price"]
                     if price != None and price != "":
