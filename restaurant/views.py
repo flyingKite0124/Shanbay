@@ -23,13 +23,15 @@ def sign(request):
         return HttpResponseNotAllowed(['GET'], 'illegal request')
 
 def signIn(request):
+    print "I am in sign in"
     if request.is_ajax() and request.method == "POST":
+        print request.body
         data = json.loads(request.body)
-        if "phone" not in data or "passwd" not in data:
+        if "phone" not in data or "password" not in data:
             return JsonResponse({"result":"fail"})
         else:
             phone = data["phone"]
-            passwd = data["passwd"]
+            passwd = data["password"]
             try:
                 restaurant = Restaurant.objects.get(phone=phone)
             except Exception:
