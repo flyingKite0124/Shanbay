@@ -12,5 +12,10 @@ urlpatterns = [
     url(r'^signUp$',views.signUp,name="signUp"),
     url(r'^checkPhone$',views.checkPhone,name="checkPhone"),
     url(r'^createOrder$',views.createOrder,name="createOrder"),
+    url(r'^sumbitOrder$',views.submitOrder,name="submitOrder"),
+    url(r'^manageAddress$',views.manageAddress,name="manageAddress"),
+    url(r'^updatePasswd$',views.updatePasswd,name="updatePasswd"),
+    url(r'^cancelOrder$',views.cancelOrder,name="cancelOrder"),
+    url(r'^logout$',views.logout,name="logout"),
     url(r'^test$',views.test,name="test"),
 ]

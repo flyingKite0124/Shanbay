@@ -53,3 +53,26 @@ function testCheckOrder() {
     //    alert("success")
     //}, "json")
 }
+
+data={
+    result:"success",
+    orders:[
+        {
+            order_id:1,
+            order_status:2,
+            address:"7舍",
+            phone:"1888xxx",
+            name:"熊青城",
+            dish:[
+                {
+                    dish_id:12,
+                    dish_num:2
+                },
+                {
+                    dish_id:2,
+                    dish_num:1
+                }
+            ]
+        }
+    ]
+};

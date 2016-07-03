@@ -13,7 +13,9 @@ const.order = {
     "PAYED": 2,
     "ACCEPTED": 3,
     "SENT": 4,
-    "FINISHED": 5}
+    "FINISHED": 5,
+    "CANCELLED": 6,
+}
 
 def index(request):
     if not request.is_ajax() and request.method == "GET":
@@ -79,7 +81,7 @@ def checkorder(request):
             else:
                 return HttpResponseRedirect("index")
             order=Order.objects.filter(pk=request.GET["order_id"])
-            if order.count()==1 and order[0].status==const.order["UNCERTAIN"]:
+            if order.count()==1 and order[0].status==const.order["UNCERTAIN"] and order[0].customer.id==int(request.session.get("customer_id")):
                 content_dict["order"]=order[0]
                 content_dict["order_dishes"]=OrderDish.objects.filter(order=content_dict["order"])
             else:
@@ -137,7 +139,7 @@ def signIn(request):
         phone=postObj["phone"]
         password=postObj["password"]
         hasCustomer=Customer.objects.filter(phone=phone).filter(passwd=password)
-        if len(hasCustomer)==1:
+        if hasCustomer.count()==1:
             request.session["customer_id"]=str(hasCustomer[0].id)
             request.session["issigned"]="True"
             return JsonResponse({"result":"success"})
@@ -152,7 +154,7 @@ def signUp(request):
         postObj=json.loads(request.body)
         phone=postObj["phone"]
         password=postObj["password"]
-        if len(Customer.objects.filter(phone=phone)):
+        if Customer.objects.filter(phone=phone).count():
             return JsonResponse({"result":"fail"})
         else:
             try:
@@ -174,7 +176,7 @@ def checkPhone(request):
         global const
         postObj=json.loads(request.body)
         phone=postObj["phone"]
-        if len(Customer.objects.filter(phone=phone)):
+        if Customer.objects.filter(phone=phone).count():
             return JsonResponse({"result":"fail"})
         else:
             return JsonResponse({"result":"success"})
@@ -210,9 +212,121 @@ def createOrder(request):
         return HttpResponseNotAllowed(['POST'],'illegal request')
 
 def submitOrder(request):
-    pass
+    if request.is_ajax() and request.method=="POST":
+        global const
+        if request.session.get("issigned","False")=="True":
+            postObj=json.loads(request.body)
+            order_id=postObj["order_id"]
+            address_id=postObj["address_id"]
+            order=Order.objects.get(pk=order_id)
+            order.address=Address.objects.get(pk=address_id)
+            order.status=const.order["PAYED"]
+            order.save()
+            return JsonResponse({"result":"success"})
+        else:
+            return JsonResponse({"result":"fail"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+
+def manageAddress(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        if request.session.get("issigned","False")=="True":
+            postObj=json.loads(request.body)
+            customer_id=int(request.session.get("customer_id"))
+            customer=Customer.objects.get(pk=customer_id)
+            if postObj["type"]=="new":
+                address=Address()
+                address.name=postObj["name"]
+                address.phone=postObj["phone"]
+                address.address=postObj["address"]
+                address.customer=customer
+                address.save()
+                customer.default_aid=address.id
+                customer.save()
+                return JsonResponse({"result":"success","address_id":address.id})
+            elif postObj["type"]=="delete":
+                address_id=postObj["address_id"]
+                address=Address.objects.get(pk=address_id)
+                address.delete_flag=True
+                address.save()
+                return JsonResponse({"result":"success"})
+            elif postObj["type"]=="default":
+                address_id=postObj["address_id"]
+                customer.default_aid=address_id
+                customer.save()
+                return JsonResponse({"result":"success"})
+        else:
+            return JsonResponse({"result":"fail"})
+
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+
+def updatePasswd(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        if request.session.get("issigned","False")=="True":
+            postObj=json.loads(request.body)
+            customer_id=int(request.session.get("customer_id"))
+            customer=Customer.objects.get(pk=customer_id)
+            old_password=postObj["old_password"]
+            if customer.passwd==old_password:
+                new_password=postObj["new_password"]
+                customer.passwd=new_password
+                customer.save()
+                return JsonResponse({"result":"success"})
+            else:
+                return JsonResponse({"result":"fail"})
+        else:
+            return JsonResponse({"result":"fail"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
 
 
+def cancelOrder(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        if request.session.get("issigned","False")=="True":
+            postObj=json.loads(request.body)
+            customer_id=int(request.session.get("customer_id"))
+            order_id=postObj["order_id"]
+            order=Order.objects.get(pk=order_id)
+            if order.customer.id==customer_id:
+                if order.status==const.order["PAYED"]:
+                    order.status=const.order["CANCELLED"]
+                    order.save()
+                    return JsonResponse({"result":"success"})
+                else:
+                    return JsonResponse({"result":"fail"})
+            else:
+                return JsonResponse({"result":"fail"})
+        else:
+            return JsonResponse({"result":"fail"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+
+"""
+def comment(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        if request.session.get("issigned","False")=="True":
+            postObj=json.loads(request.body)
+            order_id=postObj["order_id"]
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
+"""
+
+def logout(request):
+    if request.is_ajax() and request.method=="POST":
+        global const
+        if request.session.get("issigned","False")=="True":
+            del request.session["issigned"]
+            del request.session["customer_id"]
+            return JsonResponse({"result":"success"})
+        else:
+            return JsonResponse({"result":"fail"})
+    else:
+        return HttpResponseNotAllowed(['POST'],'illegal request')
 
 def redirect(request):
     return HttpResponseRedirect("/customer/index")
