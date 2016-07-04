@@ -1,5 +1,43 @@
-{% load staticfiles %}
-TEST
-<br>
-<a href="{% static 'common/js/jquery.min.js' %}">static</a>
+ {% extends "customer/header.html" %}
 
+{% block content %}
+
+<div class="container ng-scope" ng-show = "!recentBoughtOnly">
+<div class="place-rstbox clearfix">
+	<div style="height: 1120px;" class="clearfix">
+	   {% for restaurant in restaurants.open %}
+		<a class="rstblock" href = "/customer/restaurant?rest_id={{ restaurant.id }}">
+			<div class="rstblock-logo">
+				<img src={{restaurant.logo_path}} alt="老娘舅（杭州黄龙餐厅）" class="rstblock-logo-icon" height="70" width="70">
+					<div class="elemeicon elemeicon-premiumsign rstblock-logo-premiumsign">
+					</div>
+			</div>
+			<div class="rstblock-content">
+				<div class="rstblock-title">{{ restaurant.name}}
+				</div>
+				<div class="starrating icon-star">
+					<span class="icon-star" style="width:90%;">
+					</span>
+				</div>
+				<span class="rstblock-monthsales">月售2575单
+				</span>
+			<div class="rstblock-cost">0元起送 / 配送费7元</div>
+			<div class="rstblock-activity"><i style="background:#f07373;">减</i><i style="background:#70bc46;">首</i><i style="background:#fff;color:#FF4E00;border:1px solid;padding:0;">付</i>
+			<i style="background:#fff;color:#9071CB;border:1px solid;padding:0;">票</i>
+			</div>
+	</div>
+	</a>
+<!-- 	{% endfor %} -->
+	</div>
+	</div>
+	</div>
+<!-- 	<div ng-show="rstStream.status === 'LOADING'" loading="" content="正在载入更多商家..." type="normal" class="loading ng-binding ng-isolate-scope ng-hide">
+	<img ng-if="type==='normal'" class="normal ng-scope" src="//static11.elemecdn.com/eleme/desktop/media/img/loading.64a249.gif" alt="正在加载">正在载入更多商家...</div>
+	<div class="" id="fetchMoreRst" ng-hide="rstStream.status === 'LOADING' || rstStream.status === 'COMPLETE'">点击加载更多商家...</div>
+	<div class="place-rstbox-nodata ng-hide" ng-show="rstStream.status === 'COMPLETE' &amp;&amp; !filteredRestaurants.length">
+		<img class="nodata" src="//static11.elemecdn.com/eleme/desktop/media/img/icon-restaurant.b3a359.png" alt="找不到商家" width="100">
+		<div class="typo-small">附近没有找到符合条件的商家，换个筛选条件试试吧</div>
+	</div>
+</div> -->
+
+{% endblock %}

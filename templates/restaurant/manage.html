@@ -45,7 +45,6 @@
                 {{ restaurant.introduction }}
             </div>
         </div>
-<<<<<<< HEAD
         <div class="row" style="margin-top: 20px">
             <div role="navigation" class="col-md-2">
                 <!-- Nav tabs -->
@@ -129,81 +128,13 @@
                                                 <button class="btn btn-primary my-btn-margin btn-cancel-modify-dish">取消
                                                 </button>
                                             </div>
-=======
-        <!-- Tab panes -->
-        <div class="col-md-10">
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="dishes">
-                    <div id="dish-list">
-                        {% for dish in restaurant.dish_set.all %}
-                        <div class="dish-item">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100%
-                                         height=100%>
-                                </div>
-                                <div class="dish-info">
-                                    <div class="col-md-8">
-                                        <ul class="list-group">
-                                            <li class="list-group-item">{{ dish.name }}</li>
-                                            <li class="list-group-item">
-                                                {{ dish.price }}<span class="glyphicon glyphicon-yen"></span>
-                                            </li>
-                                            <li class="list-group-item">{{ dish.introduction }}</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-2 ">
-                                        <button class="btn btn-primary btn-modify-dish my-btn-margin">修改</button>
-                                        <br/>
-                                        <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>
-                                    </div>
-                                </div>
-                                <div class="dish-modify">
-                                    <div class="col-md-8">
-                                        <input disabled type="number" class="form-control dish-id hide"
-                                               value="{{ dish.id }}">
-                                        <div class="input-group" style="padding: 0 0 0 0;">
-                                            <div class="input-group-addon">菜名</div>
-                                            <input type="text" placeholder="菜名" class="form-control dish-name"
-                                                   value="{{ dish.name }}">
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <span class="glyphicon glyphicon-yen"></span>
-                                            </div>
-                                            <input type="number" class="form-control dish-price"
-                                                   placeholder="价格" value="{{ dish.price }}">
-                                        </div>
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                菜品介绍
-                                            </div>
-                                                <textarea class="form-control dish-introduction"
-                                                          placeholder="菜品介绍">{{ dish.introduction }}</textarea>
->>>>>>> mydev
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <button class="btn btn-primary my-btn-margin btn-submit-modify-dish">确定
-                                        </button>
-                                        <br/>
-                                        <button class="btn btn-primary my-btn-margin btn-cancel-modify-dish">取消
-                                        </button>
-                                    </div>
                                 </div>
-<<<<<<< HEAD
                             {% empty %}
                                 <p>您的店铺目前空空如也</p>
                             {% endfor %}
                         </div>
-=======
-                            </div>
-                        </div>
-                        {% empty %}
-                        <p>您的店铺目前空空如也</p>
-                        {% endfor %}
-
->>>>>>> mydev
                         <div class="row text-center">
                             <button class="btn btn-success btn-lg my-btn-margin"
                                     id="btn-create-dish">添加菜品
@@ -313,21 +244,27 @@
                             <button class="btn btn-primary my-btn-margin" id="btn-cancel-modify-restaurant">取消</button>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade" id="order-manage">
-                        <div class="col-md-8">
-                            <ul class="list-group">
-                                <li class="list-group-item">订单号</li>
-                                <li class="list-group-item">用户电话</li>
-                                <li class="list-group-item">地址</li>
-                                <li class="list-group-item">状态</li>
-                            </ul>
-                        </div>
-                        <div class="col-md-2 ">
-                            <button class="btn btn-primary btn-modify-dish my-btn-margin">修改
-                            </button>
-                            <br/>
-                            <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>
-                        </div>
+                    <div role="tabpanel" class="tab-pane fade order-list" id="order-manage">
+                        {% for order in restaurant.order_set.all %}
+                            <div class="row order-item">
+                                <div class="col-md-8">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">{{ order.id }}</li>
+                                        <li class="list-group-item">{{ order.customer }}</li>
+                                        <li class="list-group-item">{{ order.address.address }}</li>
+                                        <li class="list-group-item">{{ order.address.status }}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2 ">
+                                    <button class="btn btn-primary btn-modify-dish my-btn-margin">修改
+                                    </button>
+                                    <br/>
+                                    <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p>您还没有订单</p>
+                        {% endfor %}
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="cash-flow">
                         <table class="table table-striped">
@@ -401,48 +338,10 @@
             $('.btn-submit-modify-dish').click(btn_submit_modify_dish);
             $('.btn-delete-dish').click(btn_delete_dish);
 
-<<<<<<< HEAD
             $('#btn-create-dish').click(btn_create_dish);
             $('#dish-create').hide();
             $('#btn-submit-create-dish').click(btn_submit_create_dish);
             $('#btn-cancel-create-dish').click(btn_cancel_create_dish);
-=======
-<script src="/static/common/js/jquery.min.js"></script>
-<script src="/static/common/js/csrf.js"></script>
-<script src="/static/common/bootstrap/js/bootstrap.js"></script>
-<script src="/static/restaurant/js/manage.js"></script>
-<script>
-    $(document).ready(function () {
-        //这里的代码会在整个html文档加载完成后执行
-        //你应该在此进行各种初始化，比如注册你的回调函数
-        var open_or_close;
-        var open_btn = $('#open_restaurant');
-        var close_btn = $('#close_restaurant');
-        var status = {
-        {
-            restaurant.status
-        }
-    }
-        ;
-        if (status === 2) {
-            show_banned_btn();
-        }
-        else {
-            if (status === 1)
-                open_or_close = open_btn;
-            else
-                open_or_close = close_btn;
-            open_or_close.removeClass('btn-default');
-            open_or_close.addClass('btn-warning active');
-        }
-        open_btn.click(open_restaurant);
-        close_btn.click(close_restaurant);
-        $('.btn-modify-dish').click(btn_modify_dish);
-        $('.dish-modify').hide();
-        $('.btn-cancel-modify-dish').click(btn_cancel_modify_dish);
-        $('.btn-submit-modify-dish').click(btn_submit_modify_dish);
-        $('.btn-delete-dish').click(btn_delete_dish);
->>>>>>> mydev
 
             $('#btn-submit-or-cancel-modify-restaurant').hide();
             $('#btn-modify-restaurant').click(btn_modify_restaurant);
@@ -450,7 +349,7 @@
             $('#btn-cancel-modify-restaurant').click(function (e) {
                 btn_cancel_modify_restaurant(e, classification);
             });
-{#            setInterval(get_orders, 10000);#}
+            {#            setInterval(get_orders, 10000);#}
         })
     </script>
 {% endblock %}
