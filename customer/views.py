@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render
 from database.models import *
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect,JsonResponse
@@ -27,10 +28,10 @@ def index(request):
                 pk=int(request.session.get("customer_id")))
         else:
             content_dict["issigned"] = False
-        content_dict["restaurant"] = dict()
-        content_dict["restaurant"]["open"] = Restaurant.objects.filter(
+        content_dict["restaurants"] = dict()
+        content_dict["restaurants"]["open"] = Restaurant.objects.filter(
             status=const.restaurant["OPENING"])
-        content_dict["restaurant"]["close"] = Restaurant.objects.filter(
+        content_dict["restaurants"]["close"] = Restaurant.objects.filter(
             status=const.restaurant["CLOSED"])
         return render(request, "customer/index.html", content_dict)
     else:
@@ -129,7 +130,7 @@ def profile(request):
         for order in content_dict["orders"]:
             content_dict["order_dishes"][order.id]=OrderDish.objects.filter(order=order)
         content_dict["addresses"]=Address.objects.filter(customer=content_dict["customer"]).filter(delete_flag=False)
-        return render(request, "customer/profile.html")
+        return render(request, "customer/profile.html",content_dict)
     else:
         return HttpResponseNotAllowed(['GET'], 'illegal request')
 
@@ -224,6 +225,7 @@ def submitOrder(request):
             address_id=postObj["address_id"]
             order=Order.objects.get(pk=order_id)
             order.address=Address.objects.get(pk=address_id)
+            order.order_time=datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
             order.status=const.order["PAYED"]
             order.save()
             orderDishes=OrderDish.objects.filter(order=order)
