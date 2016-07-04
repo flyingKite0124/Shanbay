@@ -20,13 +20,17 @@
 <body>
 {% block content %}
     <div class="container">
-        <form class="form-signin">
+        <form class="form-signin" onsubmit="return false;">
             <h2 class="form-signin-heading text-center">登录</h2>
             <label for="inputEmail" class="sr-only">电话</label>
-            <input type="text" id="username" class="form-control" placeholder="157xxxxxxxx" required autofocus>
+            <input type="text" id="username" class="form-control name-input" placeholder="157xxxxxxxx" required autofocus>
             <label for="inputPassword" class="sr-only">密码</label>
             <input type="password" id="password" class="form-control" placeholder="密码" required>
-            <button class="btn btn-lg btn-primary btn-block" id="sign-in">登录</button>
+            <p>
+                <button class="btn btn-lg btn-primary " id="sign-in">登录</button>
+                <button class="btn btn-lg btn-success " style = "float:right" id="sign-up">注册</button>
+            </p>
+            
         </form>
     </div> <!-- /container -->
 {% endblock %}
@@ -38,6 +42,7 @@
     <script>
         $(document).ready(function () {
             $('#sign-in').click(sign_in);
+            $('#sign-up').click(sign_up);
         });
     </script>
 {% endblock %}

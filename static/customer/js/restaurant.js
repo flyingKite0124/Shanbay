@@ -219,9 +219,10 @@ function sendOrder() {
 		url		: '/customer/createOrder',
 		contentType: "application/json",
 		dataType : "json",
-		data	: JSON.stringify({rest_id : dishItem.restID, order_dishes : orderDishes}),
-		success	: function(data){
-			cartItem.clear();
-		}		
+		data	: JSON.stringify({rest_id : dishItem.restID, order_dishes : orderDishes})
+	}).done(function (data) {
+		cartItem.clear();
+		cartItem.render();
+		location.href = "/customer/checkorder?order_id=" + data.order_id;
 	});
 }

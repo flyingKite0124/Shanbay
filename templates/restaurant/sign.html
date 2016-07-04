@@ -12,13 +12,29 @@
 
 {% block content %}
     <div class="container" id="sign-form">
-        <form class="form-signin">
-            <h2 class="form-signin-heading text-center">请登录</h2>
+、
+       <form class="form-signin">
+            <button id = "choose-sign-in" class="form-signin-heading text-center">登录</button>
+            <button id = "choose-sign-up" class="form-signin-heading text-center" style="float:right">注册</button>
+
             <label for="inputEmail" class="sr-only">电话</label>
             <input type="text" id="username" class="form-control" placeholder="157xxxxxxxx" required autofocus>
+
             <label for="inputPassword" class="sr-only">密码</label>
-            <input type="password" id="password" class="form-control" placeholder="密码" required>
-            <button class="btn btn-lg btn-primary btn-block" id="sign-in">Sign in</button>
+            <input type="password" id="password" class="form-control" placeholder="密码" >
+
+             <label for="inputName" class="sr-only">餐厅名字</label>
+            <input type="text" id="restname" class="form-control" placeholder="餐厅名"  style="display:none"
+            >
+
+             <label for="inputIntro" class="sr-only">简介</label>
+            <input type="text" id="introduction" class="form-control" placeholder="简介：特色菜..." style="display:none" >
+
+             <label for="inputAddr" class="sr-only">地址</label>
+            <input type="text" id="address" class="form-control" placeholder="地址" 
+            style="display:none" >
+
+            <button class="btn btn-lg btn-primary btn-block" id="sign-in" style = "margin-top:10px">登陆</button>
         </form>
     </div> <!-- /container -->
 {% endblock %}
@@ -28,7 +44,10 @@
     <script src="/static/restaurant/js/sign.js"></script>
     <script>
         $(document).ready(function () {
-            $('#sign-in').click(sign_in);
+            console.log('text to find');
+            $('sign-in').click(sign_in);
+            $('choose-sign-in').click(hide);
+            $('choose-sign-up').click(slide);
         });
     </script>
 {% endblock %}
