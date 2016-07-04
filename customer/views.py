@@ -125,6 +125,7 @@ def profile(request):
         else:
             return HttpResponseRedirect("index")
         content_dict["orders"]=Order.objects.filter(customer=content_dict["customer"]).exclude(status=const.order["UNCERTAIN"])
+        content_dict["order_dishes"]=dict()
         for order in content_dict["orders"]:
             content_dict["order_dishes"][order.id]=OrderDish.objects.filter(order=order)
         content_dict["addresses"]=Address.objects.filter(customer=content_dict["customer"]).filter(delete_flag=False)
