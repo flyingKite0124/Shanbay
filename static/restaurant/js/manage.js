@@ -294,10 +294,60 @@ function get_orders() {
         .done(function (data) {
             if (data.result === 'success') {
                 orders = data.orders;
-                console.log(orders);
+                console.log(JSON.stringify(orders));
             }
             else {
                 alert('Fail to get orders');
+            }
+        })
+        .fail(ajax_fail_handler);
+}
+
+
+function take_order(e){
+    var data = {
+        order_id: $(e).parents('.order-item').find('.order-id').html(),
+        type: "accept",
+    };
+    console.log(data.order_id);
+    $.ajax({
+            url: "/restaurant/changeOrderStatus",   // 填上接口中要求的url
+            data: JSON.stringify(data),
+            type: "POST",       // 据熊学长说都是POST请求，不用改
+            dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
+        })
+        //请求成功时的回调函数
+        .done(function (data) {
+            if (data.result === 'success') {
+                get_orders();
+            }
+            else {
+                alert('Fail to change order status');
+            }
+        })
+        .fail(ajax_fail_handler);
+}
+
+function send_food(e){
+    var data = {
+        order_id: $(e).parents('.order-item').find('.order-id').html(),
+        type: "sendout",
+    };
+    $.ajax({
+            url: "/restaurant/changeOrderStatus",   // 填上接口中要求的url
+            data: JSON.stringify(data),
+            type: "POST",       // 据熊学长说都是POST请求，不用改
+            dataType: "json",  // 据熊学长说都是json格式，不用改
+            contentType: "application/json",
+        })
+        //请求成功时的回调函数
+        .done(function (data) {
+            if (data.result === 'success') {
+                get_orders();
+            }
+            else {
+                alert('Fail to change order status');
             }
         })
         .fail(ajax_fail_handler);

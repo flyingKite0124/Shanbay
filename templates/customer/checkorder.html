@@ -9,6 +9,7 @@
     <script src="{% static 'common/js/jquery.min.js' %}"></script>
     <script src="{% static 'common/js/csrf.js'%}"></script>
     <script src="{% static 'common/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="/static/customer/js/checkorder.js"></script>
 
     <title>订单确认</title>
 
@@ -89,40 +90,6 @@
                         </button>
                         <button type="button" class="btn btn-link btn-md" data-toggle="modal"
                                 data-target="#confirmdialog" onclick="showDeleteAddress(this)">
-                            <small>删除</small>
-                        </button>
-                    </div>
-                </div>
-                <div class="list-group-item address-item" addrID="124">
-                    <div class="address-info">
-                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                        <p><span class="name">ZHW</span> <span class="phone">18868103729</span></p>
-                        <p><span class="address">浙江大学玉泉校区</span></p>
-                    </div>
-                    <div class="address-edit">
-                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
-                                data-target="#addressdialog" onclick="showEditAddress(this)">
-                            <small>编辑</small>
-                        </button>
-                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
-                                data-target="#confirmdialog">
-                            <small>删除</small>
-                        </button>
-                    </div>
-                </div>
-                <div class="list-group-item address-item" addrID="125">
-                    <div class="address-info">
-                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                        <p><span class="name">asdf</span> <span class="phone">18868112935</span></p>
-                        <p><span class="address">浙江大学紫金港校区</span></p>
-                    </div>
-                    <div class="address-edit">
-                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
-                                data-target="#addressdialog" onclick="showEditAddress(this)">
-                            <small>编辑</small>
-                        </button>
-                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
-                                data-target="#confirmdialog">
                             <small>删除</small>
                         </button>
                     </div>
@@ -229,28 +196,22 @@
     'use strict';
     //initialize
     $(function () {
-        $('[data-toggle="popover"]').popover();
-        $('.address-item').find('.address-edit').hide();
-        $('.address-item').first().addClass('chosen');
-        $('.payment-item').first().addClass('chosen');
-    })
+        order.orderID = {{ order.id }};
+        order.total = {{ order.total }};
+        if ({{customer.default_aid}}){
+            defaultAddr = {{customer.default_aid}}
+        }
 
-    $('.address-item').on('mouseenter', function () {
-        $(this).find('.address-edit').show();
-    })
+        {% for d in order_dishes %}
+            order.dishlist.push(new dishObj('{{d.dish.name}}', {{d.price}}, {{d.num}}));
+        {% endfor %}
 
-    $('.address-item').on('mouseleave', function () {
-        $(this).find('.address-edit').hide();
-    })
+        {% for addr in addresses %}
+            addrlist.push(new addrObj({{addr.id}}, '{{addr.name}}', '{{addr.address}}', '{{addr.phone}}'));
+        {% endfor %}
 
-    $('.address-item').on('click', function () {
-        $('.address-item').filter('.chosen').removeClass('chosen');
-        $(this).addClass('chosen');
-    })
-
-    $('.payment-item').on('click', function () {
-        $('.payment-item').filter('.chosen').removeClass('chosen');
-        $(this).addClass('chosen');
+        renderOrder(order.orderID, order.total, order.dishlist);
+        renderAddress(addrlist);
     })
 
     function showAddAddress() {
@@ -274,10 +235,10 @@
         $('#confirmdialog').attr('addrID', $(btn).parents('.address-item').attr('addrID'));
     }
     //分割线
-
+/*
     function dishObj(name, price, num){
         this.name = name;
-        this.subtotal = price;
+        this.subtotal = price * num;
         this.number = num;
     }
 
@@ -477,8 +438,11 @@
             console.log("Error: " + errorThrown);
             console.log("Status: " + status);
             console.dir(xhr);
+
         })
     }
+*/
+
 </script>
 </body>
 </html>

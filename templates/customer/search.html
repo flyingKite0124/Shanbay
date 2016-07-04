@@ -226,6 +226,10 @@
             padding: 7px 30px;
             color: #FFFFFF;
         }
+        
+        .dishtable .dishref a:hover {
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -271,7 +275,7 @@
                     <tr class="dishitem">
                         <td class="dishname"><a ><span>{{dish.name}}<br><small>{{dish.restaurant.name}}</small></span></a></td>
                         <td class="dishprice">￥{{dish.price}}</td>
-                        <td class="dishref" onclick="'/customer/restaurant?rest_id={{restaurant.id}}'"><a>去购买</a></td>
+                        <td class="dishref"><a onclick="location.href='/customer/restaurant?rest_id={{dish.restaurant.id}}'">去购买</a></td>
                     </tr>
                     {% empty %}
                     <p>没有找到商品</p>

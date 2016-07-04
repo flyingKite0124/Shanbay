@@ -25,3 +25,21 @@
 .my-btn-margin {
     margin: 10px 10px 10px 10px;
 }
+
+.order-item {
+    background-color: rgba(12, 119, 209, 0.1);
+    margin: 20px 20px 20px 20px;
+}
+
+.table-order-dish {
+    background-color: #FFFFFF;
+}
+
+.order-status {
+    color: #FFFFFF;
+}
+
+.order-info label{
+    -webkit-border-radius: 4px;
+    padding: 3px 3px 3px 3px;
+}
