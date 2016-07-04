@@ -248,12 +248,45 @@
                         {% for order in restaurant.order_set.all %}
                             <div class="row order-item">
                                 <div class="col-md-8">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">{{ order.id }}</li>
-                                        <li class="list-group-item">{{ order.customer }}</li>
-                                        <li class="list-group-item">{{ order.address.address }}</li>
-                                        <li class="list-group-item">{{ order.address.status }}</li>
-                                    </ul>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>订单号</th>
+                                            <th>用户号码</th>
+                                            <th>用户地址</th>
+                                            <th>状态</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">{{ order.id }}</th>
+                                            <th>{{ order.customer }}</th>
+                                            <th>{{ order.address.address }}</th>
+                                            <th>{{ order.getStatusInChinese }}</th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-order-dish">
+                                        <thead>
+                                        <tr>
+                                            <th>菜名</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for orderdish in order.orderdish_set.all %}
+                                            <tr>
+                                                <td>{{ orderdish.dish }}</td>
+                                                <td>{{ orderdish.num }}</td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td>--</td>
+                                                <td>--</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="col-md-2 ">
                                     <button class="btn btn-primary btn-modify-dish my-btn-margin">修改
