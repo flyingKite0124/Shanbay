@@ -61,6 +61,7 @@ def restaurant(request):
             restaurant=Restaurant.objects.filter(pk=request.GET["rest_id"])
             if restaurant.count()==1:
                 content_dict["restaurant"]=restaurant[0]
+                content_dict["dishes"]=Dish.objects.filter(restaurant=restaurant[0])
             else:
                 return HttpResponseRedirect("index")
             return render(request, "customer/restaurant.html",content_dict)
@@ -222,6 +223,10 @@ def submitOrder(request):
             order.address=Address.objects.get(pk=address_id)
             order.status=const.order["PAYED"]
             order.save()
+            orderDishes=OrderDish.objects.filter(order=order)
+            for orderDish in orderDishes:
+                orderDish.dish.total_count+=1
+                orderDish.dish.save()
             return JsonResponse({"result":"success"})
         else:
             return JsonResponse({"result":"fail"})
@@ -305,16 +310,31 @@ def cancelOrder(request):
     else:
         return HttpResponseNotAllowed(['POST'],'illegal request')
 
-"""
 def comment(request):
     if request.is_ajax() and request.method=="POST":
         global const
         if request.session.get("issigned","False")=="True":
             postObj=json.loads(request.body)
             order_id=postObj["order_id"]
+            order_dishes=postObj["order_id"]
+            order=Order.objects.get(pk=order_id)
+            order.status=const.order["FINISHED"]
+            order.save()
+            for order_dish in order_dishes:
+                orderDish=OrderDish.objects.get(pk=order_dish["order_dish_id"])
+                orderDish.grade=order_dish["grade"]
+                orderDish.comment=order_dish["comment"]
+                orderDish.save()
+                if orderDish.grade!=0:
+                    orderDish.dish.total_grade+=orderDish.grade
+                    orderDish.dish.grade_count+=1
+                    orderDish.dish.ave_grade=orderDish.dish.total_grade/float(orderDish.dish.grade_count)
+                    orderDish.dish.save()
+            return JsonResponse({"result":"success"})
+        else:
+            return JsonResponse({"result":"fail"})
     else:
         return HttpResponseNotAllowed(['POST'],'illegal request')
-"""
 
 def logout(request):
     if request.is_ajax() and request.method=="POST":

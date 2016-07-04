@@ -45,6 +45,7 @@ class Dish(models.Model):
     total_count = models.IntegerField(default=0)
     grade_count = models.IntegerField(default=0)
     total_grade = models.IntegerField(default=0)
+    ave_grade=models.FloatField(default=0)
     introduction = models.TextField()
     pic_path = models.TextField(null=True)
     delete_flag = models.BooleanField(default=False)
@@ -57,7 +58,7 @@ class Dish(models.Model):
 class Order(models.Model):
     order_time = models.DateTimeField(null=True)
     status = models.IntegerField()
-    total = models.FloatField()
+    total = models.FloatField(default=0)
     customer = models.ForeignKey(Customer)
     restaurant = models.ForeignKey(Restaurant)
     address = models.ForeignKey(Address,null=True)

@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^manageAddress$',views.manageAddress,name="manageAddress"),
     url(r'^updatePasswd$',views.updatePasswd,name="updatePasswd"),
     url(r'^cancelOrder$',views.cancelOrder,name="cancelOrder"),
+    url(r'^comment$',views.comment,name="comment"),
     url(r'^logout$',views.logout,name="logout"),
     url(r'^test$',views.test,name="test"),
 ]
