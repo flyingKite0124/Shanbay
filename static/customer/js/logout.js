@@ -1,12 +1,6 @@
-function sign_in() {
-    data = {
-        phone: $('#username').val(),
-        password: $('#password').val(),
-    };
-    console.log(data)
+function log_out() {
     $.ajax({
-            url: "/customer/signIn",   // 填上接口中要求的url
-            data: JSON.stringify(data),
+            url: "/customer/logout",   // 填上接口中要求的url
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
             contentType: "application/json",
@@ -17,7 +11,7 @@ function sign_in() {
                 $(window.location).attr('href', '/customer/index');
             }
             else {
-                alert('Username and password are not compitable.');
+                alert('error');
             }
         })
 }
