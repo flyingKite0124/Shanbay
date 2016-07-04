@@ -6,6 +6,7 @@ from django.http import HttpResponse,HttpResponseRedirect,HttpResponseNotAllowed
 import json
 import const
 from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
 
 
 
@@ -290,9 +291,35 @@ def manageDish(request):
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
 def pollOrder(request):
-
-    return HttpResponse("pollOrder")
-
+    if not request.session.get("isSignIn", False):
+        return HttpResponseRedirect("sign")
+    if request.is_ajax() and request.method == "POST":
+        restaurant = None
+        try:
+            restaurant = Restaurant.objects.get(id=request.session.get("mID"))
+        except Exception:
+            HttpResponseRedirect("sign")
+        if restaurant == None:
+            HttpResponseRedirect("sign")
+        order_list = Order.objects.filter(restaurant=restaurant).filter(status=const.order["PAYED"])
+        ret_data = []
+        for item in order_list:
+            order = {}
+            order["order_id"] = item.id
+            order["order_status"] = item.status
+            order["address"] = item.address.address
+            order["phone"] = item.customer.phone
+            order["name"] = item.address.name
+            order["dish"] = []
+            orderDish = OrderDish.objects.filter(order=item)
+            for dishItem in orderDish:
+                order["dish"].append({"dish_name":dishItem.dish.name,"dish_num":dishItem.num})
+            ret_data.append(order)
+        
+        return JsonResponse({"result":"success","orders":ret_data},safe=False)
+    else:
+        return HttpResponseNotAllowed(['POST'], 'illegal request')
+        
 
 
 def redirect(request):
