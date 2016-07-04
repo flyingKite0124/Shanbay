@@ -19,4 +19,5 @@ function sign_in(e) {
                 alert('Username and password are not compitable.');
             }
         })
+    e.preventDefault();
 }

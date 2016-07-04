@@ -190,7 +190,8 @@ function renderDishes(dishlist){
 	this.dlElement = $('#dishlist');
 	this.dlElement.empty();
 	for (var i = 0; i < dishlist.length; ++i){
-		var item = $('<div>').attr('did', 'dish' + (i+1).toString()).attr('class', 'dishitem');
+		//var item = $('<div>').attr('did', 'dish' + (i+1).toString()).attr('class', 'dishitem');
+		var item = $('<div>').attr('did', (i+1).toString()).attr('class', 'dishitem');
 		var img = $('<img>').attr('class', 'dishitem-pic').attr('src', dishlist[i].pic_path);
 		var name = $('<name>').attr('class', 'dishitem-name').text(dishlist[i].name);
 		var d = $('<div>');
@@ -215,9 +216,10 @@ function sendOrder() {
 	}
 	$.ajax({
 		type	: 'POST',
-		url		: '/user/createOrder/',
+		url		: '/customer/createOrder',
 		contentType: "application/json",
-		data	: {rest_id : dishItem.restID, order_dishes : orderDishes},
+		dataType : "json",
+		data	: JSON.stringify({rest_id : dishItem.restID, order_dishes : orderDishes}),
 		success	: function(data){
 			cartItem.clear();
 		}		

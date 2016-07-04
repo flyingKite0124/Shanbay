@@ -5,6 +5,9 @@ from database.models import *
 from django.http import HttpResponse,HttpResponseRedirect,HttpResponseNotAllowed, JsonResponse
 import json
 import const
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 const.restaurant = {"UNCERTIFIED": 0, "OPENING": 1, "CLOSED": 2, "FROZEN": 3}
 const.order = {
@@ -22,6 +25,7 @@ def sign(request):
     else:
         return HttpResponseNotAllowed(['GET'], 'illegal request')
 
+@csrf_exempt
 def signIn(request):
     print "I am in sign in"
     if request.is_ajax() and request.method == "POST":
@@ -286,6 +290,7 @@ def manageDish(request):
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
 def pollOrder(request):
+
     return HttpResponse("pollOrder")
 
 
