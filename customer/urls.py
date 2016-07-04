@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^comment$',views.comment,name="comment"),
     url(r'^logout$',views.logout,name="logout"),
     url(r'^test$',views.test,name="test"),
+    url(r'^$',views.redirect,name="redirect")
 ]

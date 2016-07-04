@@ -1,0 +1,128 @@
+
+
+h1,.h1,h2,.h2,h3,.h3,h4,.h4,.lead {
+	font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif
+}
+
+
+
+.widget .title {
+	margin-top: 0;
+	padding-bottom: 7px;
+	border-bottom: 1px solid #ebebeb;
+	margin-bottom: 21px;
+	position: relative
+}
+
+.widget .title:after {
+	content: "";
+	width: 90px;
+	height: 1px;
+	background: #337ab7;
+	position: absolute;
+	left: 0;
+	bottom: -1px
+}
+
+
+
+.main-footer {
+	background: #202020;
+	padding: 35px 0 0;
+	color: #959595
+}
+
+.main-footer .widget {
+	padding: 0 30px
+}
+
+.main-footer .widget .title {
+	color: #fff;
+	border-bottom: 1px solid #303030
+}
+
+.main-footer .widget .tag-cloud a {
+	border: 1px solid #303030
+}
+
+.main-footer .widget .tag-cloud a:hover {
+	border: 1px solid #337ab7
+}
+
+.copyright {
+	background: #111;
+	font-size: 13px;
+	text-align: center;
+	color: #555;
+	padding-top: 14px;
+	padding-bottom: 20px;
+	border-top: 1px solid #303030
+}
+
+.copyright span {
+	margin: 0 .5em
+}
+
+.copyright a {
+	color: #555
+}
+
+#back-to-top {
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	background: rgba(51,122,183,0.6);
+	color: #fff;
+	text-align: center;
+	border-radius: 2px;
+	z-index: 1;
+	display: none
+}
+
+#back-to-top:hover {
+	background: #337ab7
+}
+
+#back-to-top i {
+	width: 30px;
+	height: 30px;
+	line-height: 30px
+}
+
+.widget .friend-links a {
+	display: block;
+	border-bottom: 1px dashed #303030;
+	padding-bottom: 14px;
+	margin-bottom: 14px;
+	color: #959595;
+	-webkit-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease
+}
+
+.widget .friend-links a:hover {
+	color: #fff;
+	text-decoration: none
+}
+
+.widget .friend-links a:last-child {
+	margin-bottom: 0
+}
+.widget .tag-cloud a {
+	border: 1px solid #ebebeb;
+	padding: 2px 7px;
+	color: #959595;
+	line-height: 1.5em;
+	display: inline-block;
+	margin: 0 7px 7px 0;
+	-webkit-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease
+}
+
+.widget .tag-cloud a:hover {
+	color: #fff;
+	background: #337ab7;
+	border: 1px solid #337ab7;
+	text-decoration: none
+}

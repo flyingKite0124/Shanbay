@@ -322,12 +322,13 @@ def comment(request):
             postObj=json.loads(request.body)
             order_id=postObj["order_id"]
             order_dishes=postObj["order_dishes"]
+            print order_dishes
             order=Order.objects.get(pk=order_id)
             order.status=const.order["FINISHED"]
             order.save()
             for order_dish in order_dishes:
                 orderDish=OrderDish.objects.get(pk=order_dish["order_dish_id"])
-                orderDish.grade=order_dish["grade"]
+                orderDish.grade=int(order_dish["grade"])
                 orderDish.comment=order_dish["comment"]
                 orderDish.save()
                 if orderDish.grade!=0:
