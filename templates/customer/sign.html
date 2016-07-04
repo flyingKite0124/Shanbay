@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    {% block title %}
+        <title>登录</title>
+    {% endblock %}
+
+    <!-- Bootstrap -->
+    <link href="/static/common/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/restaurant/css/base.css" rel="stylesheet">
+
+    {% block css %}
+        <link href="/static/restaurant/css/sign.css" rel="stylesheet">
+    {% endblock %}
+</head>
+<body>
+{% block content %}
+    <div class="container">
+        <form class="form-signin">
+            <h2 class="form-signin-heading text-center">登录</h2>
+            <label for="inputEmail" class="sr-only">电话</label>
+            <input type="text" id="username" class="form-control" placeholder="157xxxxxxxx" required autofocus>
+            <label for="inputPassword" class="sr-only">密码</label>
+            <input type="password" id="password" class="form-control" placeholder="密码" required>
+            <button class="btn btn-lg btn-primary btn-block" id="sign-in">登录</button>
+        </form>
+    </div> <!-- /container -->
+{% endblock %}
+<script src="/static/common/js/jquery.min.js"></script>
+<script src="/static/common/js/csrf.js"></script>
+<script src="/static/common/bootstrap/js/bootstrap.js"></script>
+{% block script %}
+    <script src="/static/customer/js/sign.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sign-in').click(sign_in);
+        });
+    </script>
+{% endblock %}
+</body>
+</html>
