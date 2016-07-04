@@ -14,14 +14,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-3">
+            <div class="col-md-7">
                 <h1 id="name">{{ restaurant.name }}</h1>
                 <ul class="list-unstyled">
                     <li><b style="padding: 0 10px 0 0">电话</b>{{ restaurant.phone }}</li>
                     <li><b style="padding: 0 10px 0 0">地址</b>{{ restaurant.address }}</li>
                 </ul>
             </div>
-            <div class="col-md-4"></div>
             <div class="col-md-4">
                 <button type="button" class="btn btn-danger btn-lg disabled hide"
                         id="banned-btn">封停中
@@ -57,6 +56,10 @@
                     <li role="presentation">
                         <a data-target="#profile" aria-controls="profile"
                            role="tab" data-toggle="tab">店铺信息</a>
+                    </li>
+                    <li role="presentation">
+                        <a data-target="#order-manage" aria-controls="order-manage"
+                           role="tab" data-toggle="tab">订单管理</a>
                     </li>
                     <li role="presentation">
                         <a data-target="#cash-flow" aria-controls="cash-flow"
@@ -241,6 +244,28 @@
                             <button class="btn btn-primary my-btn-margin" id="btn-cancel-modify-restaurant">取消</button>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane fade order-list" id="order-manage">
+                        {% for order in restaurant.order_set.all %}
+                            <div class="row order-item">
+                                <div class="col-md-8">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">{{ order.id }}</li>
+                                        <li class="list-group-item">{{ order.customer }}</li>
+                                        <li class="list-group-item">{{ order.address.address }}</li>
+                                        <li class="list-group-item">{{ order.address.status }}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2 ">
+                                    <button class="btn btn-primary btn-modify-dish my-btn-margin">修改
+                                    </button>
+                                    <br/>
+                                    <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p>您还没有订单</p>
+                        {% endfor %}
+                    </div>
                     <div role="tabpanel" class="tab-pane fade" id="cash-flow">
                         <table class="table table-striped">
                             <caption>菜品统计</caption>
@@ -272,20 +297,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="orders">
-        <div class="dropup">
-            <button class="btn btn-default dropdown-toggle" type="button" id="orderlist-btn" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">
-                订单
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="orderlist-btn" id="orderlist">
-                <li><a role="button">Another action</a></li>
-                <li><a role="button">Something else here</a></li>
-                <li><a role="button">Separated link</a></li>
-            </ul>
         </div>
     </div>
 {% endblock %}
@@ -338,7 +349,7 @@
             $('#btn-cancel-modify-restaurant').click(function (e) {
                 btn_cancel_modify_restaurant(e, classification);
             });
-            {#        setInterval(get_orders, 10000);#}
+            {#            setInterval(get_orders, 10000);#}
         })
     </script>
 {% endblock %}

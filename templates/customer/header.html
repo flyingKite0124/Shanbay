@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+   <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>main page</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/common/bootstrap/css/bootstrap.min.css"/>
+<!--     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet'> -->
+    
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="/static/customer/cssfont-awesome.css">
+    <link rel="stylesheet" href="/static/customer/css/prism.css">
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="/static/customer/css/style-2.css">
+    <link href="/static/customer/css/ele.css" rel="stylesheet">
+    
+    <link href="/static/customer/css/ele2.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+	<header id="header" class="header">
+	    <div class="container">
+	        <h1 class="logo pull-left">
+	            <a class="scrollto" href="#promo">
+	                <span class="logo-title">ShanBay</span>
+	            </a>
+	        </h1><!--//logo-->
+	        <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+	            <div class="navbar-header">
+	                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button><!--//nav-toggle-->
+	            </div><!--//navbar-header-->
+	            <div class="navbar-collapse collapse" id="navbar-collapse">
+	                <ul class="nav navbar-nav">	                
+	                    <li class="nav-item sr-only active"><a class="scrollto" href="#promo">Home</a></li>
+	                    {% if issigned %}
+	                    <li class="nav-item">
+	                    	<a class="scrollto" href="/customer/profile">{{ customer.phone }}</a>
+	                    </li>
+	                    <li class="nav-item">
+	                    	<a class="scrollto btn"  onclick="log_out()">logout</a>
+	                    </li> 
+	                    {% else %}
+	                    <li class="nav-item"><a class="scrollto" href="/customer/sign#signup">Signup</a></li>
+	                    <li class="nav-item"><a class="scrollto" href="/customer/sign#signin">Signin</a></li>
+	                    {% endif %}
+	                </ul><!--//nav-->
+	            </div><!--//navabr-collapse-->
+	        </nav><!--//main-nav-->
+	    </div>
+	</header>
+  	{% block content %}
+    {% endblock %}
+
+<footer class="footer">
+        <div class="container text-center">
+            <small class="copyright">EJS © 2112 <a href="http://twitter.com/mde">Matthew Eernisse</a> ::: Template designed with <i class="fa fa-heart"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a></small>
+        </div><!--//container-->
+    </footer>
+
+    <script src="/static/common/js/jquery.min.js"></script>
+    <script src="/static/common/js/csrf.js"></script>
+    <script src="/static/common/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/customer/js/logout.js"></script>
+  </body>
+</html>
+

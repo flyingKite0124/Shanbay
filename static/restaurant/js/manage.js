@@ -1,15 +1,6 @@
 var open_btn = $('#open_restaurant');
 var close_btn = $('#close_restaurant');
 
-/*请求失败时的回调函数，这个失败是指http的request失败，
- *某些接口中给你返回{result:"fail"},并不会调用这个函数。
- *你能成功收到这个{result:"fail"}返回，说明请求已经成功了*/
-function ajax_fail_handler(xhr, status, errorThrown) {
-    console.log("Error: " + errorThrown);
-    console.log("Status: " + status);
-    console.dir(xhr);
-}
-
 function show_banned_btn() {
     $("#open-or-close").addClass('hide');
     $("#unauthorized-btn").addClass('hide');
@@ -303,6 +294,7 @@ function get_orders() {
         .done(function (data) {
             if (data.result === 'success') {
                 orders = data.orders;
+                console.log(orders);
             }
             else {
                 alert('Fail to get orders');
