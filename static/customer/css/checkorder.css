@@ -188,6 +188,10 @@
     top: 10px;
 }
 
+#address-manager span.name {
+    margin-right: 10px;
+}
+
 #confirmdialog .glyphicon-question-sign {
     color: #d9534f;
 }

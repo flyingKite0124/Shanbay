@@ -135,7 +135,7 @@ def profile(request):
         return HttpResponseNotAllowed(['GET'], 'illegal request')
 
 def test(request):
-    return render(request,"customer/test.html")
+    return render(request,"customer/search.html")
 
 def signIn(request):
     if request.is_ajax() and request.method=="POST":
@@ -210,7 +210,7 @@ def createOrder(request):
                 order.total+=orderDish.price*orderDish.num
                 orderDish.save()
             order.save()
-            return JsonResponse({"result":"success","":order.id})
+            return JsonResponse({"result":"success","order_id":order.id})
         else:
             return JsonResponse({"result":"notsigned"})
     else:
