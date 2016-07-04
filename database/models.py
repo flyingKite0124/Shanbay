@@ -70,7 +70,7 @@ class Order(models.Model):
                + smart_unicode(self.restaurant) + u' ' \
                + smart_unicode(self.order_time)
 
-    def getStatusInChinese(self):
+    def get_status_in_chinese(self):
         if self.status == 0:
             return u'未确认'
         elif self.status == 1:
@@ -80,11 +80,28 @@ class Order(models.Model):
         elif self.status == 3:
             return u'已接单'
         elif self.status == 4:
-            return u'已送出'
+            return u'派送中'
         elif self.status == 5:
             return u'已完成'
         elif self.status == 6:
             return u'已取消'
+
+    def get_next_operation_in_chinese(self):
+        if self.status == 0:
+            return u'确认'
+        elif self.status == 1:
+            return u'付款'
+        elif self.status == 2:
+            return u'接单'
+        elif self.status == 3:
+            return u'开始派送'
+        elif self.status == 4:
+            return u''
+        elif self.status == 5:
+            return u''
+        elif self.status == 6:
+            return u''
+
 
 
 class OrderDish(models.Model):

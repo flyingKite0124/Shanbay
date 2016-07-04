@@ -302,7 +302,7 @@ def pollOrder(request):
             HttpResponseRedirect("sign")
         if restaurant == None:
             HttpResponseRedirect("sign")
-        order_list = Order.objects.filter(restaurant=restaurant).filter(status=const.order["PAYED"])
+        order_list = Order.objects.filter(restaurant=restaurant)
         ret_data = []
         for item in order_list:
             order = {}
@@ -373,9 +373,11 @@ def changeOrderStatus(request):
         global const
         if mType == "accept":
             order.status = const.order["ACCEPTED"]
+            order.save()
             return JsonResponse({"result":"success"})
         elif mType == "sendout":
             order.status = const.order["SENT"]
+            order.save()
             return JsonResponse({"result":"success"})
         else:
             return JsonResponse({"result":"fail"})
