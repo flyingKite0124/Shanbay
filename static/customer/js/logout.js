@@ -15,3 +15,7 @@ function log_out() {
             }
         })
 }
+
+function search_box() {
+    location.href="/customer/search?queryString="+$('.search-box input').val();
+}  
