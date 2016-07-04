@@ -7,6 +7,7 @@ import json
 import const
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
+import datetime
 
 
 
@@ -336,7 +337,24 @@ def queryOrder(request):
         if "start_data" not in data \
         or "stop_data" not in data:
             return JsonResponse({"result":"fail"})
-        #orders = Order.objects.filter()
+        start_date = data["start_data"]
+        end_date = data["stop_data"]
+        order_list = Order.objects.filter(order_time__gte=datetime(int(start_date[0:4]),int(start_date[4:6]),int(start_date[6:8]))).filter(order_time__lte=datetime(int(end_date[0:4]),int(end_date[4:6]),int(end_date[6:8])))
+        ret_data = []
+        for item in order_list:
+            order = {}
+            order["order_id"] = item.id
+            order["order_status"] = item.status
+            order["address"] = item.address.address
+            order["phone"] = item.customer.phone
+            order["name"] = item.address.name
+            order["dish"] = []
+            orderDish = OrderDish.objects.filter(order=item)
+            for dishItem in orderDish:
+                order["dish"].append({"dish_name":dishItem.dish.name,"dish_num":dishItem.num})
+            ret_data.append(order)
+        
+        return JsonResponse({"result":"success","orders":ret_data},safe=False)
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 def changeOrderStatus(request):
