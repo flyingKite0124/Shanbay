@@ -303,6 +303,7 @@ function get_orders() {
         .done(function (data) {
             if (data.result === 'success') {
                 orders = data.orders;
+                console.log(orders);
             }
             else {
                 alert('Fail to get orders');
