@@ -1,527 +1,675 @@
-  <!DOCTYPE html>
-  <html lang="zh-CN">
-    <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-      <title>profile</title>
+   {% load template_lib%}
 
-      <!-- Bootstrap -->
-      <link href="../../static/common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+        <title>profile</title>
 
-      <link href="../../static/customer/css/dashboard.css" rel="stylesheet">
-      <style >
-        .show{
-          display: block;
-        }
+        <!-- Bootstrap -->
+        <link href="../../static/common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        .unshow{
-          display: none;
-        }
+        <link href="../../static/customer/css/dashboard.css" rel="stylesheet">
+        <style >
+          .show{
+            display: block;
+          }
 
-        .btn-order,.btn-pay{
-          padding-top: 0;
-          padding-bottom: 0;
-        }
+          .unshow{
+            display: none;
+          }
 
-        .comment{
-          position: fixed;
-          background-color: #fff;
-          padding:0;
-        }
+          .btn-order,.btn-pay,.btn-cancel{
+            padding-top: 0;
+            padding-bottom: 0;
+          }
 
-        .bigStar,.blueStar,.yellowStar{
-          background: url(../../static/customer/image/star.png) no-repeat;
-          width: 46px;
-          height: 45px;
-          background-size: 163px 275px
-        }
+          .comment{
+            position: fixed;
+            background-color: #fff;
+            padding:0;
+          }
 
-        .bigStar{
-          background-position: -6px -387px;
-          outline-width: 0;
-          background-size: 326px 550px
-        }
+          .bigStar,.blueStar,.yellowStar{
+            background: url(../../static/customer/image/star.png) no-repeat;
+            width: 46px;
+            height: 45px;
+            background-size: 163px 275px
+          }
 
-        .blueStar{
-          background-position: -51px -387px;
-          background-size: 326px 550px
-        }
+          .bigStar{
+            background-position: -6px -387px;
+            outline-width: 0;
+            background-size: 326px 550px
+          }
 
-        .yellowStar{
-          background-position: -96px -387px;
-          background-size: 326px 550px
-        }
+          .blueStar{
+            background-position: -51px -387px;
+            background-size: 326px 550px
+          }
 
-        .fl{
-          float: left;
-        }
+          .yellowStar{
+            background-position: -96px -387px;
+            background-size: 326px 550px
+          }
 
-        .fr{
-          float: right;
-        }
+          .fl{
+            float: left;
+          }
 
-        .di{
-          display: inline;
-        }
-        .center{
-          margin-left: auto;
-          margin-right:auto;
-        }
+          .fr{
+            float: right;
+          }
 
-        .footer{
-          padding-top: 20px;
-          padding-bottom: 20px;
-          color: #767676;
-          text-align: center;
-        }
+          .di{
+            display: inline;
+          }
+          .center{
+            margin-left: auto;
+            margin-right:auto;
+          }
 
-        .singleComment{
-          margin-bottom: 10px;
-        }
+          .footer{
+            padding-top: 20px;
+            padding-bottom: 20px;
+            color: #767676;
+            text-align: center;
+          }
 
-        .upload{
-          /*position: absolute;*/
-          /*bottom:0;*/
-        }
+          .singleComment{
+            margin-bottom: 10px;
+          }
 
-        .comment-header{
-/*          position: fixed;
-          top:0;
-*/        }
+          .upload{
+            /*position: absolute;*/
+            /*bottom:0;*/
+          }
 
-        .comment-body{
-/*          padding-top:109px;*/
-        }
-      </style>
+          .comment-header{
+  /*          position: fixed;
+            top:0;
+  */        }
 
-    </head>
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+          .comment-body{
+  /*          padding-top:109px;*/
+          }
+        </style>
+
+      </head>
+      <body>
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="http://v3.bootcss.com/examples/dashboard/#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">NULL</a></li>
+                <li><a href="#">NULL</a></li>
+                <li><a href="#">NULL</a></li>
+                <li><a href="#">NULL</a></li>
+              </ul>
+              <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+              </form>
+            </div>
+          </div>
+        </nav>
+
+
         <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="http://v3.bootcss.com/examples/dashboard/#">Project name</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">NULL</a></li>
-              <li><a href="#">NULL</a></li>
-              <li><a href="#">NULL</a></li>
-              <li><a href="#">NULL</a></li>
-            </ul>
-            <form class="navbar-form navbar-right">
-              <input type="text" class="form-control" placeholder="Search...">
-            </form>
-          </div>
-        </div>
-      </nav>
+          <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+              <ul class="nav nav-sidebar">
+                <li >
+                  <a href="#orderManage">管理订单</a>
+                </li>
+                <li>
+                  <a href="#pwdModify" >修改密码</a>
+                </li>
+                <li>
+                  <a href="#addressManage">管理收货地址</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              <div id = "orderManage" class="row show">
+                <h1 class="page-header"> 管理订单</h1>
+                <div class = "text-center">
 
 
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-              <li >
-                <a href="#orderManage">管理订单</a>
-              </li>
-              <li>
-                <a href="#pwdModify" >修改密码</a>
-              </li>
-              <li>
-                <a href="#addressManage">管理收货地址</a>
-              </li>
-            </ul>
-          </div>
+                  <thead class="order-title">
+                     <div class="row">
+                      <div class="col-md-1 ">订单号</div>
+                      <div class="col-md-2">时间</div>
+                      <div class="col-md-5 ">订餐详情</div>
+                      <div class="col-md-1">总价</div>
+                      <div class="col-md-1">状态</div>
+                      <div class="col-md-1">动作</div>
+                    </div>
+                  </thead>
 
-          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div id = "orderManage" class="row show">
-              <h1 class="page-header"> 管理订单</h1>
-              <div class = "text-center">
-               <!--  {% for item　in Order %}
-                  <li>时间： {{item.order_time}} 价格：{{item.total}} 元 状态：{{item.status}} </li>
-                {% empty　％}
+                  <tbody class="order-body">
+                  {% for order in orders %}
+                      {% if order.status != 0 %}
+                        <div class="row">
+                          <div class="col-md-1 order-id">{{order.id}}</div>
+                          <div class="col-md-2">{{order.order_time}}</div>
+                          <div class="col-md-5 text-center">
+                              {% for order_dish in order_dishes|index:order.id %}
+                                  {{order_dish.dish.name}};
+                              {% endfor %}
+
+                          </div>
+                          <div class="col-md-1">{{order.total}}</div>
+                            {% if order.status == 1 %}
+                                <button class="col-md-1 btn btn-warning btn-pay" type="button" value="pay">等待付款</button>
+                            {% elif order.status == 2 %}
+                                 <div class="col-md-1 btn btn-order" disabled="disabled">等待接受</div>
+                                 <button class="col-md-1 btn btn-cancel btn-danger" type>取消订单</button>
+                            {% elif order.status == 3 %}
+                                <div class="col-md-1 btn btn-order" disabled="disabled">正在制作</div>
+                            {% elif order.status == 4 %}
+                                <div class="col-md-1 btn btn-order" disabled="disabled">正在派送</div>
+                                <button class="col-md-1 btn btn-success btn-order" type="button" value="receieve">确认收单</button>
+                            {% elif order.status == 5 %}
+                                <div class="col-md-1 btn btn-order" disabled="disabled">已经完成</div>
+                            {% endif %}
+                        </div>
+                      {% endif %}
+                  {% empty %}
+                    <div>你还什么都没点哦 ，快去浏览菜品下订单吧！</div>
+                  {% endfor %}
+
+
+                  </tbody>
+
+
+                </div>
+              </div>
+
+
+              <div id = "pwdModify" class="row unshow">
+                <h1 class="page-header">修改密码 </h1>
+                <div class = "talbe-responsive" >
+                  <div >当前密码：
+                    <br>
+                    <input type="password" name="passwdOld" class = "text" id ="passwdOld" size="20">
+                  </div>
+                  <div >新密码：
+                    <br>
+                    <input type="password" name="passwdNew" class = "text" id ="passwdNew" size="20">
+                  </div>
+                  <div>重复新密码：
+                    <br>
+                    <input type="password" name="passwdNewCheck" class = "text" id ="passwdNewCheck" size="20">
+                  </div>
+                  <br>
+                  <input class="btn" type="submit" value ="确认修改密码" id  = "submitBtn">
+                </div>
+              </div>
+
+
+              <div id = "addressManage" class="row unshow">
+                <h1 class="page-header">管理收货地址 </h1>
                 <div>
-                  你还什么都没点哦 ，快去浏览菜品下订单吧！
                 </div>
-                {%endfor%} -->
-                 <div class="row">
-                  <div class="col-md-1">订单号</div>
-                  <div class="col-md-2">时间</div>
-                  <div class="col-md-5 ">订餐详情</div>
-                  <div class="col-md-1">总价</div>
-                  <div class="col-md-1">状态</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-1">00001</div>
-                  <div class="col-md-2">2016-5-31</div>
-                  <div class="col-md-5 text-center">骨肉相连 扬州炒饭</div>
-                  <div class="col-md-1">20.00</div>
-                  <button class="col-md-1 btn btn-warning btn-pay" type="button" value="pay">等待付款</button>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-1">00001</div>
-                  <div class="col-md-2">2016-5-31</div>
-                  <div class="col-md-5 text-center">骨肉相连 扬州炒饭</div>
-                  <div class="col-md-1">20.00</div>
-                  <div class="col-md-1 btn btn-order" disabled="disabled"">等待接受</div>
-                </div>
-
-                 <div class="row">
-                  <div class="col-md-1">00001</div>
-                  <div class="col-md-2">2016-5-31</div>
-                  <div class="col-md-5 text-center">骨肉相连 扬州炒饭</div>
-                  <div class="col-md-1">20.00</div>
-                  <div class="col-md-1 btn btn-order" disabled="disabled"">正在制作</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-1">00001</div>
-                  <div class="col-md-2">2016-5-31</div>
-                  <div class="col-md-5 text-center">骨肉相连 扬州炒饭</div>
-                  <div class="col-md-1">20.00</div>
-                  <div class="col-md-1 btn btn-order" disabled="disabled"">正在派送</div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-1">00001</div>
-                  <div class="col-md-2">2016-5-31</div>
-                  <div class="col-md-5 text-center">骨肉相连 扬州炒饭</div>
-                  <div class="col-md-1">20.00</div>
-                  <button class="col-md-1 btn btn-success btn-order" type="button" value="receieve">确认收货</button>
-                </div>
-
-
-                 <div class="row">
-                  <div class="col-md-1">00001</div>
-                  <div class="col-md-2">2016-5-31</div>
-                  <div class="col-md-5 text-center">骨肉相连 扬州炒饭</div>
-                  <div class="col-md-1">20.00</div>
-                  <div class="col-md-1 btn btn-order" disabled="disabled">已经评价</div>
-                </div> 
-
-
               </div>
+
             </div>
+          </div>
+       </div>
+
+<!--       <div id ="comBack" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; opacity: 0.5; z-index: 1002; background: rgb(0, 0, 0); display:none"></div>
+      <div  id ="comBody" class="comment ontainer-fluid col-md-6 col-md-offset-2" style="z-index:1005;left:0;right:0;top:10%; overflow: auto; margin-left:auto;margin-right:auto;display: none ">
+        <div class="container-fluid ">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1 ">
+                <h1 class="page-header comment-header">评价订单</h1>
+                <div class ="comment-body">
 
 
-            <div id = "pwdModify" class="row unshow">
-              <h1 class="page-header">修改密码 </h1>
-              <div class = "talbe-responsive" >
-                <div >当前密码：
-                  <br>
-                  <input type="password" name="passwdOld" class = "text" id ="passwdOld" size="20">
+                  <div class= "row singleComment" id="comment0">
+                    <div class="col-md-4">
+                      <img border="0" src="../../static/customer/image/yangzhou.jpg" alt="扬州炒饭" width="160" height="120">
+                    </div>
+                    <div class="text-left">
+                      <div class="col-md-2 ">菜品名</div>
+                      <div class="col-md-5  mealName">扬州炒饭</div>
+                    </div>
+                    <br><br>
+                     <div class="text-left">
+                      <div class="col-md-2 ">价格</div>
+                      <div class="col-md-5 mealPrice">10.00元</div>
+                    </div>
+                    <br><br>
+                    <div class="text-left">
+                      <div class="col-md-2 ">评价</div>
+                      <div class="col-md-6 ">
+                        <div class="center" style="padding-left:50% padding-right:50%">
+                          <div class="bigStar fl star1" tabindex="1" role="button" aria-label="选择将商品评为一星。" ></div>
+                          <div class="bigStar fl star2" tabindex="2" role="button" aria-label="选择将商品评为两星。"></div>
+                          <div class="bigStar fl star3" tabindex="3" role="button" aria-label="选择将商品评为三星。"></div>
+                          <div class="bigStar fl star4" tabindex="4" role="button" aria-label="选择将商品评为四星。"></div>
+                          <div class="bigStar fl star5" tabindex="5" role="button" aria-label="选择将商品评为五星。"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                     <div class="text-left">
+                      <div class="col-md-offset-4 col-md-2 ">评论</div>
+                      <input type= "text" name="comment_text" class="col-md-5 comment" style="padding:0;margin-left:15px">
+                    </div>
+                    <div class="row upload">
+                      <button class="  btn btn-default btn-lg fr btn-refuse" type="submit">取消评价</button>
+                      <button class="  btn btn-primary btn-lg fr btn-push submitCom" type="submit">提交评价</button>
+                    </div>
+                  </div>
+
+
+                  <div class= "row singleComment" id="comment1">
+                    <div class="col-md-4">
+                      <img border="0" src="../../static/customer/image/yangzhou.jpg" alt="骨肉相连" width="160" height="120">
+                    </div>
+                    <div class="text-left">
+                      <div class="col-md-2 ">菜品名</div>
+                      <div class="col-md-5 mealName">扬州炒饭</div>
+                    </div>
+                    <br><br>
+                    <div class="text-left">
+                      <div class="col-md-2 ">价格</div>
+                      <div class="col-md-5 ">5.00元</div>
+                    </div>
+                    <br><br>
+                    <div class="text-left">
+                      <div class="col-md-2">评价</div>
+                      <div class="col-md-6 ">
+                        <div class="center" style="padding-left:50% padding-right:50%">
+                          <div class="bigStar fl star1" tabindex="1" role="button" aria-label="选择将商品评为一星。" ></div>
+                          <div class="bigStar fl star2" tabindex="2" role="button" aria-label="选择将商品评为两星。"></div>
+                          <div class="bigStar fl star3" tabindex="3" role="button" aria-label="选择将商品评为三星。"></div>
+                          <div class="bigStar fl star4" tabindex="4" role="button" aria-label="选择将商品评为四星。"></div>
+                          <div class="bigStar fl star5" tabindex="5" role="button" aria-label="选择将商品评为五星。"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <br><br>
+                    <div class="text-left">
+                      <div class="col-md-offset-4 col-md-2 ">评论</div>
+                      <input type= "text" name="comment_text" class="col-md-5" style="padding:0;margin-left:15px">
+                    </div>
+                    <br><br>
+                    <div class="row upload">
+                      <button class="  btn btn-default btn-lg fr btn-refuse" type="submit">取消评价</button>
+                      <button class="  btn btn-primary btn-lg fr btn-push submitCom" type="submit">提交评价</button>
+                    </div>
+                  </div>
+
+                  <div class= "row singleComment" id="comment2">
+                    <div class="col-md-4">
+                      <img border="0" src="../../static/customer/image/yangzhou.jpg" alt="骨肉相连" width="160" height="120">
+                    </div>
+                    <div class="text-left">
+                      <div class="col-md-2 ">菜品名</div>
+                      <div class="col-md-5 mealName">骨肉相连</div>
+                    </div>
+                    <br><br>
+                     <div class="text-left">
+                      <div class="col-md-2 ">价格</div>
+                      <div class="col-md-5 ">5.00元</div>
+                    </div>
+                    <br><br>
+                    <div class="text-left">
+                      <div class="col-md-2 ">评价</div>
+                      <div class="col-md-6 ">
+                        <div class="center" style="padding-left:50% padding-right:50%">
+                          <div class="bigStar fl star1" tabindex="1" role="button" aria-label="选择将商品评为一星。"></div>
+                          <div class="bigStar fl star2" tabindex="2" role="button" aria-label="选择将商品评为两星。"></div>
+                          <div class="bigStar fl star3" tabindex="3" role="button" aria-label="选择将商品评为三星。"></div>
+                          <div class="bigStar fl star4" tabindex="4" role="button" aria-label="选择将商品评为四星。"></div>
+                          <div class="bigStar fl star5" tabindex="5" role="button" aria-label="选择将商品评为五星。"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                     <div class="text-left">
+                      <div class="col-md-offset-4 col-md-2 ">评论</div>
+                      <input type= "text" name="comment_text" class="col-md-5" style="padding:0;margin-left:15px">
+                    </div>
+                    <div class="row upload">
+                      <button class="  btn btn-default btn-lg fr btn-refuse" type="submit">取消评价</button>
+                      <button class="  btn btn-primary btn-lg fr btn-push submitCom" type="submit">提交评价</button>
+                    </div>
+                  </div>
                 </div>
-                <div >新密码：
-                  <br>
-                  <input type="password" name="passwdNew" class = "text" id ="passwdNew" size="20">
-                </div>
-                <div>重复新密码：
-                  <br>
-                  <input type="password" name="passwdNewCheck" class = "text" id ="passwdNewCheck" size="20">
-                </div>
-                <br>
-                <input class="btn" type="submit" value ="确认修改密码">
-              </div>
+
+                <footer class="footer"></footer>
+
             </div>
-
-            <div id = "addressManage" class="row unshow">
-              <h1 class="page-header">管理收货地址 </h1>
-              <div>
-              </div>
-            </div>
-
           </div>
         </div>
-     </div>
+      </div> -->
 
-    <div id ="comBack" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; opacity: 0.5; z-index: 1002; background: rgb(0, 0, 0); display:none"></div>
-    <div  id ="comBody" class="comment ontainer-fluid col-md-6 col-md-offset-2" style="z-index:1005;left:0;right:0;top:10%; overflow: auto; margin-left:auto;margin-right:auto;display: none ">
-      <div class="container-fluid ">
-        <div class="row">
-          <div class="col-md-10 col-md-offset-1 ">
-              <h1 class="page-header comment-header">评价订单</h1>
-              <div class ="comment-body">
-                <div class= "row singleComment" id="comment0">
-                  <div class="col-md-4">
-                    <img border="0" src="../../static/customer/image/yangzhou.jpg" alt="扬州炒饭" width="160" height="120">
-                  </div>
-                  <div class="text-left">
-                    <div class="col-md-2 ">菜品名</div>
-                    <div class="col-md-5  mealName">扬州炒饭</div>
-                  </div>
-                  <br><br>
-                   <div class="text-left">
-                    <div class="col-md-2 ">价格</div>
-                    <div class="col-md-5 ">10.00元</div>
-                  </div>
-                  <br><br>
-                  <div class="text-left">
-                    <div class="col-md-2 ">评价</div>
-                    <div class="col-md-6 ">
-                      <div class="center" style="padding-left:50% padding-right:50%">
-                        <div class="bigStar fl star1" tabindex="1" role="button" aria-label="选择将商品评为一星。" ></div>
-                        <div class="bigStar fl star2" tabindex="2" role="button" aria-label="选择将商品评为两星。"></div>
-                        <div class="bigStar fl star3" tabindex="3" role="button" aria-label="选择将商品评为三星。"></div>
-                        <div class="bigStar fl star4" tabindex="4" role="button" aria-label="选择将商品评为四星。"></div>
-                        <div class="bigStar fl star5" tabindex="5" role="button" aria-label="选择将商品评为五星。"></div>
+        <div id ="comBack" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; opacity: 0.5; z-index: 1002; background: rgb(0, 0, 0); display:none"></div>
+
+        {% for order in orders %}
+          {% if order.status == 4 %}
+
+
+             <div   id =  "comment-{{order.id}}"" class="comment ontainer-fluid col-md-6 col-md-offset-2 combody" style="z-index:1005;left:0;right:0;top:10%; overflow: auto; margin-left:auto;margin-right:auto;display: none ">
+                <div class="container-fluid ">
+                    <div class="row">
+                      <div class="col-md-10 col-md-offset-1 ">
+                          <h1 class="page-header comment-header">评价订单</h1>
+
+                          {% for order_dish in order_dishes|index:order.id %}
+                            {{order_dish.dish.name}}
+
+                            <div class= "row singleComment" class = "{{order_dish.dish.name}}" >
+                              <div class="col-md-4">
+                                <img border="0" src="{{order_dish.dish.pic_path}}" alt="{{order_dish.dish.name}}" width="160" height="120">
+                              </div>
+                              <div class="text-left">
+                                <div class="col-md-2 ">菜品名</div>
+                                <div class="col-md-5  mealName">{{order_dish.dish.name}}</div>
+                              </div>
+                              <br><br>
+                               <div class="text-left">
+                                <div class="col-md-2 ">价格</div>
+                                <div class="col-md-5 mealPrice">{{order_dish.dish.price}}元</div>
+                              </div>
+                              <br><br>
+                              <div class="text-left">
+                                <div class="col-md-2 ">评价</div>
+                                <div class="col-md-6 ">
+                                  <div class="center" style="padding-left:50% padding-right:50%">
+                                    <div class="bigStar fl star1" tabindex="1" role="button" aria-label="选择将商品评为一星。" ></div>
+                                    <div class="bigStar fl star2" tabindex="2" role="button" aria-label="选择将商品评为两星。"></div>
+                                    <div class="bigStar fl star3" tabindex="3" role="button" aria-label="选择将商品评为三星。"></div>
+                                    <div class="bigStar fl star4" tabindex="4" role="button" aria-label="选择将商品评为四星。"></div>
+                                    <div class="bigStar fl star5" tabindex="5" role="button" aria-label="选择将商品评为五星。"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <br>
+                               <div class="text-left">
+                                <div class="col-md-offset-4 col-md-2 ">评论</div>
+                                <input type= "text" name="comment_text" class="col-md-5" style="padding:0;margin-left:15px">
+                              </div>
+                            </div>
+
+                          {% endfor %}
+
+                    <div class="row upload">
+                                <button class="  btn btn-default btn-lg fr btn-refuse" type="submit">取消评价</button>
+                                <button class="  btn btn-primary btn-lg fr btn-push submitCom" type="submit">提交评价</button>
+                          </div>
+
+                    <footer class="footer"></footer>
+
                       </div>
                     </div>
-                  </div>
-
-                  <div class="row upload">
-                    <button class="  btn btn-default btn-lg fr btn-refuse" type="submit">取消评价</button>
-                    <button class="  btn btn-primary btn-lg fr btn-push" type="submit">提交评价</button>
-                  </div>
-
                 </div>
-
-                <div class= "row singleComment" id="comment1">
-                  <div class="col-md-4">
-                    <img border="0" src="../../static/customer/image/yangzhou.jpg" alt="骨肉相连" width="160" height="120">
-                  </div>
-                  <div class="text-left">
-                    <div class="col-md-2 ">菜品名</div>
-                    <div class="col-md-5 mealName">骨肉相连</div>
-                  </div>
-                  <br><br>
-                   <div class="text-left">
-                    <div class="col-md-2 ">价格</div>
-                    <div class="col-md-5 ">5.00元</div>
-                  </div>
-                  <br><br>
-                  <div class="text-left">
-                    <div class="col-md-2 ">评价</div>
-                    <div class="col-md-6 ">
-                      <div class="center" style="padding-left:50% padding-right:50%">
-                        <div class="bigStar fl star1" tabindex="1" role="button" aria-label="选择将商品评为一星。" ></div>
-                        <div class="bigStar fl star2" tabindex="2" role="button" aria-label="选择将商品评为两星。"></div>
-                        <div class="bigStar fl star3" tabindex="3" role="button" aria-label="选择将商品评为三星。"></div>
-                        <div class="bigStar fl star4" tabindex="4" role="button" aria-label="选择将商品评为四星。"></div>
-                        <div class="bigStar fl star5" tabindex="5" role="button" aria-label="选择将商品评为五星。"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row upload">
-                    <button class="  btn btn-default btn-lg fr btn-refuse" type="submit">取消评价</button>
-                    <button class="  btn btn-primary btn-lg fr btn-push" type="submit">提交评价</button>
-                  </div>
-                </div>
-
-                <div class= "row singleComment" id="comment2">
-                  <div class="col-md-4">
-                    <img border="0" src="../../static/customer/image/yangzhou.jpg" alt="骨肉相连" width="160" height="120">
-                  </div>
-                  <div class="text-left">
-                    <div class="col-md-2 ">菜品名</div>
-                    <div class="col-md-5 mealName">骨肉相连</div>
-                  </div>
-                  <br><br>
-                   <div class="text-left">
-                    <div class="col-md-2 ">价格</div>
-                    <div class="col-md-5 ">5.00元</div>
-                  </div>
-                  <br><br>
-                  <div class="text-left">
-                    <div class="col-md-2 ">评价</div>
-                    <div class="col-md-6 ">
-                      <div class="center" style="padding-left:50% padding-right:50%">
-                        <div class="bigStar fl star1" tabindex="1" role="button" aria-label="选择将商品评为一星。"></div>
-                        <div class="bigStar fl star2" tabindex="2" role="button" aria-label="选择将商品评为两星。"></div>
-                        <div class="bigStar fl star3" tabindex="3" role="button" aria-label="选择将商品评为三星。"></div>
-                        <div class="bigStar fl star4" tabindex="4" role="button" aria-label="选择将商品评为四星。"></div>
-                        <div class="bigStar fl star5" tabindex="5" role="button" aria-label="选择将商品评为五星。"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row upload">
-                    <button class="  btn btn-default btn-lg fr btn-refuse" type="submit">取消评价</button>
-                    <button class="  btn btn-primary btn-lg fr btn-push" type="submit">提交评价</button>
-                  </div>
-                </div>
-              </div>
-
-              <br>
-              <br>
-              <br>
-
-              <!-- <div class="row upload">
-                <button class="  btn btn-default btn-lg fl btn-refuse" type="submit">取消评价</button>
-                <button class="  btn btn-primary btn-lg fr btn-push" type="submit">提交评价</button>
-              </div> -->
-              <footer class="footer"></footer>
-
           </div>
-        </div>
-      </div>
-    </div>
+
+          {% endif %}
+        {% endfor %}
 
 
-      <script src="../../static/common/js/jquery.min.js"></script>
-      <script src="../../static/common/js/csrf.js"></script>
-      <script src="../../static/common/bootstrap/js/bootstrap.min.js"></script>
-      <script src="../../static/common/bootstrap/js/npm.js"></script>
+        <script src="../../static/common/js/jquery.min.js"></script>
+        <script src="../../static/common/js/csrf.js"></script>
+        <script src="../../static/common/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../../static/common/bootstrap/js/npm.js"></script>
 
-      <script type="text/Javascript">
-        $(function(){
-          var orderNav =$("[href='#orderManage']");
-          var pwdNav   =$("[href='#pwdModify']");
-          var addNav   =$("[href='#addressManage']")
+        <script type="text/Javascript">
+          $(function(){
 
-          console.log(orderNav.text())
-          var orderMan =$("#orderManage");
-          var pwdMod=$("#pwdModify");
-          var addMan=$("#addressManage");
-          console.log(pwdNav.text())
-          orderNav.click(function(){
-            console.log("haha1");
-            $(".show").removeClass('show').addClass("unshow");
-            orderMan.addClass('show');
-          });
+            var orderNav =$("[href='#orderManage']");
+            var pwdNav   =$("[href='#pwdModify']");
+            var addNav   =$("[href='#addressManage']")
 
-          pwdNav.click(function(){
-            console.log("haha2");
-            $(".show").removeClass('show').addClass("unshow");
-            pwdMod.addClass('show');
-          });
+            var customer;
+            var orders;
+            var order_dishes;
+            var address;
 
-          addNav.click(function(){
-            console.log("haha3");
-            $(".show").removeClass('show').addClass("unshow");
-            addMan.addClass('show');
-          });
+            console.log(orderNav.text())
+            var orderMan =$("#orderManage");
+            var pwdMod=$("#pwdModify");
+            var addMan=$("#addressManage");
+            console.log(pwdNav.text())
+            orderNav.click(function(){
+              console.log("haha1");
+              $(".show").removeClass('show').addClass("unshow");
+              orderMan.addClass('show');
+            });
 
+            pwdNav.click(function(){
+              console.log("haha2");
+              $(".show").removeClass('show').addClass("unshow");
+              pwdMod.addClass('show');
+            });
 
-          // 实现点击星星变黄
-          var  allStar = $(".bigStar");
-          var  gradeSingle = 0;
-
-
-
-          console.log("here~");
-          allStar.click(function() {
-            var par = $(this).parent();
-            var child = par.children();
-            var iStr=  $(this).index();
-            var i = 0;
-            console.log($(this).index);
-            console.log('haha');
-            gradeSingle = $(this).attr("tabindex");
-            console.log("grade="+gradeSingle);
-            for(;i < 5; i++)
-            {
-              child.eq(i).removeClass('yellowStar');
-            }
-            i = 0;
-            $(this).addClass('yellowStar');
-
-            while(!child.eq(i).hasClass('yellowStar' )){
-              child.eq(i).addClass('yellowStar');
-              i ++;
-            }
-          });
-
-          //实现滑动星星变蓝
-          allStar.mouseover(function() {
-            var par = $(this).parent();
-            var child = par.children();
-            var iStr=  $(this).index();
-            var i = 0;
-            gradeSingle = 0;
-            for(;i < 5; i++)
-            {
-              if(child.eq(i).hasClass('yellowStar'))
-              {  gradeSingle = i+1;}
-              child.eq(i).removeClass('blueStar');
-              child.eq(i).removeClass('yellowStar');
-            }
-
-            i = 0;
-
-            $(this).addClass('blueStar');
-
-            while(!child.eq(i).hasClass('blueStar' )){
-              child.eq(i).addClass('blueStar');
-              i ++;
-            }
-          });
+            addNav.click(function(){
+              console.log("haha3");
+              $(".show").removeClass('show').addClass("unshow");
+              addMan.addClass('show');
+            });
 
 
-          allStar.mouseout(function() {
-            var par = $(this).parent();
-            var child = par.children();
-            var iStr=  $(this).index();
-            var i = 0;
-
-            for(;i < 5; i++)
-            {
-              child.eq(i).removeClass('blueStar');
-              child.eq(i).removeClass('yellowStar');
-            }
-
-            i = 0;
-            for(; i < gradeSingle;i++)
-            {
-              child.eq(i).addClass('yellowStar');
-            }
-          });
+            // 实现点击星星变黄
+            var  allStar = $(".bigStar");
+            var  gradeSingle = 0;
 
 
-          $("button.btn-order").click(function(){
-            $("#comBack").css('display', 'block');
-            $("#comBody").css('display', 'block');
-            //console.log('haha');
+
+            console.log("here~");
+            allStar.click(function() {
+              var par = $(this).parent();
+              var child = par.children();
+              var iStr=  $(this).index();
+              var i = 0;
+              console.log($(this).index);
+              console.log('haha');
+              gradeSingle = $(this).attr("tabindex");
+              console.log("grade="+gradeSingle);
+              for(;i < 5; i++)
+              {
+                child.eq(i).removeClass('yellowStar');
+              }
+              i = 0;
+              $(this).addClass('yellowStar');
+
+              while(!child.eq(i).hasClass('yellowStar' )){
+                child.eq(i).addClass('yellowStar');
+                i ++;
+              }
+            });
+
+            //实现滑动星星变蓝
+            allStar.mouseover(function() {
+              var par = $(this).parent();
+              var child = par.children();
+              var iStr=  $(this).index();
+              var i = 0;
+              gradeSingle = 0;
+              for(;i < 5; i++)
+              {
+                if(child.eq(i).hasClass('yellowStar'))
+                {  gradeSingle = i+1;}
+                child.eq(i).removeClass('blueStar');
+                child.eq(i).removeClass('yellowStar');
+              }
+
+              i = 0;
+
+              $(this).addClass('blueStar');
+
+              while(!child.eq(i).hasClass('blueStar' )){
+                child.eq(i).addClass('blueStar');
+                i ++;
+              }
+            });
+
+
+            allStar.mouseout(function() {
+              var par = $(this).parent();
+              var child = par.children();
+              var iStr=  $(this).index();
+              var i = 0;
+
+              for(;i < 5; i++)
+              {
+                child.eq(i).removeClass('blueStar');
+                child.eq(i).removeClass('yellowStar');
+              }
+
+              i = 0;
+              for(; i < gradeSingle;i++)
+              {
+                child.eq(i).addClass('yellowStar');
+              }
+            });
+
+
+            $("button.btn-order").click(function(){
+              var par = $(this).parent();
+              var order_id = par.children(".order-id").text();
+              var comment_id = '#comment-'+ order_id;
+              var comment_body = $(comment_id);
+              console.log('the comment_id is '+ comment_id);
+              console.log(comment_body.html());
+              $("#comBack").css('display', 'block');
+
+              comment_body.css('display', 'block');
+
+
+              $(".btn-refuse").click(function(){
+                  $("#comBack").css('display', 'none');
+                  comment_body.css('display', 'none');
+              })
+
+
+
+              $(".btn-push").click(function(){
+                  var sinCom = $(this).parents('.singleComment');
+                  console.log(sinCom.html());
+                  var star = $(sinCom).find(".bigStar");
+                  console.log(star.eq(1).html());
+                  var name = $(sinCom).find(".mealName").text();
+                  var grades = 0;
+                  var i = 0;
+                  while(star.eq(i).hasClass('yellowStar' )){
+                    grades++;
+                    i ++;
+                  }
+                  console.log("菜品名:"+ name +" ; 评分:" + grades);
+                  $("#comBack").css('display', 'none');
+                   comment_body.css('display', 'none');
+
+              })
+
+              $("#comBack").click(function(){
+                 $("#comBack").css('display', 'none');
+                  comment_body.css('display', 'none');
+              })
+
+              $(this).css('display','none');
+              $(this).parent().find(".btn").text("已经完成");
+            })
           })
-        })
 
-        $(".btn-refuse").click(function(){
-            $("#comBack").css('display', 'none');
-            $("#comBody").css('display', 'none');
-        })
 
-        $(".btn-push").click(function(){
-            var sinCom = $(this).parents('.singleComment');
-            console.log(sinCom.html());
-            var star = $(sinCom).find(".bigStar");
-            console.log(star.eq(1).html());
-            var name = $(sinCom).find(".mealName").text();
-            var grades = 0;
-            var i = 0;
-            while(star.eq(i).hasClass('yellowStar' )){
-              grades++;
-              i ++;
-            }
-            console.log("菜品名："+ name +" ; 评分" + grades);
-            $("#comBack").css('display', 'none');
-            $("#comBody").css('display', 'none');
-        })
+          $(".btn-cancel").click(function(){
 
-        $("#comBack").click(function(){
-           $("#comBack").css('display', 'none');
-           $("#comBody").css('display', 'none');
-        })
-
-        $(".btn-pay").mouseover(function(){
-          $(this).html("就去付款");
-        })
-
-        $(".btn-pay").mouseout(function(){
-          $(this).html("等待付款");
-        })
+              $(this).css('display','none');
+              $(this).parent().find(".btn").text("已经取消");
+          })
 
 
 
 
-      </script>
+
+          $(".btn-pay").mouseover(function(){
+            $(this).html("就去付款");
+          })
+
+          $(".btn-pay").mouseout(function(){
+            $(this).html("等待付款");
+          })
 
 
-    </body>
-  </html>
+
+          //修改密码
+          function submitPw(){
+          var oldPw = $("#passwdOld").val();
+          var newPw = $("#passwdNew").val();
+          var newPwCheck = $("#passwdNewCheck").val();
+          if (newPw != newPwCheck )
+            return false;
+          $.ajax({
+              url: '/user/updatePasswd',
+              type: 'post',
+              data: JSON.stringify({
+                "old_password": oldPw,
+                "new_password": newPw
+              }),
+
+            });
+
+            // .done(function( data ) {
+            //     console.log(data);  //data里面有后端返回给你各种数据，按照接口取出来用
+            // })
+        }
+
+        $("#submitBtn").click(submitPw());
+
+
+        //提交评价
+        function submitCom(){
+          var orderId;
+          var orderNum;//没写！
+          var dishId;
+          var dishGrade;
+          var dishComment;
+
+          var order_dish = {
+            dish_id:"",
+            grade_id:"",
+            comment:""
+          }
+          var order_dishes = new Array();
+
+          //循环，create order_dish 填入order_dishes里面
+          order_dishes.push(order_dish);
+
+
+          $.ajax({
+              url: '/customer/comment',
+              type: 'post',
+              data: JSON.stringify({
+                "order_id":order_id,
+                "order_dishes":order_dishes
+              }),
+              success: function (data) {
+                data
+              }
+            });
+        }
+
+
+        </script>
+
+
+      </body>
+    </html>
