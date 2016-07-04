@@ -14,18 +14,20 @@
 #restaurant-info {
     padding: 20px 20px 20px 20px;
 }
-#open_or_close{
-    padding: 30px 30px 30px 30px;
+#open-or-close, #banned-btn, #unauthorized-btn {
+    margin: 30px 30px 30px 30px;
 }
 
 #name {
     font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
 }
 
-body {
-    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
-}
-
 .my-btn-margin {
     margin: 10px 10px 10px 10px;
+}
+
+#orders {
+    position: fixed;
+    right: 5%;
+    bottom:auto;
 }

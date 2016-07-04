@@ -1,0 +1,460 @@
+{% load staticfiles %}
+
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="{% static 'common/js/jquery.min.js' %}"></script>
+    <script src="{% static 'common/js/csrf.js'%}"></script>
+    <script src="{% static 'common/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <title>订单确认</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'common/bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'customer/css/checkorder.css' %}"/>
+</head>
+
+<body>
+<div id="checkoutguide">
+    <div class="container">
+        <a class="checkoutguide-logo" href="/">扇贝订餐</a>
+        <span class="checkoutguide-text">订单信息</span>
+    </div>
+</div>
+
+<div class="container">
+    <div id="checkout-cart">
+        <div id="order-manager" class="checkout-order">
+            <div class="checkoutcart-title">
+                <p>订单详情</p>
+            </div>
+            <div class="checkoutcart-row tablehead">
+                <div class="cell dishname">商品</div>
+                <div class="cell dishquantity">份数</div>
+                <div class="cell dishprice">小计</div>
+            </div>
+            <div id="checkoutcart-dishlist">
+                <div class="checkoutcart-row">
+                    <div class="cell dishname">大鸡腿</div>
+                    <div class="cell dishquantity">2</div>
+                    <div class="cell dishprice">￥20.00</div>
+                </div>
+                <div class="checkoutcart-row">
+                    <div class="cell dishname">大茄子</div>
+                    <div class="cell dishquantity">2</div>
+                    <div class="cell dishprice">￥16.00</div>
+                </div>
+                <div class="checkoutcart-row">
+                    <div class="cell dishname">金针菇</div>
+                    <div class="cell dishquantity">4</div>
+                    <div class="cell dishprice">￥8.00</div>
+                </div>
+            </div>
+            <div class="checkoutcart-row extra">
+                <div class="cell dishname">配送费</div>
+                <div class="cell dishquantity"></div>
+                <div class="cell dishprice">￥5.00</div>
+            </div>
+            <div class="checkoutcart-total">
+                <p class="checkoutcart-totalprice">
+                    ￥<span id="totalprice">49</span>
+                </p>
+                <p class="checkoutcart-totalquantity">
+                    共<span id="totalquantity">6</span>份商品
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="checkout-content">
+        <div id="address-manager" class="checkout-select">
+            <div class="checkout-title">
+                收货地址
+                <a class="btn btn-link btn-link" data-toggle="modal" data-target="#addressdialog" onclick="showAddAddress()">
+                    添加新地址
+                </a>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item address-item" addrID="123">
+                    <div class="address-info">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        <p><span class="name">zhw</span> <span class="phone">18868119485</span></p>
+                        <p><span class="address">浙江大学玉泉校区学生宿舍7舍</span></p>
+                    </div>
+                    <div class="address-edit">
+                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
+                                data-target="#addressdialog" onclick="showEditAddress(this)">
+                            <small>编辑</small>
+                        </button>
+                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
+                                data-target="#confirmdialog" onclick="showDeleteAddress(this)">
+                            <small>删除</small>
+                        </button>
+                    </div>
+                </div>
+                <div class="list-group-item address-item" addrID="124">
+                    <div class="address-info">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        <p><span class="name">ZHW</span> <span class="phone">18868103729</span></p>
+                        <p><span class="address">浙江大学玉泉校区</span></p>
+                    </div>
+                    <div class="address-edit">
+                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
+                                data-target="#addressdialog" onclick="showEditAddress(this)">
+                            <small>编辑</small>
+                        </button>
+                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
+                                data-target="#confirmdialog">
+                            <small>删除</small>
+                        </button>
+                    </div>
+                </div>
+                <div class="list-group-item address-item" addrID="125">
+                    <div class="address-info">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        <p><span class="name">asdf</span> <span class="phone">18868112935</span></p>
+                        <p><span class="address">浙江大学紫金港校区</span></p>
+                    </div>
+                    <div class="address-edit">
+                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
+                                data-target="#addressdialog" onclick="showEditAddress(this)">
+                            <small>编辑</small>
+                        </button>
+                        <button type="button" class="btn btn-link btn-md" data-toggle="modal"
+                                data-target="#confirmdialog">
+                            <small>删除</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="payment-manager" class="checkout-select">
+            <div class="checkout-title">
+                付款方式
+            </div>
+            <div class="list-group">
+                <div class="list-group-item payment-item">
+                    <div class="payment-info">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        <p>在线支付</p>
+                        <p class="payment-detail">使用支付宝支付</p>
+                    </div>
+                </div>
+                <div class="list-group-item payment-item">
+                    <div class="payment-info">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                        <p>货到付款</p>
+                        <p class="payment-detail">送货上门后再付款</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-danger" id="btn-submit" onclick="submitOrder()">确认下单</button>
+        </div>
+    </div>
+</div>
+
+<!--地址编辑模态框-->
+<div class="modal fade" id="addressdialog" tabindex="-1" role="dialog" aria-labelledby="addressDialogLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="addressDialogLabel">title</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <!--<div class="form-group hidden">
+                        <label for="address-id" class="col-sm-2 col-xs-2 control-label">地址ID</label>
+                        <div class="col-sm-8 col-xs-8">
+                            <input type="number" class="form-control" id="address-id" required>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 col-xs-2 control-label">名字</label>
+                        <div class="col-sm-8 col-xs-8">
+                            <input type="text" class="form-control" id="name" maxlength="60" placeholder="请输入名字"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="col-sm-2 col-xs-2 control-label">地址</label>
+                        <div class="col-sm-8 col-xs-8">
+                            <input type="text" class="form-control" id="address" placeholder="请输入地址" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="col-sm-2 col-xs-2 control-label">电话</label>
+                        <div class="col-sm-8 col-xs-8">
+                            <input type="tel" class="form-control" id="phone" maxlength="15" placeholder="请输入手机号"
+                                   required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel-address">取消</button>
+                <button type="button" class="btn btn-primary" id="save-address" onclick="addressManage()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--确认模态框-->
+<div class="modal fade" id="confirmdialog" tabindex="-1" role="dialog" aria-labelledby="confirmDialogLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+            </div>
+            <div class="modal-body">
+                <p>确定删除收货地址？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancel-delete">取消</button>
+                <button type="button" class="btn btn-success" id="confirm-delete" onclick="deleteAddress()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    'use strict';
+    //initialize
+    $(function () {
+        $('[data-toggle="popover"]').popover();
+        $('.address-item').find('.address-edit').hide();
+        $('.address-item').first().addClass('chosen');
+        $('.payment-item').first().addClass('chosen');
+    })
+
+    $('.address-item').on('mouseenter', function () {
+        $(this).find('.address-edit').show();
+    })
+
+    $('.address-item').on('mouseleave', function () {
+        $(this).find('.address-edit').hide();
+    })
+
+    $('.address-item').on('click', function () {
+        $('.address-item').filter('.chosen').removeClass('chosen');
+        $(this).addClass('chosen');
+    })
+
+    $('.payment-item').on('click', function () {
+        $('.payment-item').filter('.chosen').removeClass('chosen');
+        $(this).addClass('chosen');
+    })
+
+    function showAddAddress() {
+        $('#addressDialogLabel').text("添加新地址");
+        $('#addressdialog').attr('type','add');
+        $('#addressdialog').attr('addrID', "");
+        $('#addressdialog input').val("");
+    }
+
+    function showEditAddress(btn) {
+        $('#addressDialogLabel').text("编辑地址");
+        $('#addressdialog').attr('type','update');
+        $('#addressdialog').attr('addrID', $(btn).parents('.address-item').attr('addrID'));
+        var addrinfo = $(btn).parents('.address-item').find('.address-info');
+        $('input#name').val(addrinfo.find('.name').text());
+        $('input#address').val(addrinfo.find('.address').text());
+        $('input#phone').val(addrinfo.find('.phone').text());
+    }
+
+    function showDeleteAddress(btn){
+        $('#confirmdialog').attr('addrID', $(btn).parents('.address-item').attr('addrID'));
+    }
+    //分割线
+
+    function dishObj(name, price, num){
+        this.name = name;
+        this.subtotal = price;
+        this.number = num;
+    }
+
+    function addrObj(id, name, address, phone){
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
+
+    var order = {
+        orderID : undefined,
+        total : undefined,
+        dishlist : [],
+    }
+
+    var addrlist = [];
+
+/*
+    order.orderID = {{ order.id }};
+    order.total = {{ order.total }};
+
+    {% for d in order_dishes %}
+        order.dishlist.push(new dishObj('{{d.dish.name}}', {{d.price}}, {{d.num}}));
+    {% endfor %}
+
+    {% for addr in addresses %}
+        addrlist.push(new addrObj({{addr.id}}, '{{addr.name}}', '{{addr.address}}', '{{addr.phone}}'));
+    {% endfor %}
+
+    function renderOrder(oid, total, dishes){
+        $('#order-manager').attr('orderID', String(oid));
+        var dishList = $('#checkoutcart-dishlist');
+        dishList.empty();
+        var count = 0;
+        for(var i=0; i < dishes.length; i++){
+            var item = $('<div>').addClass('checkoutcart-row');
+            var name = $('<div>').addClass('cell dishname').text(dishes[i].name);
+            var quantity = $('<div>').addClass('cell dishquantity').text(dishes[i].subtotal);
+            var price = $('<div>').addClass('cell dishprice').text('￥'+dishes[i].price);
+            item.append(name).append(quantity).append(price);
+            dishList.append(item);
+            count = count + dishes[i].price;
+        }
+        $('#totalprice').text(total+5);
+        $('#totalquantity').text(count);
+    }
+
+    function renderAddress(addresses) {
+        var addressList = $('#address-manager .list-group');
+        addressList.empty;
+        for (var i=0; i < addresses.length; i++){
+            var item = $('<div>').addClass('list-group-item address-item').attr('addrID', String(addresses[i].id));
+            var info = $('<div>').addClass('address-info');
+            var edit = $('<div>').addClass('address-edit');
+            item.append(info).append(edit);
+            var icon = $('<span>').addClass('glyphicon glyphicon-ok-sign').attr('aria-hidden','true');
+            var p1 = $('<p>');
+            var p2 = $('<p>');
+            var name= $('<span>').addClass('name').text(addresses[i].name);
+            var phone= $('<span>').addClass('phone').text(addresses[i].phone);
+            var address= $('<span>').addClass('address').text(addresses[i].address);
+            p1.append(name).append(phone);
+            p2.append(address);
+            info.append(icon).append(p1).append(p2);
+            var update = $('<button>').addClass('btn btn-link btn-md')
+                    .attr('data-toggle','modal').attr('data-target', '#addressdialog')
+                    .attr('onclick','showEditAddress(this)').html('<small>编辑</small>');
+            var del = $('<button>').addClass('btn btn-link btn-md')
+                    .attr('data-toggle','modal').attr('data-target', '#confirmdialog')
+                    .attr('onclick','showDeleteAddress(this)').html('<small>删除</small>');
+            edit.append(update).append(del);
+            addressList.append(item);
+        }
+    }
+ */
+
+    function addAddress() {
+        var name = $('#name').val();
+        var addr = $('#address').val();
+        var phone = $('#phone').val();
+        $.ajax({
+            url: "/user/manageAddress",
+            data: JSON.stringify({
+                type:'new',
+                name:name,
+                phone:phone,
+                address:addr
+            }),
+            type: "POST",
+        }).done(function (data) {
+            if (data.result === "success") {
+                addrlist.push(new addrObj(data.address_id, name, addr, phone));
+                renderAddress(addrlist);
+            }
+        })
+        $('#addressdialog').modal('hide');
+    }
+
+    function updateAddress() {
+        var id = $('#addressdialog').attr('addrID');
+        id = Number(id);
+        var name = $('#name').val();
+        var addr = $('#address').val();
+        var phone = $('#phone').val();
+        $.ajax({
+            url: "/user/manageAddress",
+            data:JSON.stringify({
+                type:'update',
+                address_id:id,
+                name:name,
+                phone:phone,
+                address:addr
+            }),
+            type:"POST"
+        }).done(function (data) {
+            if (data.result === "success"){
+                var updated = addrlist.filter(function (item) {
+                    return item.id === id;
+                })[0];
+                updated.name = name;
+                updated.phone = phone;
+                updated.address = addr;
+                renderAddress(addrlist);
+            }
+        })
+        $('#addressdialog').modal('hide');
+    }
+
+    function addressManage() {
+        var option = $('#addressdialog').attr('type');
+        if(option === "add")
+                addAddress();
+        else if (option === "update")
+                updateAddress();
+        else
+                $("#addressdialog").modal('hide');
+    }
+
+    function deleteAddress(){
+        var id = $('#confirmdialog').attr('addrID');
+        id = Number(id);
+        $.ajax({
+            url: "/user/manageAddress",
+            data:JSON.stringify({
+                type:'delete',
+                address_id:id
+            }),
+            type:"POST"
+        }).done(function (data) {
+            if (data.result === "success"){
+                var deleted = addrlist.filter(function (item) {
+                    return item.id === id;
+                })[0];
+                addrlist.shift(deleted);
+            }
+        })
+        $('#confirmdialog').modal('hide');
+    }
+
+    function submitOrder() {
+        var address_id = $('.address-item.chosen').attr('addrID');
+        address_id = Number(address_id);
+        $.ajax({
+            url: "/user/submitOrder",
+            data:JSON.stringify({
+                order_id: order.orderID,
+                address_id: address_id
+            }),
+            type: "POST"
+        }).done(function () {
+
+        })
+        alert("done!");
+    }
+
+
+</script>
+</body>
+</html>
