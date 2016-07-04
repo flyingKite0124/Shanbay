@@ -142,64 +142,7 @@ function btn_cancel_create_dish(e) {
     dish_create.hide('fast');
     create_btn_row.show('slow');
 }
-//var dish_item_format =
-//    '<div class="dish-item">\
-//        <div class="row">\
-//            <div class="col-md-2">\
-//                <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100%\
-//                     height=100%>\
-//            </div>\
-//            <div class="dish-info">\
-//                <div class="col-md-8">\
-//                    <ul class="list-group">\
-//                        <li class="list-group-item hidden dish-id">{{ dish.id }}</li>\
-//                        <li class="list-group-item">{{ dish.name }}</li>\
-//                        <li class="list-group-item">\
-//                            {{ dish.price }}<span class="glyphicon glyphicon-yen"></span>\
-//                        </li>\
-//                        <li class="list-group-item">{{ dish.introduction }}</li>\
-//                    </ul>\
-//                </div>\
-//                <div class="col-md-2 ">\
-//                    <button class="btn btn-primary btn-modify-dish my-btn-margin">修改</button>\
-//                    <br/>\
-//                    <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>\
-//                </div>\
-//            </div>\
-//            <div class="dish-modify">\
-//                <div class="col-md-8">\
-//                    <input disabled type="number" class="form-control dish-id hide"\
-//                           value="{{ dish.id }}">\
-//                    <div class="input-group" style="padding: 0 0 0 0;">\
-//                        <div class="input-group-addon">菜名</div>\
-//                        <input type="text" placeholder="菜名" class="form-control dish-name"\
-//                               value="{{ dish.name }}">\
-//                    </div>\
-//                    <div class="input-group">\
-//                        <div class="input-group-addon">\
-//                            <span class="glyphicon glyphicon-yen"></span>\
-//                        </div>\
-//                        <input type="number" class="form-control dish-price"\
-//                               placeholder="价格" value="{{ dish.price }}">\
-//                    </div>\
-//                    <div class="input-group">\
-//                        <div class="input-group-addon">\
-//                            菜品介绍\
-//                        </div>\
-//                        <textarea class="form-control dish-introduction"\
-//                                  placeholder="菜品介绍">{{ dish.introduction }}</textarea>\
-//                    </div>\
-//                </div>\
-//                <div class="col-md-2">\
-//                    <button class="btn btn-primary my-btn-margin btn-submit-modify-dish">确定\
-//                    </button>\
-//                    <br/>\
-//                    <button class="btn btn-primary my-btn-margin btn-cancel-modify-dish">取消\
-//                    </button>\
-//                </div>\
-//            </div>\
-//        </div>\
-//    </div>';
+
 function btn_submit_create_dish(e) {
     var dish = {
         type: 'new',
@@ -282,7 +225,6 @@ function btn_cancel_modify_restaurant(e, classification) {
 }
 
 function get_orders() {
-    var orders;
     $.ajax({
             url: "/restaurant/pollOrder",   // 填上接口中要求的url
             data: JSON.stringify(null),
@@ -293,8 +235,9 @@ function get_orders() {
         //请求成功时的回调函数
         .done(function (data) {
             if (data.result === 'success') {
-                orders = data.orders;
-                console.log(JSON.stringify(orders));
+                //console.log(data.order_list);
+                //console.log(typeof (data.order_list));
+                $('#order-list').replaceWith(data.order_list);
             }
             else {
                 alert('Fail to get orders');
@@ -303,8 +246,7 @@ function get_orders() {
         .fail(ajax_fail_handler);
 }
 
-
-function take_order(e){
+function take_order(e) {
     var data = {
         order_id: $(e).parents('.order-item').find('.order-id').html(),
         type: "accept",
@@ -329,7 +271,7 @@ function take_order(e){
         .fail(ajax_fail_handler);
 }
 
-function send_food(e){
+function send_food(e) {
     var data = {
         order_id: $(e).parents('.order-item').find('.order-id').html(),
         type: "sendout",
