@@ -1,0 +1,289 @@
+{% load staticfiles %}
+
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="{% static 'common/js/jquery.min.js' %}"></script>
+    <script src="{% static 'common/js/csrf.js'%}"></script>
+    <script src="{% static 'common/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <title>搜索结果</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'common/bootstrap/css/bootstrap.min.css' %}"/>
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .search-box {
+            float: right;
+            margin: 10px 0;
+            height: 32px;
+            border: 1px solid #cccccc;
+            background: #FFFFFF;
+            position: relative;
+            z-index: 3;
+        }
+
+        .search-btn {
+            float: right;
+            width: 46px;
+            text-align: center;
+            color: #999999;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            outline: 0;
+            background-color: transparent;
+        }
+
+        .search-input {
+            width: 236px;
+            border:0;
+            outline: 0;
+            transition:width .3s ease-in-out;
+        }
+
+        .search-btn, .search-input{
+            padding: 0 8px;
+            margin: 4px 0;
+            line-height: 24px;
+        }
+
+        input {
+            text-rendering: auto;
+            color: initial;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .searchresult-title {
+            font-size: 16px;
+            border-bottom: 2px solid #e6e6e6;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+        }
+
+        .searchresult-content {
+            border: 1px solid #dddddd;
+            margin-bottom: 15px;
+            background: #FFFFFF;
+            position: relative;
+        }
+
+        .clearfix:after {
+            content: ".";
+            display: block;
+            height: 0;
+            visibility: hidden;
+        }
+
+        .resurant-item {
+            position: relative;
+            background-color: #FFFFFF;
+            border-bottom: 1px #f5f5f5 solid;
+            width: 25%;
+            height: 140px;
+        }
+
+        .resurant-item:hover {
+            cursor: pointer;
+            background-color: #f5f5f5;
+        }
+
+        .resurant-logo {
+            padding: 20px;
+            color: #999999;
+            text-align: center;
+        }
+
+        .resurant-logo, .resurant-item {
+            float: left;
+            font-size: 12px;
+            position: relative;
+        }
+
+        .logo-icon {
+            display: block;
+            width: 70px;
+            height: 70px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            border:0;
+        }
+
+        .resurant-contnet {
+            padding: 20px;
+        }
+
+        .resurant-name {
+            font-size: 16px;
+            margin-bottom: 6px;
+            font-weight: 600;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #333333;
+        }
+
+        .resurant-open {
+            color: #FFFFFF;
+            background: #70bc46;
+            display: inline-block;
+            line-height: 20px;
+            margin-top: 20px;
+            padding: 0 6px;
+            border-radius: 3px;
+        }
+
+        .resurant-close {
+            color: #FFFFFF;
+            background: #666666;
+            display: inline-block;
+            line-height: 20px;
+            margin-top: 20px;
+            padding: 0 6px;
+            border-radius: 3px;
+        }
+
+        .dishtable {
+            background: #FFFFFF;
+            width: 100%;
+            margin-bottom: 15px;
+            border: 1px solid #dddddd;
+        }
+
+        table {
+            display: table;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        tbody {
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+
+        tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+
+        td {
+            display: table-cell;
+            vertical-align: inherit;
+        }
+
+        small {
+            font-size: .9em;
+            color: #888888;
+        }
+
+        .dishtable td {
+            padding: 11px 14px;
+            border: 0;
+            border-top: 1px solid #f5f5f5;
+        }
+
+        .dishtable a {
+            color: #333333;
+        }
+
+        .dishtable .dishname {
+            padding-left: 40px;
+        }
+
+        .dishtable .dishprice {
+            width: 200px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .dishtable .dishref {
+            width: 200px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .dishtable .dishref a {
+            background-color: #0080d9;
+            padding: 7px 30px;
+            color: #FFFFFF;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container search-bar">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="搜索商家">
+            <a class="search-btn glyphicon glyphicon-search"></a>
+        </div>
+    </div>
+    <div class="container search-result">
+        <div class="search-resurant">
+            <div class="searchresult-title">
+                商家
+            </div>
+            <div class="searchresult-content clearfix">
+                {% for restaurant in restaurants %}
+                    <a class="resurant-item" onclick="location.href='/customer/restaurant?rest_id={{restaurant.id}}'">
+                        <div class="resurant-logo">
+                            <img class="logo-icon" src="{{restaurant.logo_path}}">
+                        </div>
+                        <div class="resurant-contnet">
+                            <div class="resurant-name">{{restaurant.name}}</div>
+                            {% ifequal restaurant.status 1 %}
+                            <div class="resurant-open">营业中</div>
+                            {% else %}
+                            <div class="resurant-close">商家休息</div>
+                            {% endifequal %}
+                        </div>
+                    </a>
+                {% empty %}
+                <p>没有找到商家</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="search-dish">
+            <div class="searchresult-title">
+                美食
+            </div>
+            <table class="dishtable">
+                <tbody>
+                    {% for dish in dishes %}
+                    <tr class="dishitem">
+                        <td class="dishname"><a ><span>{{dish.name}}<br><small>{{dish.restaurant.name}}</small></span></a></td>
+                        <td class="dishprice">￥{{dish.price}}</td>
+                        <td class="dishref" onclick="'/customer/restaurant?rest_id={{restaurant.id}}'"><a>去购买</a></td>
+                    </tr>
+                    {% empty %}
+                    <p>没有找到商品</p>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $('.search-box a').click(function () {
+            location.href="/customer/search?queryString="+$('.search-box input').val();
+        })
+    </script>
+</body>
+</html>

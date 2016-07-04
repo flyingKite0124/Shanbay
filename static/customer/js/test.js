@@ -3,7 +3,8 @@
  */
 
 $(document).ready(function () {
-    $("#testBtn").click(testCheckOrder)
+    $("#testBtn").click(testCheckOrder);
+    $("#checkorder").click(getCheckorder);
 });
 
 function testCheckOrder() {
@@ -52,4 +53,20 @@ function testCheckOrder() {
     //}, function (data) {
     //    alert("success")
     //}, "json")
+}
+
+
+function getCheckorder(){
+    $.ajax({
+        url: "/customer/checkorder",
+        data: {
+            order_id: 1
+        },
+        type:"GET",
+        contentType:"application/json"
+    }).done(function (data){
+        alert("done");
+    }).fail(function (xhr, statu) {
+        alert(statu);
+    })
 }
