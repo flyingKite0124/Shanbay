@@ -243,14 +243,51 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="cash-flow">
-                    The bottom part of the page gives you a couple of options:
+                    <table class="table table-striped">
+                        <caption>菜品统计</caption>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>菜名</th>
+                            <th>销量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>白菜鲜肉</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>虾仁鲜肉</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>鸡蛋汤面</td>
+                            <td>200</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div id="orders">
-    AAAAAAAAAAAAAAAAAA
+    <div class="dropup">
+        <button class="btn btn-default dropdown-toggle" type="button" id="orderlist-btn" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+            订单
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="orderlist-btn" id="orderlist">
+            <li><a role="button">Another action</a></li>
+            <li><a role="button">Something else here</a></li>
+            <li><a role="button">Separated link</a></li>
+        </ul>
+    </div>
 </div>
 
 <script src="/static/common/js/jquery.min.js"></script>
@@ -266,7 +303,7 @@
         var close_btn = $('#close_restaurant');
         var status = {{ restaurant.status }};
         var classification = {{ restaurant.classification }};
-        switch (status){
+        switch (status) {
             case 0:
                 show_unauthorized_btn();
                 break;
@@ -302,7 +339,7 @@
         $('#btn-cancel-modify-restaurant').click(function (e) {
             btn_cancel_modify_restaurant(e, classification);
         });
-        setInterval(get_orders, 10000);
+{#        setInterval(get_orders, 10000);#}
     })
 </script>
 </body>
