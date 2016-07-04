@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>main page</title>
+    {% block title %}
+
+    {% endblock %}
+
 
     <link rel="stylesheet" type="text/css" href="/static/common/bootstrap/css/bootstrap.min.css"/>
 <!--     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet'>
@@ -22,6 +25,9 @@
 
      <link rel="stylesheet" type="text/css" href="/static/customer/css/footer.css" />
     
+    {% block css %}
+
+    {% endblock %}
 
   </head>
 
@@ -43,7 +49,7 @@
 	                </button><!--//nav-toggle-->
 	            </div><!--//navbar-header-->
 	            <div class="navbar-collapse collapse" id="navbar-collapse">
-	                <ul class="nav navbar-nav">	                
+	                <ul class="nav navbar-nav">
 	                    <li class="nav-item sr-only active"><a class="scrollto" href="#promo">Home</a></li>
 	                    {% if issigned %}
 	                    <li class="nav-item">
@@ -127,6 +133,11 @@
     <script src="/static/common/js/csrf.js"></script>
     <script src="/static/common/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/customer/js/logout.js"></script>
+
+    {% block script %}
+
+	{% endblock %}
+
   </body>
 </html>
 

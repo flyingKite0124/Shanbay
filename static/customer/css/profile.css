@@ -1,0 +1,73 @@
+   .show{
+     display: block;
+   }
+
+   .unshow{
+     display: none;
+   }
+
+   .btn-order,.btn-pay,.btn-cancel{
+     padding-top: 0;
+     padding-bottom: 0;
+   }
+
+   .comment{
+     position: fixed;
+     background-color: #fff;
+     padding:0;
+   }
+
+   .bigStar,.blueStar,.yellowStar{
+     background: url(/static/customer/image/star.png) no-repeat;
+     width: 46px;
+     height: 45px;
+     background-size: 163px 275px
+   }
+
+   .bigStar{
+     background-position: -6px -387px;
+     outline-width: 0;
+     background-size: 326px 550px
+   }
+
+   .blueStar{
+     background-position: -51px -387px;
+     background-size: 326px 550px
+   }
+
+   .yellowStar{
+     background-position: -96px -387px;
+     background-size: 326px 550px
+   }
+
+   .fl{
+     float: left;
+   }
+
+   .fr{
+     float: right;
+   }
+
+   .di{
+     display: inline;
+   }
+   .center{
+     margin-left: auto;
+     margin-right:auto;
+   }
+
+   .footer{
+     padding-top: 20px;
+     padding-bottom: 20px;
+     color: #767676;
+     text-align: center;
+   }
+
+   .singleComment{
+     margin-bottom: 10px;
+   }
+
+   .upload{
+     /*position: absolute;*/
+     /*bottom:0;*/
+   }
