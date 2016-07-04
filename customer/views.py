@@ -321,7 +321,7 @@ def comment(request):
         if request.session.get("issigned","False")=="True":
             postObj=json.loads(request.body)
             order_id=postObj["order_id"]
-            order_dishes=postObj["order_id"]
+            order_dishes=postObj["order_dishes"]
             order=Order.objects.get(pk=order_id)
             order.status=const.order["FINISHED"]
             order.save()

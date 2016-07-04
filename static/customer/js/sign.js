@@ -1,8 +1,9 @@
-function sign_in(e) {
+function sign_in() {
     data = {
         phone: $('#username').val(),
         password: $('#password').val(),
     };
+    console.log(data)
     $.ajax({
             url: "/customer/signIn",   // 填上接口中要求的url
             data: JSON.stringify(data),
@@ -19,4 +20,5 @@ function sign_in(e) {
                 alert('Username and password are not compitable.');
             }
         })
+    e.preventDefault();
 }
