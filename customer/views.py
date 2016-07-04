@@ -28,10 +28,10 @@ def index(request):
                 pk=int(request.session.get("customer_id")))
         else:
             content_dict["issigned"] = False
-        content_dict["restaurant"] = dict()
-        content_dict["restaurant"]["open"] = Restaurant.objects.filter(
+        content_dict["restaurants"] = dict()
+        content_dict["restaurants"]["open"] = Restaurant.objects.filter(
             status=const.restaurant["OPENING"])
-        content_dict["restaurant"]["close"] = Restaurant.objects.filter(
+        content_dict["restaurants"]["close"] = Restaurant.objects.filter(
             status=const.restaurant["CLOSED"])
         return render(request, "customer/index.html", content_dict)
     else:
