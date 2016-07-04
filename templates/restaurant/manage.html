@@ -1,346 +1,344 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+{% extends "restaurant/base.html" %}
+
+{% block title %}
     <title>{{ restaurant.name }}</title>
+{% endblock %}
 
-    <!-- Bootstrap -->
-    <link href="/static/common/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+{% block css %}
     <link href="/static/restaurant/css/manage.css" rel="stylesheet">
+{% endblock %}
 
-</head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-3">
-            <h1 id="name">{{ restaurant.name }}</h1>
-            <ul class="list-unstyled">
-                <li><b style="padding: 0 10px 0 0">电话</b>{{ restaurant.phone }}</li>
-                <li><b style="padding: 0 10px 0 0">地址</b>{{ restaurant.address }}</li>
-            </ul>
-        </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <button type="button" class="btn btn-danger btn-lg disabled hide"
-                    id="banned-btn">封停中
-            </button>
-            <button type="button" class="btn btn-default btn-lg disabled hide"
-                    id="unauthorized-btn">未认证
-            </button>
-            <div class="btn-group" role="group" aria-label="open or close" id="open-or-close">
-                <button type="button" class="btn btn-default btn-lg"
-                        id="open_restaurant">营业
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <h1 id="name">{{ restaurant.name }}</h1>
+                <ul class="list-unstyled">
+                    <li><b style="padding: 0 10px 0 0">电话</b>{{ restaurant.phone }}</li>
+                    <li><b style="padding: 0 10px 0 0">地址</b>{{ restaurant.address }}</li>
+                </ul>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-danger btn-lg disabled hide"
+                        id="banned-btn">封停中
                 </button>
-                <button type="button" class="btn btn-default btn-lg"
-                        id="close_restaurant">打烊
+                <button type="button" class="btn btn-default btn-lg disabled hide"
+                        id="unauthorized-btn">未认证
                 </button>
+                <div class="btn-group" role="group" aria-label="open or close" id="open-or-close">
+                    <button type="button" class="btn btn-default btn-lg"
+                            id="open_restaurant">营业
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg"
+                            id="close_restaurant">打烊
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row" style="margin-top: 0">
-        <div class="col-md-1" style="margin-top: 0"></div>
-        <div class="col-md-7" style="padding-top: 0">
-            <b style="padding: 0 10px 0 0">描述</b>
-            {{ restaurant.introduction }}
+        <div class="row" style="margin-top: 0">
+            <div class="col-md-1" style="margin-top: 0"></div>
+            <div class="col-md-7" style="padding-top: 0">
+                <b style="padding: 0 10px 0 0">描述</b>
+                {{ restaurant.introduction }}
+            </div>
         </div>
-    </div>
-    <div class="row" style="margin-top: 20px">
-        <div role="navigation" class="col-md-2">
-            <!-- Nav tabs -->
-            <ul class="nav nav-pills nav-stacked" role="tablist">
-                <li role="presentation" class="active">
-                    <a data-target="#dishes" aria-controls="dishes"
-                       role="tab" data-toggle="tab">菜品管理</a>
-                </li>
-                <li role="presentation">
-                    <a data-target="#profile" aria-controls="profile"
-                       role="tab" data-toggle="tab">店铺信息</a>
-                </li>
-                <li role="presentation">
-                    <a data-target="#cash-flow" aria-controls="cash-flow"
-                       role="tab" data-toggle="tab">流水查询</a>
-                </li>
-            </ul>
-        </div>
-        <!-- Tab panes -->
-        <div class="col-md-10">
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="dishes">
-                    <div id="dish-list">
-                        {% for dish in restaurant.dish_set.all %}
-                            <div class="dish-item">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100%
-                                             height=100%>
-                                    </div>
-                                    <div class="dish-info">
-                                        <div class="col-md-8">
-                                            <ul class="list-group">
-                                                <li class="list-group-item hidden dish-id">{{ dish.id }}</li>
-                                                <li class="list-group-item">{{ dish.name }}</li>
-                                                <li class="list-group-item">
-                                                    {{ dish.price }}<span class="glyphicon glyphicon-yen"></span>
-                                                </li>
-                                                <li class="list-group-item">{{ dish.introduction }}</li>
-                                            </ul>
+        <div class="row" style="margin-top: 20px">
+            <div role="navigation" class="col-md-2">
+                <!-- Nav tabs -->
+                <ul class="nav nav-pills nav-stacked" role="tablist">
+                    <li role="presentation" class="active">
+                        <a data-target="#dishes" aria-controls="dishes"
+                           role="tab" data-toggle="tab">菜品管理</a>
+                    </li>
+                    <li role="presentation">
+                        <a data-target="#profile" aria-controls="profile"
+                           role="tab" data-toggle="tab">店铺信息</a>
+                    </li>
+                    <li role="presentation">
+                        <a data-target="#cash-flow" aria-controls="cash-flow"
+                           role="tab" data-toggle="tab">流水查询</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Tab panes -->
+            <div class="col-md-10">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="dishes">
+                        <div id="dish-list">
+                            {% for dish in restaurant.dish_set.all %}
+                                <div class="dish-item">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100%
+                                                 height=100%>
                                         </div>
-                                        <div class="col-md-2 ">
-                                            <button class="btn btn-primary btn-modify-dish my-btn-margin">修改</button>
-                                            <br/>
-                                            <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>
+                                        <div class="dish-info">
+                                            <div class="col-md-8">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item hidden dish-id">{{ dish.id }}</li>
+                                                    <li class="list-group-item">{{ dish.name }}</li>
+                                                    <li class="list-group-item">
+                                                        {{ dish.price }}<span class="glyphicon glyphicon-yen"></span>
+                                                    </li>
+                                                    <li class="list-group-item">{{ dish.introduction }}</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-2 ">
+                                                <button class="btn btn-primary btn-modify-dish my-btn-margin">修改
+                                                </button>
+                                                <br/>
+                                                <button class="btn btn-danger btn-delete-dish my-btn-margin">删除</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="dish-modify">
-                                        <div class="col-md-8">
-                                            <input disabled type="number" class="form-control dish-id hide"
-                                                   value="{{ dish.id }}">
-                                            <div class="input-group" style="padding: 0 0 0 0;">
-                                                <div class="input-group-addon">菜名</div>
-                                                <input type="text" placeholder="菜名" class="form-control dish-name"
-                                                       value="{{ dish.name }}">
-                                            </div>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-yen"></span>
+                                        <div class="dish-modify">
+                                            <div class="col-md-8">
+                                                <input disabled type="number" class="form-control dish-id hide"
+                                                       value="{{ dish.id }}">
+                                                <div class="input-group" style="padding: 0 0 0 0;">
+                                                    <div class="input-group-addon">菜名</div>
+                                                    <input type="text" placeholder="菜名" class="form-control dish-name"
+                                                           value="{{ dish.name }}">
                                                 </div>
-                                                <input type="number" class="form-control dish-price"
-                                                       placeholder="价格" value="{{ dish.price }}">
-                                            </div>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    菜品介绍
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-yen"></span>
+                                                    </div>
+                                                    <input type="number" class="form-control dish-price"
+                                                           placeholder="价格" value="{{ dish.price }}">
                                                 </div>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        菜品介绍
+                                                    </div>
                                                 <textarea class="form-control dish-introduction"
                                                           placeholder="菜品介绍">{{ dish.introduction }}</textarea>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button class="btn btn-primary my-btn-margin btn-submit-modify-dish">确定
-                                            </button>
-                                            <br/>
-                                            <button class="btn btn-primary my-btn-margin btn-cancel-modify-dish">取消
-                                            </button>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-primary my-btn-margin btn-submit-modify-dish">确定
+                                                </button>
+                                                <br/>
+                                                <button class="btn btn-primary my-btn-margin btn-cancel-modify-dish">取消
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% empty %}
-                            <p>您的店铺目前空空如也</p>
-                        {% endfor %}
-                    </div>
-                    <div class="row text-center">
-                        <button class="btn btn-success btn-lg my-btn-margin"
-                                id="btn-create-dish">添加菜品
-                        </button>
-                    </div>
-                    <div class="row" id="dish-create">
-                        <div class="col-md-2 text-center">
-                            <h3><b>添加菜品</b></h3>
+                            {% empty %}
+                                <p>您的店铺目前空空如也</p>
+                            {% endfor %}
                         </div>
-                        <div class="col-md-8">
-                            <div class="input-group" style="padding: 0 0 0 0;">
-                                <div class="input-group-addon">菜名</div>
-                                <input type="text" placeholder="菜名" class="form-control dish-name">
+                        <div class="row text-center">
+                            <button class="btn btn-success btn-lg my-btn-margin"
+                                    id="btn-create-dish">添加菜品
+                            </button>
+                        </div>
+                        <div class="row" id="dish-create">
+                            <div class="col-md-2 text-center">
+                                <h3><b>添加菜品</b></h3>
                             </div>
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-yen"></span>
+                            <div class="col-md-8">
+                                <div class="input-group" style="padding: 0 0 0 0;">
+                                    <div class="input-group-addon">菜名</div>
+                                    <input type="text" placeholder="菜名" class="form-control dish-name">
                                 </div>
-                                <input type="number" class="form-control dish-price" placeholder="价格">
-                            </div>
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    菜品介绍
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-yen"></span>
+                                    </div>
+                                    <input type="number" class="form-control dish-price" placeholder="价格">
                                 </div>
-                                <textarea class="form-control dish-introduction" placeholder="菜品介绍"></textarea>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        菜品介绍
+                                    </div>
+                                    <textarea class="form-control dish-introduction" placeholder="菜品介绍"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary my-btn-margin" id="btn-submit-create-dish">确定</button>
-                            <br/>
-                            <button class="btn btn-primary my-btn-margin" id="btn-cancel-create-dish">取消</button>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary my-btn-margin" id="btn-submit-create-dish">确定</button>
+                                <br/>
+                                <button class="btn btn-primary my-btn-margin" id="btn-cancel-create-dish">取消</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="profile">
-                    <div class="row">
-                        <form id="restaurant-info">
-                            <div class="form-group">
-                                <label for="restaurant-name">餐厅名字</label>
-                                <input type="text" class="form-control" id="restaurant-name"
-                                       placeholder="餐厅名字" value="{{ restaurant.name }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="restaurant-phone">电话</label>
-                                <input type="number" class="form-control" id="restaurant-phone"
-                                       placeholder="157xxxxxxxx" value="{{ restaurant.phone }}" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="restaurant-address">地址</label>
-                                <input type="text" class="form-control" id="restaurant-address"
-                                       placeholder="xx市xx区xx路xx号" value="{{ restaurant.address }}" disabled>
-                            </div>
+                    <div role="tabpanel" class="tab-pane fade" id="profile">
+                        <div class="row">
+                            <form id="restaurant-info">
+                                <div class="form-group">
+                                    <label for="restaurant-name">餐厅名字</label>
+                                    <input type="text" class="form-control" id="restaurant-name"
+                                           placeholder="餐厅名字" value="{{ restaurant.name }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="restaurant-phone">电话</label>
+                                    <input type="number" class="form-control" id="restaurant-phone"
+                                           placeholder="157xxxxxxxx" value="{{ restaurant.phone }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="restaurant-address">地址</label>
+                                    <input type="text" class="form-control" id="restaurant-address"
+                                           placeholder="xx市xx区xx路xx号" value="{{ restaurant.address }}" disabled>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="restaurant-classification">类型</label>
-                                <div class="form-control">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification0"
-                                               value="0"
-                                               disabled
-                                                {% if restaurant.classification == 0 %}
-                                               checked
-                                                {% endif %}
-                                        > 正餐
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification1"
-                                               value="1"
-                                               disabled
-                                                {% if restaurant.classification == 1 %}
-                                               checked
-                                                {% endif %}
-                                        > 小吃
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification2"
-                                               value="2"
-                                               disabled
-                                                {% if restaurant.classification == 2 %}
-                                               checked
-                                                {% endif %}
-                                        > 烧烤
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="restaurant-classification" id="classification3"
-                                               value="3"
-                                               disabled
-                                                {% if restaurant.classification == 3 %}
-                                               checked
-                                                {% endif %}
-                                        > 酒店
-                                    </label>
+                                <div class="form-group">
+                                    <label for="restaurant-classification">类型</label>
+                                    <div class="form-control">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="restaurant-classification" id="classification0"
+                                                   value="0"
+                                                   disabled
+                                                    {% if restaurant.classification == 0 %}
+                                                   checked
+                                                    {% endif %}
+                                            > 正餐
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="restaurant-classification" id="classification1"
+                                                   value="1"
+                                                   disabled
+                                                    {% if restaurant.classification == 1 %}
+                                                   checked
+                                                    {% endif %}
+                                            > 小吃
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="restaurant-classification" id="classification2"
+                                                   value="2"
+                                                   disabled
+                                                    {% if restaurant.classification == 2 %}
+                                                   checked
+                                                    {% endif %}
+                                            > 烧烤
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="restaurant-classification" id="classification3"
+                                                   value="3"
+                                                   disabled
+                                                    {% if restaurant.classification == 3 %}
+                                                   checked
+                                                    {% endif %}
+                                            > 酒店
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="restaurant-introduction">餐厅介绍</label>
+                                <div class="form-group">
+                                    <label for="restaurant-introduction">餐厅介绍</label>
                             <textarea class="form-control" rows="3" id="restaurant-introduction" disabled
                                       placeholder="我们餐厅的菜特别好吃">{{ restaurant.introduction }}</textarea>
-                            </div>
-                        </form>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row text-center my-btn-margin" id="btn-modify-restaurant-row">
+                            <button class="btn btn-primary" id="btn-modify-restaurant">修改</button>
+                        </div>
+                        <div class="row text-center" id="btn-submit-or-cancel-modify-restaurant">
+                            <button class="btn btn-primary my-btn-margin" id="btn-submit-modify-restaurant">确认</button>
+                            <button class="btn btn-primary my-btn-margin" id="btn-cancel-modify-restaurant">取消</button>
+                        </div>
                     </div>
-                    <div class="row text-center my-btn-margin" id="btn-modify-restaurant-row">
-                        <button class="btn btn-primary" id="btn-modify-restaurant">修改</button>
+                    <div role="tabpanel" class="tab-pane fade" id="cash-flow">
+                        <table class="table table-striped">
+                            <caption>菜品统计</caption>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>菜名</th>
+                                <th>销量</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>白菜鲜肉</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>虾仁鲜肉</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>鸡蛋汤面</td>
+                                <td>200</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="row text-center" id="btn-submit-or-cancel-modify-restaurant">
-                        <button class="btn btn-primary my-btn-margin" id="btn-submit-modify-restaurant">确认</button>
-                        <button class="btn btn-primary my-btn-margin" id="btn-cancel-modify-restaurant">取消</button>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="cash-flow">
-                    <table class="table table-striped">
-                        <caption>菜品统计</caption>
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>菜名</th>
-                            <th>销量</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>白菜鲜肉</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>虾仁鲜肉</td>
-                            <td>20</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>鸡蛋汤面</td>
-                            <td>200</td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div id="orders">
-    <div class="dropup">
-        <button class="btn btn-default dropdown-toggle" type="button" id="orderlist-btn" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">
-            订单
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="orderlist-btn" id="orderlist">
-            <li><a role="button">Another action</a></li>
-            <li><a role="button">Something else here</a></li>
-            <li><a role="button">Separated link</a></li>
-        </ul>
+    <div id="orders">
+        <div class="dropup">
+            <button class="btn btn-default dropdown-toggle" type="button" id="orderlist-btn" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                订单
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="orderlist-btn" id="orderlist">
+                <li><a role="button">Another action</a></li>
+                <li><a role="button">Something else here</a></li>
+                <li><a role="button">Separated link</a></li>
+            </ul>
+        </div>
     </div>
-</div>
+{% endblock %}
 
-<script src="/static/common/js/jquery.min.js"></script>
-<script src="/static/common/js/csrf.js"></script>
-<script src="/static/common/bootstrap/js/bootstrap.js"></script>
-<script src="/static/restaurant/js/manage.js"></script>
-<script>
-    $(document).ready(function () {
-        //这里的代码会在整个html文档加载完成后执行
-        //你应该在此进行各种初始化，比如注册你的回调函数
-        var open_or_close;
-        var open_btn = $('#open_restaurant');
-        var close_btn = $('#close_restaurant');
-        var status = {{ restaurant.status }};
-        var classification = {{ restaurant.classification }};
-        switch (status) {
-            case 0:
-                show_unauthorized_btn();
-                break;
-            case 3:
-                show_banned_btn();
-                break;
-            case 1:
-            case 2:
-                if (status === 1)
-                    open_or_close = open_btn;
-                else
-                    open_or_close = close_btn;
-                open_or_close.removeClass('btn-default');
-                open_or_close.addClass('btn-warning active');
-                break;
-        }
-        open_btn.click(open_restaurant);
-        close_btn.click(close_restaurant);
-        $('.btn-modify-dish').click(btn_modify_dish);
-        $('.dish-modify').hide();
-        $('.btn-cancel-modify-dish').click(btn_cancel_modify_dish);
-        $('.btn-submit-modify-dish').click(btn_submit_modify_dish);
-        $('.btn-delete-dish').click(btn_delete_dish);
 
-        $('#btn-create-dish').click(btn_create_dish);
-        $('#dish-create').hide();
-        $('#btn-submit-create-dish').click(btn_submit_create_dish);
-        $('#btn-cancel-create-dish').click(btn_cancel_create_dish);
+{% block script %}
+    <script src="/static/restaurant/js/manage.js"></script>
+    <script>
+        $(document).ready(function () {
+            //这里的代码会在整个html文档加载完成后执行
+            //你应该在此进行各种初始化，比如注册你的回调函数
+            var open_or_close;
+            var open_btn = $('#open_restaurant');
+            var close_btn = $('#close_restaurant');
+            var status = {{ restaurant.status }};
+            var classification = {{ restaurant.classification }};
+            switch (status) {
+                case 0:
+                    show_unauthorized_btn();
+                    break;
+                case 3:
+                    show_banned_btn();
+                    break;
+                case 1:
+                case 2:
+                    if (status === 1)
+                        open_or_close = open_btn;
+                    else
+                        open_or_close = close_btn;
+                    open_or_close.removeClass('btn-default');
+                    open_or_close.addClass('btn-warning active');
+                    break;
+            }
+            open_btn.click(open_restaurant);
+            close_btn.click(close_restaurant);
+            $('.btn-modify-dish').click(btn_modify_dish);
+            $('.dish-modify').hide();
+            $('.btn-cancel-modify-dish').click(btn_cancel_modify_dish);
+            $('.btn-submit-modify-dish').click(btn_submit_modify_dish);
+            $('.btn-delete-dish').click(btn_delete_dish);
 
-        $('#btn-submit-or-cancel-modify-restaurant').hide();
-        $('#btn-modify-restaurant').click(btn_modify_restaurant);
-        $('#btn-submit-modify-restaurant').click(btn_submit_modify_restaurant);
-        $('#btn-cancel-modify-restaurant').click(function (e) {
-            btn_cancel_modify_restaurant(e, classification);
-        });
-{#        setInterval(get_orders, 10000);#}
-    })
-</script>
-</body>
-</html>
+            $('#btn-create-dish').click(btn_create_dish);
+            $('#dish-create').hide();
+            $('#btn-submit-create-dish').click(btn_submit_create_dish);
+            $('#btn-cancel-create-dish').click(btn_cancel_create_dish);
+
+            $('#btn-submit-or-cancel-modify-restaurant').hide();
+            $('#btn-modify-restaurant').click(btn_modify_restaurant);
+            $('#btn-submit-modify-restaurant').click(btn_submit_modify_restaurant);
+            $('#btn-cancel-modify-restaurant').click(function (e) {
+                btn_cancel_modify_restaurant(e, classification);
+            });
+            {#        setInterval(get_orders, 10000);#}
+        })
+    </script>
+{% endblock %}
