@@ -47,9 +47,10 @@ $(".username").blur(function(){
 
 function slide(){
     console.log("fuck");
-    $("#restname").css("display","block");
-    $("#introduction").css("display","block");
-    $("#address").css("display","block");
+    //$("#restname").css("display","block");
+    //$("#introduction").css("display","block");
+    //$("#address").css("display","block");
+    $("#extra-sign-info").show('fast');
     $("#sign-in").unbind();
     $("#sign-in").click(sign_up);
     $("#sign-in").text('注册');
@@ -58,9 +59,11 @@ function slide(){
 
 
 function hide(){
-    $("#restname").css("display","none");
-    $("#introduction").css("display","none");
-    $("#address").css("display","none");
+    //$("#restname").css("display","none");
+    //$("#introduction").css("display","none");
+    //$("#address").css("display","none");
+    $("#extra-sign-info").hide('fast');
+
     $("#sign-up").unbind();
     $('#sign-up').click(sign_in);
     $('#sign-up').text('登陆');
