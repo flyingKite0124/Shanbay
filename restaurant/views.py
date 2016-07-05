@@ -84,6 +84,7 @@ def signUp(request):
                 newRestaurant.address = address
                 newRestaurant.classification = classification
                 newRestaurant.status = status
+                newRestaurant.logo_path = "/static/restaurant/image/"+restaurant_name+".jpg"
                 newRestaurant.save()
                 request.session["mID"] = newRestaurant.id
                 print "mID: " ,request.session["mID"]
@@ -253,6 +254,7 @@ def manageDish(request):
                 name = data["name"]
                 price = data["price"]
                 introduction = data["introduction"]
+                pic_path = "/static/restaurant/image/"+name+".jpg"
                 try:
                     dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant)
                     dish.save()
