@@ -43,3 +43,7 @@
     -webkit-border-radius: 4px;
     padding: 3px 3px 3px 3px;
 }
+
+.btn-order-operation {
+    margin: 20px 20px 20px 20px;
+}

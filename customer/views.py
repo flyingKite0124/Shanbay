@@ -122,6 +122,7 @@ def profile(request):
         global const
         content_dict = dict()
         if request.session.get("issigned", "False")=="True":
+            content_dict["issigned"]=True
             content_dict["customer"]=Customer.objects.get(pk=int(request.session.get("customer_id")))
         else:
             return HttpResponseRedirect("index")
@@ -160,7 +161,7 @@ def signUp(request):
         phone=postObj["phone"]
         password=postObj["password"]
         if Customer.objects.filter(phone=phone).count():
-            return JsonResponse({"result":"fail"})
+            return JsonResponse({"result":"dup_phone"})
         else:
             try:
                 newCustomer=Customer()

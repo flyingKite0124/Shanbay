@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from database.models import *
 from django.http import HttpResponse,HttpResponseRedirect,HttpResponseNotAllowed, JsonResponse
+from django.template import RequestContext, loader
 import json
 import const
 from django.views.decorators.csrf import csrf_exempt
@@ -127,6 +128,7 @@ def manage(request):
         return render(request,"restaurant/manage.html", {"restaurant":restaurant})
     else:
         return HttpResponseNotAllowed(['GET'], 'illegal request')
+
 
 def updateInformation(request):
     if not request.session.get("isSignIn", False):
@@ -292,6 +294,34 @@ def manageDish(request):
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
 def pollOrder(request):
+    #Liqimai rewrite this function
+    if not request.session.get("isSignIn", False):
+        return HttpResponseRedirect("sign")
+    if not request.session.get("isSignIn", False):
+        return HttpResponseRedirect("sign")
+    if request.is_ajax() and request.method == "POST":
+        restaurant = None
+        try:
+            restaurant = Restaurant.objects.get(id=request.session.get("mID"))
+        except Exception:
+            HttpResponseRedirect("sign")
+        if restaurant == None:
+            HttpResponseRedirect("sign")
+        template = loader.get_template('restaurant/orderlist.html')
+        context = RequestContext(request, {
+            'restaurant': restaurant,
+            'sequence': [2, 3, 4, 5, 1, 0, 6],
+        })
+        return JsonResponse(
+                {
+                    "order_list": template.render(context),
+                    "result":"success"
+                },
+                safe=False)
+    else:
+        return HttpResponseNotAllowed(['POST'], 'illegal request')
+
+    #this is the old version
     if not request.session.get("isSignIn", False):
         return HttpResponseRedirect("sign")
     if request.is_ajax() and request.method == "POST":
