@@ -8,7 +8,7 @@
 	   {% for restaurant in restaurants.open %}
 		<a class="rstblock" href = "/customer/restaurant?rest_id={{ restaurant.id }}">
 			<div class="rstblock-logo">
-				<img src='{{restaurant.logo_path}}' alt="老娘舅（杭州黄龙餐厅）" class="rstblock-logo-icon" height="70" width="70">
+				<img src="{{ restaurant.logo_path }}" alt="{{ restaurant.name }}" class="rstblock-logo-icon" height="70" width="70">
 					<div class="elemeicon elemeicon-premiumsign rstblock-logo-premiumsign">
 					</div>
 			</div>
@@ -21,13 +21,17 @@
 				</div>
 				<span class="rstblock-monthsales">月售2575单
 				</span>
-			<div class="rstblock-cost">0元起送 / 配送费7元</div>
-			<div class="rstblock-activity"><i style="background:#f07373;">减</i><i style="background:#70bc46;">首</i><i style="background:#fff;color:#FF4E00;border:1px solid;padding:0;">付</i>
-			<i style="background:#fff;color:#9071CB;border:1px solid;padding:0;">票</i>
+			<div class="rstblock-cost">0元起送 / 配送费 5 元</div>
+			<div class="rstblock-activity">
+				<i style="background:#f07373;">减</i>
+				<i style="background:#70bc46;">首</i>
+				<i style="background:#fff;color:#FF4E00;border:1px solid;padding:0;">付</i>
+				<i style="background:#fff;color:#9071CB;border:1px solid;padding:0;">票</i>
 			</div>
 	</div>
 	</a>
 	{% endfor %}
+
 	</div>
 	</div>
 	</div>
