@@ -3,7 +3,7 @@ var isOverWriten = false;
 function sign_in() {
     data = {
         phone: $('#username').val(),
-        password: $('#password').val(),
+        password: $('#password').val()
     };
     console.log(data)
     $.ajax({
@@ -22,61 +22,52 @@ function sign_in() {
                 alert('用户名或密码错误');
             }
         })
-    e.preventDefault();
-};
+}
 
-
-
-$(".name-input").blur(function(){
-  var phone = $(this).val();
-  console.log("phone="+phone);
-   $.ajax({
-            url: "/customer/checkPhone",   // 填上接口中要求的url
-            data: JSON.stringify(phone),
-            type: "POST",       // 据熊学长说都是POST请求，不用改
-            dataType: "json",  // 据熊学长说都是json格式，不用改
-            contentType: "application/json",
-        }).done(function(data){
-            if(data.result == 'success')
-            {
-                isOverWriten = false;
-            }
-            else {
-                isOverWriten = true;
-            }
-        })
+$(document).ready(function()
+{
+    $("#username").blur(checkPhoneNumber)
 });
-
-
-
-function sign_up(){
-    if(isOverWriten)
-    {
-        confirm("您的号码已经注册过，请登陆");
-        return
+function checkPhoneNumber()
+{
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+    if (!myreg.test($("#username").val())){
+        $("#alert").html("请输入合法的手机号");
+        return false
     }
-    var phone       =   $('#username').val();
-    var password    =   $('#password').val();
+    else {
+        $("#alert").html("");
+        return true
+    }
+}
+
+function sign_up() {
+    if (!checkPhoneNumber())
+        return;
+    var phone = $('#username').val();
+    var password = $('#password').val();
     data = {
-        "phone":  phone
+        phone: phone,
+        password: password
     };
-    console.log(data)
     $.ajax({
-            url: "/customer/checkPhone",   // 填上接口中要求的url
+            url: "/customer/signUp",   // 填上接口中要求的url
             data: JSON.stringify(data),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
-            contentType: "application/json",
+            contentType: "application/json"
         })
         //请求成功时的回调函数
         .done(function (data) {
-            if (data.result === 'success'){
-                 $(window.location).attr('href', '/customer/index');
+            if (data.result === 'success') {
+                $(window.location).attr('href', '/customer/index');
 
+            }
+            else if (data.result === "dup_phone") {
+                $("#alert").html("您的号码已经注册过，请登录")
             }
             else {
                 alert('注册失败');
             }
         })
-    e.preventDefault();
 };
