@@ -86,7 +86,7 @@ def signUp(request):
                 newRestaurant.classification = classification
                 newRestaurant.status = status
                 global restaurantName
-                if (restaurant_name not in restaurantName):
+                if (restaurant_name.encode("utf-8") not in restaurantName):
                     newRestaurant.logo_path = "/static/restaurant/image/"+"default_shop.jpg"
                 else:    
                     newRestaurant.logo_path = "/static/restaurant/image/"+restaurant_name+".jpg"
@@ -263,7 +263,7 @@ def manageDish(request):
                 flag = False
                 pic_path = ""
                 for item in dishName:
-                    if item in name:
+                    if item.decode("utf-8") in name:
                         pic_path = "/static/restaurant/image/"+item+".jpg"
                         flag = True
                 if flag == False:
