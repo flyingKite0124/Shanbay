@@ -222,8 +222,8 @@ def submitOrder(request):
         global const
         if request.session.get("issigned","False")=="True":
             postObj=json.loads(request.body)
-            order_id=postObj["order_id"]
-            address_id=postObj["address_id"]
+            order_id=int(postObj["order_id"])
+            address_id=int(postObj["address_id"])
             order=Order.objects.get(pk=order_id)
             order.address=Address.objects.get(pk=address_id)
             order.order_time=datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
