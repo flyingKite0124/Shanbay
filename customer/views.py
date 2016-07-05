@@ -233,7 +233,7 @@ def submitOrder(request):
             order.save()
             orderDishes=OrderDish.objects.filter(order=order)
             for orderDish in orderDishes:
-                orderDish.dish.total_count+=1
+                orderDish.dish.total_count+=orderDish.num
                 orderDish.dish.save()
             return JsonResponse({"result":"success"})
         else:
