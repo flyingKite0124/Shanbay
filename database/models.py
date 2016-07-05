@@ -59,7 +59,7 @@ class Dish(models.Model):
 
 
 class Order(models.Model):
-    order_time = models.DateTimeField(default=datetime.datetime.now())
+    order_time = models.DateTimeField(null=True)
     status = models.IntegerField()
     total = models.FloatField(default=0)
     customer = models.ForeignKey(Customer)

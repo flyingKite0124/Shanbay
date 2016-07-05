@@ -228,6 +228,7 @@ def submitOrder(request):
             address_id=int(postObj["address_id"])
             order=Order.objects.get(pk=order_id)
             order.address=Address.objects.get(pk=address_id)
+            order.order_time=datetime.datetime.now()
             order.status=const.order["PAYED"]
             order.save()
             orderDishes=OrderDish.objects.filter(order=order)
