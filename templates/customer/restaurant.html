@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html>
-	<meta charset=utf-8 />
-	<link rel="stylesheet" href="/static/common/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="/static/common/bootstrap/css/bootstrap-theme.css">
-	<link rel="stylesheet" href="/static/customer/css/restaurant.css">
-	<script src="/static/common/js/jquery.min.js"></script>
-	<script src="/static/common/js/csrf.js"></script>
-	<script src="/static/common/bootstrap/js/bootstrap.js"></script>
-	<script type="text/javascript" src="/static/customer/js/restaurant.js"></script>
-	<body>
+ {% extends "customer/header.html" %}
+
+	{% block css %}
+		<link rel="stylesheet" href="/static/common/bootstrap/css/bootstrap-theme.css">
+		<link rel="stylesheet" href="/static/customer/css/restaurant.css">
+		<script type="text/javascript" src="/static/customer/js/restaurant.js"></script>
+		<script src="/static/common/js/jquery.min.js"></script>
+
+	{% endblock css %}
+
+	{% block script %}
+		<script src="/static/common/js/csrf.js"></script>
+		<script src="/static/common/bootstrap/js/bootstrap.js"></script>
+	{% endblock %}
+
+
+	{% block content %}
 		<div id="shopguide">
 			<div class="container">
 				<img src="{{ restaurant.logo_path }}" id="logopic" class="info-item">
@@ -33,7 +39,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="shopmenu">
+		<div id="shopmenu" style ="height:920px">
 			<div id="shopmenu-section" class="container">
 				<div id="shopnav">
 					<h4 id="shopnav-title">默认排序</h4>
@@ -51,7 +57,7 @@
 					</span>
 				</div>
 				<div id="dishlist">
-					
+
 				</div>
 			</div>
 		</div>
@@ -92,4 +98,5 @@
 			cartItem.readCookies();
 		</script>
 	</body>
+	{% endblock content %}
 </html>

@@ -44,18 +44,18 @@
         </nav> -->
       {% block content %}
 
-        <div class="container-fluid">
-          <div class="row">
+        <div class="container-fluid" style="">
+          <div class="row" style = "height:920px">
             <div class="col-sm-3 col-md-2 ">
-              <ul class="nav nav-sidebar">
+              <ul class="nav nav-sidebar " style = "padding-top:40px">
                 <li >
-                  <a href="#orderManage">管理订单</a>
+                  <a id = "orderManageBtn">管理订单</a>
                 </li>
                 <li>
-                  <a href="#pwdModify" >修改密码</a>
+                  <a id = "pwdModifyBtn" >修改密码</a>
                 </li>
                 <li>
-                  <a href="#addressManage">管理收货地址</a>
+                  <a id = "addressManageBtn">管理收货地址</a>
                 </li>
               </ul>
             </div>
@@ -225,9 +225,9 @@
         <script type="text/Javascript">
           $(function(){
 
-            var orderNav =$("[href='#orderManage']");
-            var pwdNav   =$("[href='#pwdModify']");
-            var addNav   =$("[href='#addressManage']")
+            var orderNav =$("#orderManageBtn");
+            var pwdNav   =$("#pwdModifyBtn");
+            var addNav   =$("#addressManageBtn");
 
             var customer;
             var orders;

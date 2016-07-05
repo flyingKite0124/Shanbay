@@ -12,11 +12,11 @@
 
 {% block content %}
     <div class="container" id="sign-form">
-、
-       <form class="form-signin">
+        <div class = "form-signin">
             <button id = "choose-sign-in" class="form-signin-heading text-center">登录</button>
             <button id = "choose-sign-up" class="form-signin-heading text-center" style="float:right">注册</button>
-
+        </div>
+       <form class="form-signin">
             <label for="inputEmail" class="sr-only">电话</label>
             <input type="text" id="username" class="form-control" placeholder="157xxxxxxxx" required autofocus>
 
@@ -45,9 +45,9 @@
     <script>
         $(document).ready(function () {
             console.log('text to find');
-            $('sign-in').click(sign_in);
-            $('choose-sign-in').click(hide);
-            $('choose-sign-up').click(slide);
+            $('#sign-in').click(sign_in);
+            $('#choose-sign-in').click(hide);
+            $('#choose-sign-up').click(slide);
         });
     </script>
 {% endblock %}

@@ -31,11 +31,11 @@
 
   </head>
 
-  <body>
+  <body style="padding:0px">
 	<header id="header" class="header">
 	    <div class="container">
 	        <h1 class="logo pull-left">
-	            <a class="scrollto" href="#promo">
+	            <a class="scrollto" href="/customer/index">
 	                <span class="logo-title">ShanBay</span>
 	            </a>
 	        </h1><!--//logo-->
@@ -56,8 +56,15 @@
 	                    	<a class="scrollto btn" href="/customer/profile">{{ customer.phone }}</a>
 	                    </li>
 	                    <li class="nav-item">
-	                    	<a class="scrollto btn"  onclick="log_out()">logout</a>
-	                    </li> 
+	                    	<a class="scrollto btn"  onclick="log_out()">退出登陆</a>
+	                    </li>
+	                    {% elif customer.id %}
+						 <li class="nav-item">
+	                    	<a class="scrollto" href="/customer/profile">{{ customer.phone }}</a>
+	                    </li>
+	                    <li class="nav-item">
+	                    	<a class="scrollto btn"  onclick="log_out()">退出登陆</a>
+	                    </li>
 	                    {% else %}
 	                    <li class="nav-item"><a class="scrollto" href="/customer/sign#signup">Signup</a></li>
 	                    <li class="nav-item"><a class="scrollto" href="/customer/sign#signin">Signin</a></li>
@@ -76,7 +83,7 @@
   	{% block content %}
     {% endblock %}
 
-<footer class="main-footer">
+<!-- <footer class="main-footer">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
@@ -116,13 +123,13 @@
         </div>
     </div>
 </footer>
-
+ -->
 <div class="copyright">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <span>Copyright &copy; <a href="http://expo.bootcss.com">优站精选</a></span> |
-                <span><a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备11008151号</a></span>
+                <span>Copyright &copy; <a href="http://expo.bootcss.com">扇贝订餐</a></span> |
+                <span><a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备xxxx号</a></span>
             </div>
         </div>
     </div>
