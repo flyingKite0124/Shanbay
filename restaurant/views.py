@@ -52,6 +52,8 @@ def signIn(request):
                 request.session["mID"] = restaurant.id
                 request.session["isSignIn"] = True
                 return JsonResponse({"result":"success"})
+            else:
+                return JsonResponse({"result":"fail"})
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
