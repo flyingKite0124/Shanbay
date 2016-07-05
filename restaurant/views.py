@@ -260,10 +260,14 @@ def manageDish(request):
                 price = data["price"]
                 introduction = data["introduction"]
                 global dishName
-                if name not in dishName:
+                flag = False
+                pic_path = ""
+                for item in dishName:
+                    if item in name:
+                        pic_path = "/static/restaurant/image/"+item+".jpg"
+                        flag = True
+                if flag == False:
                     pic_path = "/static/restaurant/image/"+"default_dish.jpg"
-                else:
-                    pic_path = "/static/restaurant/image/"+name+".jpg"
                 try:
                     dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant, pic_path=pic_path)
                     dish.save()
