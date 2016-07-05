@@ -52,8 +52,6 @@ def signIn(request):
                 request.session["mID"] = restaurant.id
                 request.session["isSignIn"] = True
                 return JsonResponse({"result":"success"})
-            else:
-                return JsonResponse({"result":"fail"})
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
@@ -89,7 +87,7 @@ def signUp(request):
                 newRestaurant.status = status
                 global restaurantName
                 if (restaurant_name.encode("utf-8") not in restaurantName):
-                    newRestaurant.logo_path = "/static/restaurant/image/"+"default_shop.png"
+                    newRestaurant.logo_path = "/static/restaurant/image/"+"default_shop.jpg"
                 else:    
                     newRestaurant.logo_path = "/static/restaurant/image/"+restaurant_name+".jpg"
                 newRestaurant.save()
@@ -269,7 +267,7 @@ def manageDish(request):
                         pic_path = "/static/restaurant/image/"+item+".jpg"
                         flag = True
                 if flag == False:
-                    pic_path = "/static/restaurant/image/"+"default_dish.jpg"
+                    pic_path = "/static/restaurant/image/"+"default_dish.png"
                 try:
                     dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant, pic_path=pic_path)
                     dish.save()
