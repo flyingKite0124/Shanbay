@@ -256,7 +256,7 @@ def manageDish(request):
                 introduction = data["introduction"]
                 pic_path = "/static/restaurant/image/"+name+".jpg"
                 try:
-                    dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant)
+                    dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant, pic_path=pic_path)
                     dish.save()
                     print data
                     return JsonResponse({"result":"success"})
