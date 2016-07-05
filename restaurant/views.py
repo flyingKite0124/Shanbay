@@ -24,6 +24,8 @@ const.order = {
 # Create your views here.
 def sign(request):
     if not request.is_ajax() and request.method == "GET":
+        if request.session.get("isSignIn",False):
+            return HttpResponseRedirect("manage")
         return render(request,"restaurant/sign.html")
     else:
         return HttpResponseNotAllowed(['GET'], 'illegal request')
@@ -68,7 +70,7 @@ def signUp(request):
         introduction = data["introduction"]
         address = data["address"]
         classification = 0
-        status = const.restaurant["UNCERTIFIED"]
+        status = const.restaurant["OPENING"]
         if len(Restaurant.objects.filter(phone=phone))>0:
             print "duplicate"
             return JsonResponse({"result": "fail"})
@@ -83,6 +85,9 @@ def signUp(request):
                 newRestaurant.classification = classification
                 newRestaurant.status = status
                 newRestaurant.save()
+                request.session["mID"] = newRestaurant.id
+                print "mID: " ,request.session["mID"]
+                request.session["isSignIn"] = True
                 return JsonResponse({"result":"success"})
             except Exception, e:
                 print e

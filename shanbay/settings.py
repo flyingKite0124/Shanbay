@@ -82,16 +82,11 @@ WSGI_APPLICATION = 'shanbay.wsgi.application'
 
 DATABASES = {
     'default': {
-<<<<<<< HEAD
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
-=======
         'ENGINE': 'django.db.backends.mysql',
-	'NAME': 'shanbay',
-        'OPTIONS':{
-            'read_default_file':os.path.join(os.path.dirname(__file__),'my.cnf'),
-        },
->>>>>>> 17fcb5ee896dc086033eaa869591eeea2a8e84ad
+        'NAME': "shanbay",
+        'USER' : "shanbay",
+        'HOST': "10.214.129.74",
+        'PORT' : '3306',
     }
 }
 
