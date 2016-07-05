@@ -10,7 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import datetime
 
-
+dishName = ["冰淇淋","寿司","汉堡","烤鸭","虾","面包","鸡腿"]
+restaurantName = ["美味"]
 
 const.restaurant = {"UNCERTIFIED": 0, "OPENING": 1, "CLOSED": 2, "FROZEN": 3}
 const.order = {
@@ -84,7 +85,11 @@ def signUp(request):
                 newRestaurant.address = address
                 newRestaurant.classification = classification
                 newRestaurant.status = status
-                newRestaurant.logo_path = "/static/restaurant/image/"+restaurant_name+".jpg"
+                global restaurantName
+                if (restaurant_name not in restaurantName):
+                    newRestaurant.logo_path = "/static/restaurant/image/"+"default_shop.jpg"
+                else:    
+                    newRestaurant.logo_path = "/static/restaurant/image/"+restaurant_name+".jpg"
                 newRestaurant.save()
                 request.session["mID"] = newRestaurant.id
                 print "mID: " ,request.session["mID"]
@@ -254,7 +259,11 @@ def manageDish(request):
                 name = data["name"]
                 price = data["price"]
                 introduction = data["introduction"]
-                pic_path = "/static/restaurant/image/"+name+".jpg"
+                global dishName
+                if name not in dishName:
+                    pic_path = "/static/restaurant/image/"+"default_dish.jpg"
+                else:
+                    pic_path = "/static/restaurant/image/"+name+".jpg"
                 try:
                     dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant, pic_path=pic_path)
                     dish.save()
