@@ -18,7 +18,7 @@ function sign_in(e) {
                 $(window.location).attr('href', '/restaurant/manage');
             }
             else {
-                alert('Username and password are not compitable.');
+                alert('手机或密码不正确');
             }
         })
     e.preventDefault();

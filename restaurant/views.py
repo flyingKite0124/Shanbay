@@ -11,7 +11,7 @@ from django.core import serializers
 import datetime
 
 dishName = ["冰淇淋","寿司","汉堡","烤鸭","虾","面包","鸡腿"]
-restaurantName = ["美味"]
+restaurantName = ["美味","爱心早餐","大鸡排"]
 
 const.restaurant = {"UNCERTIFIED": 0, "OPENING": 1, "CLOSED": 2, "FROZEN": 3}
 const.order = {
@@ -269,7 +269,7 @@ def manageDish(request):
                         pic_path = "/static/restaurant/image/"+item+".jpg"
                         flag = True
                 if flag == False:
-                    pic_path = "/static/restaurant/image/"+"default_dish.jpg"
+                    pic_path = "/static/restaurant/image/"+"default_dish.png"
                 try:
                     dish = Dish(name = name, price = float(price), introduction = introduction, restaurant = restaurant, pic_path=pic_path)
                     dish.save()
