@@ -1,29 +1,29 @@
- {% extends "customer/header.html" %}
+{% extends "customer/header.html" %}
 
-	{% block css %}
-		<link rel="stylesheet" href="/static/common/bootstrap/css/bootstrap-theme.css">
-		<link rel="stylesheet" href="/static/customer/css/restaurant.css">
-		<script type="text/javascript" src="/static/customer/js/restaurant.js"></script>
-		<script src="/static/common/js/jquery.min.js"></script>
+{% block css %}
+    <link rel="stylesheet" href="/static/common/bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/static/customer/css/restaurant.css">
+    <script type="text/javascript" src="/static/customer/js/restaurant.js"></script>
+    <script src="/static/common/js/jquery.min.js"></script>
 
-	{% endblock css %}
+{% endblock css %}
 
-	{% block script %}
-		<script src="/static/common/js/csrf.js"></script>
-		<script src="/static/common/bootstrap/js/bootstrap.js"></script>
-	{% endblock %}
+{% block script %}
+    <script src="/static/common/js/csrf.js"></script>
+    <script src="/static/common/bootstrap/js/bootstrap.js"></script>
+{% endblock %}
 
 
-	{% block content %}
-		<div id="shopguide">
-			<div class="container">
-				<img src="{{ restaurant.logo_path }}" id="logopic" class="info-item">
-				<div id="shopinfo-basic" class="info-item">
-					<h1 id="shopname">{{ restaurant.name }}</h1>
-					<p id="classification">快餐</p>
-					<p id="introduction">{{ restaurant.introduction }}</p>
-				</div>
-				<div id="shopinfo-extra" class="info-item">
+{% block content %}
+    <div id="shopguide">
+        <div class="container">
+            <img src="{{ restaurant.logo_path }}" id="logopic" class="info-item">
+            <div id="shopinfo-basic" class="info-item">
+                <h1 id="shopname">{{ restaurant.name }}</h1>
+                <p id="classification">快餐</p>
+                <p id="introduction">{{ restaurant.introduction }}</p>
+            </div>
+            <div id="shopinfo-extra" class="info-item">
 					<span id="packingtime" class="exinfo-item">
 						<p class="exinfo-item-title">配送时间</p>
 						<p>40 分钟</p>
@@ -36,67 +36,70 @@
 						<p class="exinfo-item-title">起送价</p>
 						<p>10 元</p>
 					</span>
-				</div>
-			</div>
-		</div>
-		<div id="shopmenu" style ="height:920px">
-			<div id="shopmenu-section" class="container">
-				<div id="shopnav">
-					<h4 id="shopnav-title">默认排序</h4>
+            </div>
+        </div>
+    </div>
+    <div id="shopmenu" style="height:920px">
+        <div id="shopmenu-section" class="container">
+            <div id="shopnav">
+                <h4 id="shopnav-title">默认排序</h4>
 					<span id="dishsort">
 						<a href="javascript:" class="sortbtn" onclick="renderDishes(dishItem.dl); sortTitle('默认排序');">默认排序</a>
-						<a href="javascript:" class="sortbtn" onclick="renderDishes(sortObj(dishItem.dl, 'grade', true)); sortTitle('评分从高到低排序');">评分
-							<span class="glyphicon glyphicon-arrow-down"></span>
-						</a>
-						<a href="javascript:" class="sortbtn" onclick="renderDishes(sortObj(dishItem.dl, 'total_count', true)); sortTitle('销量从高到低排序');">销量
-							<span class="glyphicon glyphicon-arrow-down"></span>
-						</a>
-						<a href="javascript:" class="sortbtn" onclick="renderDishes(sortObj(dishItem.dl, 'price', false)); sortTitle('价格从低到高排序');">价格
-							<span class="glyphicon glyphicon-arrow-up"></span>
-						</a>
+						<a href="javascript:" class="sortbtn"
+                           onclick="renderDishes(sortObj(dishItem.dl, 'grade', true)); sortTitle('评分从高到低排序');">评分
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </a>
+						<a href="javascript:" class="sortbtn"
+                           onclick="renderDishes(sortObj(dishItem.dl, 'total_count', true)); sortTitle('销量从高到低排序');">销量
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </a>
+						<a href="javascript:" class="sortbtn"
+                           onclick="renderDishes(sortObj(dishItem.dl, 'price', false)); sortTitle('价格从低到高排序');">价格
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </a>
 					</span>
-				</div>
-				<div id="dishlist">
+            </div>
+            <div id="dishlist">
 
-				</div>
-			</div>
-		</div>
-		<div id="shopbulletin">
-			<div id="shopbulletin-section" class="container">
-				<h3 id="shopbulletin-title">商家公告</h3>
-				<div id="shopbulletin-content">
-					<p id="shopbulletin-content-text">本店价格公道，童叟无欺，欢迎大家常来哦</p>
-				</div>
-			</div>
-		</div>
-		<div class="shop-cart">
-			<div class="shop-cartbasket" id="shopbasket">
-				<div class="shop-groupswitcher">
-					<div class="shop-grouphead">
-						<div class="shop-grouphead-row">
-							购物车
-							<a href="javascript:" onclick="cartItem.clear()">[清空]</a>
-						</div>
-					</div>
-				</div>
-				<div class="shop-cartbasket-list">
-				</div>
-			</div>
-			<div class="shop-cartfooter">
-				<span class="icon-cart 	glyphicon glyphicon-shopping-cart"></span>
-				<p class="shop-cartfooter-price">￥0</p>
-				<button class="shop-cartfooter-checkout" onclick="sendOrder()">去结算 ></button>
-			</div>
-		</div>
-		<script type="text/javascript">
-			{% for dish in dishes %}
-			dishItem.dl.push(new dishObj('{{ dish.id }}', '{{ dish.name }}',{{ dish.price }},'{{ dish.introduction }}',{{ dish.total_count }},{{ dish.grade_count }},{{ dish.total_grade }},'{{ dish.pic_path }}'));
-			{% endfor %}
-			dishItem.restID = {{ restaurant.id }};
-			cartItem.init(dishItem.dl);
-			renderDishes(dishItem.dl);
-			cartItem.readCookies();
-		</script>
-	</body>
-	{% endblock content %}
+            </div>
+        </div>
+    </div>
+    <div id="shopbulletin">
+        <div id="shopbulletin-section" class="container">
+            <h3 id="shopbulletin-title">商家公告</h3>
+            <div id="shopbulletin-content">
+                <p id="shopbulletin-content-text">本店价格公道，童叟无欺，欢迎大家常来哦</p>
+            </div>
+        </div>
+    </div>
+    <div class="shop-cart">
+        <div class="shop-cartbasket" id="shopbasket">
+            <div class="shop-groupswitcher">
+                <div class="shop-grouphead">
+                    <div class="shop-grouphead-row">
+                        购物车
+                        <a href="javascript:" onclick="cartItem.clear()">[清空]</a>
+                    </div>
+                </div>
+            </div>
+            <div class="shop-cartbasket-list">
+            </div>
+        </div>
+        <div class="shop-cartfooter">
+            <span class="icon-cart 	glyphicon glyphicon-shopping-cart"></span>
+            <p class="shop-cartfooter-price">￥0</p>
+            <button class="shop-cartfooter-checkout" onclick="sendOrder()">去结算 ></button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        {% for dish in dishes %}
+            dishItem.dl.push(new dishObj('{{ dish.id }}', '{{ dish.name }}', {{ dish.price }}, '{{ dish.introduction }}', {{ dish.total_count }}, {{ dish.grade_count }}, {{ dish.total_grade }}, '{{ dish.pic_path }}'));
+        {% endfor %}
+        dishItem.restID = {{ restaurant.id }};
+        cartItem.init(dishItem.dl);
+        renderDishes(dishItem.dl);
+        cartItem.readCookies();
+    </script>
+    </body>
+{% endblock content %}
 </html>

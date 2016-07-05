@@ -191,7 +191,7 @@ function renderDishes(dishlist){
 	this.dlElement.empty();
 	for (var i = 0; i < dishlist.length; ++i){
 		//var item = $('<div>').attr('did', 'dish' + (i+1).toString()).attr('class', 'dishitem');
-		var item = $('<div>').attr('did', (i+1).toString()).attr('class', 'dishitem');
+		var item = $('<div>').attr('did', dishlist[i].id).attr('class', 'dishitem');
 		var img = $('<img>').attr('class', 'dishitem-pic').attr('src', dishlist[i].pic_path);
 		var name = $('<name>').attr('class', 'dishitem-name').text(dishlist[i].name);
 		var d = $('<div>');
@@ -228,7 +228,8 @@ function sendOrder() {
 		}
 		else if(data.result=="notsigned")
 		{
-			alert("您还未登录,请登录")
+			alert("您还未登录,请登录");
+			location.href="/customer/sign"
 		}
 	});
 }
