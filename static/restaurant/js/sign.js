@@ -50,9 +50,10 @@ function slide(){
     $("#restname").css("display","block");
     $("#introduction").css("display","block");
     $("#address").css("display","block");
+    $("#sign-in").unbind();
     $("#sign-in").click(sign_up);
     $("#sign-in").text('注册');
-    $("#sige-in").attr("id","sign-up");
+    $("#sign-in").attr("id","sign-up");
 }
 
 
@@ -60,8 +61,9 @@ function hide(){
     $("#restname").css("display","none");
     $("#introduction").css("display","none");
     $("#address").css("display","none");
+    $("#sign-up").unbind();
     $('#sign-up').click(sign_in);
-    $('#sign-up').text(登陆);
+    $('#sign-up').text('登陆');
     $('#sign-up').attr("id","sign-in");
 }
 
@@ -74,16 +76,29 @@ function sign_up(e) {
         return;
     }
 
-    data = {
-        phone: $('#username').val(),
-        password: $('#password').val(),
-        restaurant_name: $('#restname').val(),
-        introduction: $('#introduction').val(),
-        address:$('address').val(),
-    };
+    console.log($('#username').val())
+    console.log($('#restname').val())
+
+
+    var phone = $('#username').val();
+    var password = $('#password').val();
+    var restaurant_name = $('#restname').val();
+    var introduction = $('#introduction').val();
+    var address = $('#address').val();
+    var classification = 0;
+
+    console.log("data="+phone + " "+ password + " "+ restaurant_name + " "+ introduction + " "+ address + " ");
+
     $.ajax({
             url: "/restaurant/signUp",   // 填上接口中要求的url
-            data: JSON.stringify(data),
+            data: JSON.stringify({
+                phone:phone,
+                passwd:password,
+                restaurant_name:restaurant_name,
+                introduction:introduction,
+                address:address,
+                classification:classification
+            }),
             type: "POST",       // 据熊学长说都是POST请求，不用改
             dataType: "json",  // 据熊学长说都是json格式，不用改
             contentType: "application/json",
