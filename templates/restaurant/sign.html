@@ -12,30 +12,62 @@
 
 {% block content %}
     <div class="container" id="sign-form">
-        <div class = "form-signin btn-group">
-            <button  class="btn btn-lg btn-primary" id = "choose-sign-in" class="form-signin-heading text-center">登录</button>
-            <button  class="btn btn-lg btn-primary" id = "choose-sign-up" class="form-signin-heading text-center" style="float:right">注册</button>
+        <div class="row text-center">
+            <div class="form-signin btn-group">
+                <button class="btn btn-lg btn-primary" id="choose-sign-in" class="form-signin-heading text-center">登录
+                </button>
+                <button class="btn btn-lg btn-primary" id="choose-sign-up" class="form-signin-heading text-center"
+                        style="float:right">注册
+                </button>
+            </div>
         </div>
-       <form class="form-signin">
-            <label for="inputEmail" class="sr-only">电话</label>
-            <input type="text" id="username" class="form-control" placeholder="电话" required autofocus>
+        <div class="row">
+            <form class="form-signin form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail" class="col-sm-4 col-md-pull-2 control-label">电话</label>
+                    <div class="col-sm-8 col-md-pull-2">
+                        <input type="text" id="username" class="form-control" placeholder="电话" required autofocus>
+                    </div>
+                </div>
 
-            <label for="inputPassword" class="sr-only">密码</label>
-            <input type="password" id="password" class="form-control" placeholder="密码" >
+                <div class="form-group">
+                    <label for="inputPassword" class="col-sm-4 col-md-pull-2 control-label">密码</label>
+                    <div class="col-sm-8 col-md-pull-2">
+                        <input type="password" id="password" class="form-control" placeholder="密码">
+                    </div>
+                </div>
 
-             <label for="inputName" class="sr-only">餐厅名字</label>
-            <input type="text" id="restname" class="form-control" placeholder="餐厅名"  style="display:none"
-            >
+                <div id="extra-sign-info">
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-4 col-md-pull-2 control-label">餐厅名字</label>
+                        <div class="col-sm-8  col-md-pull-2">
+                            <input type="text" id="restname" class="form-control" placeholder="餐厅名">
+                        </div>
+                    </div>
 
-             <label for="inputIntro" class="sr-only">简介</label>
-            <input type="text" id="introduction" class="form-control" placeholder="简介：特色菜..." style="display:none" >
+                    <div class="form-group">
+                        <label for="inputAddr" class="col-sm-4 col-md-pull-2 control-label">地址</label>
+                        <div class="col-sm-8  col-md-pull-2">
+                            <textarea class="form-control" rows="2" id="address" placeholder="地址"></textarea>
+                        </div>
+                    </div>
 
-             <label for="inputAddr" class="sr-only">地址</label>
-            <input type="text" id="address" class="form-control" placeholder="地址" 
-            style="display:none" >
-
-            <button class="btn btn-lg btn-primary btn-block" id="sign-in" style = "margin-top:10px">登陆</button>
-        </form>
+                    <div class="form-group">
+                        <label for="inputIntro" class="col-sm-4 col-md-pull-2 control-label">简介</label>
+                        <div class="col-sm-8  col-md-pull-2">
+                            <textarea class="form-control" rows="3" id="introduction" placeholder="特色菜..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-md-pull-2"></div>
+                    <div class="col-sm-8  col-md-pull-2">
+                        <button class="btn btn-lg btn-primary btn-block" id="sign-in" style="margin-top:10px">登录
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div> <!-- /container -->
 {% endblock %}
 
@@ -44,6 +76,7 @@
     <script src="/static/restaurant/js/sign.js"></script>
     <script>
         $(document).ready(function () {
+            hide();
             console.log('text to find');
             $('#sign-in').click(sign_in);
             $('#choose-sign-in').click(hide);
