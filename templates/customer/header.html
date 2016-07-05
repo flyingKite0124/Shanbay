@@ -31,11 +31,11 @@
 
   </head>
 
-  <body>
+  <body style="padding:0px">
 	<header id="header" class="header">
 	    <div class="container">
 	        <h1 class="logo pull-left">
-	            <a class="scrollto" href="#promo">
+	            <a class="scrollto" href="/customer/index">
 	                <span class="logo-title">ShanBay</span>
 	            </a>
 	        </h1><!--//logo-->
@@ -57,7 +57,14 @@
 	                    </li>
 	                    <li class="nav-item">
 	                    	<a class="scrollto btn"  onclick="log_out()">退出登陆</a>
-	                    </li> 
+	                    </li>
+	                    {% elif customer.id %}
+						 <li class="nav-item">
+	                    	<a class="scrollto" href="/customer/profile">{{ customer.phone }}</a>
+	                    </li>
+	                    <li class="nav-item">
+	                    	<a class="scrollto btn"  onclick="log_out()">退出登陆</a>
+	                    </li>
 	                    {% else %}
 	                    <li class="nav-item"><a class="scrollto" href="/customer/sign#signup">Signup</a></li>
 	                    <li class="nav-item"><a class="scrollto" href="/customer/sign#signin">Signin</a></li>
