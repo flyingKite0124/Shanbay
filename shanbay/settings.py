@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'shanbay.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+	'NAME': 'shanbay',
         'OPTIONS':{
             'read_default_file':os.path.join(os.path.dirname(__file__),'my.cnf'),
         },
