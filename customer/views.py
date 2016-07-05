@@ -79,6 +79,8 @@ def checkorder(request):
             content_dict=dict()
             if request.session.get("issigned", "False")=="True":
                 content_dict["customer"]=Customer.objects.get(pk=int(request.session.get("customer_id")))
+                if content_dict["customer"].default_aid is None:
+                    content_dict["customer"].default_aid=-1
                 content_dict["addresses"]=Address.objects.filter(customer=content_dict["customer"]).filter(delete_flag=False)
             else:
                 return HttpResponseRedirect("index")
@@ -226,7 +228,7 @@ def submitOrder(request):
             address_id=int(postObj["address_id"])
             order=Order.objects.get(pk=order_id)
             order.address=Address.objects.get(pk=address_id)
-            order.order_time=datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S")
+            order.order_time=datetime.datetime.now()
             order.status=const.order["PAYED"]
             order.save()
             orderDishes=OrderDish.objects.filter(order=order)

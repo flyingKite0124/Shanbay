@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.encoding import smart_unicode
+import datetime
 
 
 # Create your models here.
