@@ -87,7 +87,7 @@ def signUp(request):
                 newRestaurant.status = status
                 global restaurantName
                 if (restaurant_name.encode("utf-8") not in restaurantName):
-                    newRestaurant.logo_path = "/static/restaurant/image/"+"default_shop.jpg"
+                    newRestaurant.logo_path = "/static/restaurant/image/"+"default_shop.png"
                 else:    
                     newRestaurant.logo_path = "/static/restaurant/image/"+restaurant_name+".jpg"
                 newRestaurant.save()
