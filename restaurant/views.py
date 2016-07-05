@@ -59,16 +59,18 @@ def signUp(request):
         or "passwd" not in data \
         or "restaurant_name" not in data \
         or "introduction" not in data \
-        or "address" not in data \
-        or "classification" not in data:
+        or "address" not in data:
             return JsonResponse({"result":"fail"})
+        print "check field success"
         phone = data["phone"]
         passwd = data["passwd"]
         restaurant_name = data["restaurant_name"]
         introduction = data["introduction"]
         address = data["address"]
-        classification = data["classification"]
-        if len(Restaurant.objects.filter(phone=phone) > 0):
+        classification = 0
+        status = const.restaurant["UNCERTIFIED"]
+        if len(Restaurant.objects.filter(phone=phone))>0:
+            print "duplicate"
             return JsonResponse({"result": "fail"})
         else:
             try:
@@ -79,10 +81,12 @@ def signUp(request):
                 newRestaurant.introduction = introduction
                 newRestaurant.address = address
                 newRestaurant.classification = classification
+                newRestaurant.status = status
                 newRestaurant.save()
-                return JsonResponse({"result":"fail"})
-            except Exception:
                 return JsonResponse({"result":"success"})
+            except Exception, e:
+                print e
+                return JsonResponse({"result":"fail"})
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
