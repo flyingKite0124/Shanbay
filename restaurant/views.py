@@ -77,7 +77,7 @@ def signUp(request):
                 newRestaurant = Restaurant()
                 newRestaurant.phone = phone
                 newRestaurant.passwd = passwd
-                newRestaurant.restaurant_name = restaurant_name
+                newRestaurant.name = restaurant_name
                 newRestaurant.introduction = introduction
                 newRestaurant.address = address
                 newRestaurant.classification = classification
@@ -110,7 +110,7 @@ def checkName(request):
         if "restaurant_name" not in data:
             return JsonResponse({"result":"fail"})
         restaurant_name = data["restaurant_name"]
-        duplicate = Restaurant.objects.filter(restaurant_name = restaurant_name)
+        duplicate = Restaurant.objects.filter(name = restaurant_name)
         if (len(duplicate) > 0):
             return JsonResponse({"result":"fail"})
         else:
@@ -155,7 +155,7 @@ def updateInformation(request):
         print data
         restaurant_name = data["restaurant_name"]
         if restaurant_name != None and restaurant_name != "":
-            restaurant.restaurant_name = restaurant_name
+            restaurant.name = restaurant_name
         phone = data["phone"]
         if phone != None and phone != "":
             restaurant.phone = phone
