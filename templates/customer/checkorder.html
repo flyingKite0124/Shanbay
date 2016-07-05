@@ -198,7 +198,11 @@
     $(function () {
         order.orderID = {{ order.id }};
         order.total = {{ order.total }};
-        if ({{customer.default_aid}}){
+        if ({{customer.default_aid}}!=-1){
+            defaultAddr = {{customer.default_aid}}
+        }
+        else
+        {
             defaultAddr = {{customer.default_aid}}
         }
 
