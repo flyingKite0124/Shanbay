@@ -59,30 +59,34 @@ def signUp(request):
         or "passwd" not in data \
         or "restaurant_name" not in data \
         or "introduction" not in data \
-        or "address" not in data \
-        or "classification" not in data:
+        or "address" not in data:
             return JsonResponse({"result":"fail"})
+        print "check field success"
         phone = data["phone"]
         passwd = data["passwd"]
         restaurant_name = data["restaurant_name"]
         introduction = data["introduction"]
         address = data["address"]
-        classification = data["classification"]
-        if len(Restaurant.objects.filter(phone=phone) > 0):
+        classification = 0
+        status = const.restaurant["UNCERTIFIED"]
+        if len(Restaurant.objects.filter(phone=phone))>0:
+            print "duplicate"
             return JsonResponse({"result": "fail"})
         else:
             try:
                 newRestaurant = Restaurant()
                 newRestaurant.phone = phone
                 newRestaurant.passwd = passwd
-                newRestaurant.restaurant_name = restaurant_name
+                newRestaurant.name = restaurant_name
                 newRestaurant.introduction = introduction
                 newRestaurant.address = address
                 newRestaurant.classification = classification
+                newRestaurant.status = status
                 newRestaurant.save()
-                return JsonResponse({"result":"fail"})
-            except Exception:
                 return JsonResponse({"result":"success"})
+            except Exception, e:
+                print e
+                return JsonResponse({"result":"fail"})
     else:
         return HttpResponseNotAllowed(['POST'], 'illegal request')
 
@@ -106,7 +110,7 @@ def checkName(request):
         if "restaurant_name" not in data:
             return JsonResponse({"result":"fail"})
         restaurant_name = data["restaurant_name"]
-        duplicate = Restaurant.objects.filter(restaurant_name = restaurant_name)
+        duplicate = Restaurant.objects.filter(name = restaurant_name)
         if (len(duplicate) > 0):
             return JsonResponse({"result":"fail"})
         else:
@@ -151,7 +155,7 @@ def updateInformation(request):
         print data
         restaurant_name = data["restaurant_name"]
         if restaurant_name != None and restaurant_name != "":
-            restaurant.restaurant_name = restaurant_name
+            restaurant.name = restaurant_name
         phone = data["phone"]
         if phone != None and phone != "":
             restaurant.phone = phone
