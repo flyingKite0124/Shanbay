@@ -13,8 +13,10 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-7">
+            <div class="col-md-2">
+                <img src="{{ restaurant.logo_path }}" width=100% height=100%>
+            </div>
+            <div class="col-md-6">
                 <h1 id="name">{{ restaurant.name }}</h1>
                 <ul class="list-unstyled">
                     <li><b style="padding: 0 10px 0 0">电话</b>{{ restaurant.phone }}</li>
@@ -76,7 +78,7 @@
                                 <div class="dish-item">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <img src="/static/restaurant/image/haochibuguojiaozi.jpg" width=100%
+                                            <img src="{{ dish.pic_path }}" width=100%
                                                  height=100%>
                                         </div>
                                         <div class="dish-info">
