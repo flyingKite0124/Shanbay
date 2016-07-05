@@ -224,6 +224,11 @@ function defaultAddress(btn){
 function submitOrder() {
     var address_id = $('.address-item.chosen').attr('addrID');
     address_id = Number(address_id);
+    if (isNaN(address_id))
+    {
+        alert("请选择收货地址");
+        return
+    }
     $.ajax({
         url: "/customer/sumbitOrder",
         data:JSON.stringify({
