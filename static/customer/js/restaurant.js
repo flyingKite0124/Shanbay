@@ -228,8 +228,7 @@ function sendOrder() {
 		}
 		else if(data.result=="notsigned")
 		{
-			alert("您还未登录");
-			location.href="/customer/sign"
+			alert("您还未登录,请登录")
 		}
 	});
 }
