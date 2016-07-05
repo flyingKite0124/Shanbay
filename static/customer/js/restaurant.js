@@ -221,8 +221,15 @@ function sendOrder() {
 		dataType : "json",
 		data	: JSON.stringify({rest_id : dishItem.restID, order_dishes : orderDishes})
 	}).done(function (data) {
-		cartItem.clear();
-		cartItem.render();
-		location.href = "/customer/checkorder?order_id=" + data.order_id;
+		if(data.result=="success") {
+			cartItem.clear();
+			cartItem.render();
+			location.href = "/customer/checkorder?order_id=" + data.order_id;
+		}
+		else if(data.result=="notsigned")
+		{
+			alert("您还未登录");
+			location.href="/customer/sign"
+		}
 	});
 }

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.encoding import smart_unicode
+import datetime
 
 
 # Create your models here.
@@ -58,7 +59,7 @@ class Dish(models.Model):
 
 
 class Order(models.Model):
-    order_time = models.DateTimeField(null=True)
+    order_time = models.DateTimeField(default=datetime.datetime.now())
     status = models.IntegerField()
     total = models.FloatField(default=0)
     customer = models.ForeignKey(Customer)
